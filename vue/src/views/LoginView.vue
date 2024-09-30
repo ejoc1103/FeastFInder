@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <form v-on:submit.prevent="login">
-      <h1 >Please Sign In</h1>
+      <h1>Please Sign In</h1>
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
       </div>
@@ -18,7 +18,10 @@
       </div>
       <button type="submit">Sign in</button>
       <p>
-      <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+        <router-link v-bind:to="{ name: 'register' }" :style="{ color: 'white' }" v-on:click="changeBackground">Need an
+          account? Sign
+          up.</router-link>
+      </p>
     </form>
   </div>
 </template>
@@ -55,15 +58,29 @@ export default {
             this.invalidCredentials = true;
           }
         });
+    },
+    changeBackground(){
+      this.$store.commit('UPDATE_BACKGROUND', '../../fancyDinner.jpg');
     }
   }
 };
 </script>
 
 <style scoped>
+#login {
+  font-weight: bold;
+  font-size: larger;
+  background: #2e4053;
+  color: white;
+  border-radius: 10px;
+  padding: 3%;
+  margin: 3%;
+}
+
 .form-input-group {
   margin-bottom: 1rem;
 }
+
 label {
   margin-right: 0.5rem;
 }
