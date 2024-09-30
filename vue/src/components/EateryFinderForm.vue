@@ -1,0 +1,49 @@
+<template>
+    <div class="eatery-finder-form">
+        <h1>Eatery Finder</h1>
+        <form v-on:submit.prevent="findEatery">
+            <div class="form-input-group">
+                <label for="City">City</label>
+                <input type="text" v-model="eatery.city">
+            </div>
+            <div class="form-input-group">
+                <label for="Zip Code">Zip Code</label>
+                <input type="number" v-model="eatery.zipCode">
+            </div>
+            <button type="submit">Find Eatery</button>
+
+        </form>
+    </div>
+    
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            eatery: {
+               zipCode: "",
+               city: "",
+            },
+        };
+    },
+    methods: {
+        findEatery() {
+            console.log('Finding eatery...');
+        },
+    },
+};
+
+
+</script>
+
+<style>
+.eatery-finder-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    background-color: #f0f0f0;
+}
+</style>

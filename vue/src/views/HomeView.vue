@@ -1,11 +1,16 @@
 <template>
   <div class="home" >
-    <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
+  <eatery-finder-form-vue/>
   </div>
+  
 </template>
 
 <script>
+import EateryFinderFormVue from '../components/EateryFinderForm.vue';
 export default {
+  components:{
+    EateryFinderFormVue
+  },
+  
 };
 </script>
