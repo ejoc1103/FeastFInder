@@ -73,9 +73,22 @@ export default {
 </script>
 
 <style scoped>
+#register {
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  font-size: larger;
+  background: #2e4053;
+  color: white;
+  border-radius: 10px;
+  padding: 3%;
+  margin: 3%;
+}
+
 .form-input-group {
   margin-bottom: 1rem;
 }
+
 label {
   margin-right: 0.5rem;
 }
