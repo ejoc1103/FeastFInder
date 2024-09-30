@@ -79,4 +79,9 @@ export default {
 label {
   margin-right: 0.5rem;
 }
+#register {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
 </style>
