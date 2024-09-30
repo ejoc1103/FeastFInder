@@ -18,7 +18,7 @@
       </div>
       <button type="submit">Sign in</button>
       <p>
-        <router-link v-bind:to="{ name: 'register' }" :style="{ color: 'white' }">Need an
+        <router-link v-bind:to="{ name: 'register' }" :style="{ color: 'white' }" v-on:click="changeBackground">Need an
           account? Sign
           up.</router-link>
       </p>
@@ -58,6 +58,9 @@ export default {
             this.invalidCredentials = true;
           }
         });
+    },
+    changeBackground(){
+      this.$store.commit('UPDATE_BACKGROUND', '../../fancyDinner.jpg');
     }
   }
 };
@@ -65,8 +68,6 @@ export default {
 
 <style scoped>
 #login {
-  width: 100%;
-  height: 100%;
   font-weight: bold;
   font-size: larger;
   background: #2e4053;

@@ -18,7 +18,8 @@
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
       <button type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+      <p><router-link v-bind:to="{ name: 'login' }" v-on:click="changeBackground">Already have an account? Log
+          in.</router-link></p>
     </form>
   </div>
 </template>
@@ -49,6 +50,7 @@ export default {
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
+              this.$store.commit('UPDATE_BACKGROUND', '../../dinerBackground.jpg');
               this.$router.push({
                 path: '/login',
                 query: { registration: 'success' },
@@ -68,14 +70,15 @@ export default {
       this.registrationErrors = false;
       this.registrationErrorMsg = 'There were problems registering this user.';
     },
+    changeBackground() {
+      this.$store.commit('UPDATE_BACKGROUND', '../../dinerBackground.jpg');
+    }
   },
 };
 </script>
 
 <style scoped>
 #register {
-  width: 100%;
-  height: 100%;
   font-weight: bold;
   font-size: larger;
   background: #2e4053;
