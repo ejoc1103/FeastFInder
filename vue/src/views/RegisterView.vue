@@ -40,11 +40,20 @@ export default {
     };
   },
   methods: {
+    isPasswordValid() {
+      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; 
+      return pattern.test(this.user.password);
+    },
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
-      } else {
+      }else if (!this.isPasswordValid()) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg = 'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number.';
+      }
+      
+      else {
         authService
           .register(this.user)
           .then((response) => {
