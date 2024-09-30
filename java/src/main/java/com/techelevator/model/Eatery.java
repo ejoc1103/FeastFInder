@@ -10,7 +10,8 @@ public class Eatery {
     private String[] openTimes;
     private String[] closeTimes;
     private boolean hasTakeout;
-    private int rating;
+    //greg thought this was an int
+    private double rating;
     private int phoneNumber;
 
     public int getId() {
@@ -85,7 +86,7 @@ public class Eatery {
         this.hasTakeout = hasTakeout;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
