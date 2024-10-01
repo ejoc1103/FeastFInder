@@ -23,7 +23,7 @@ public class EateryController {
     @Autowired
     private EateryDao eateryDao;
     private final TokenProvider tokenProvider;
-
+    @Autowired
     private YelpService yelpService;
 
     public EateryController(TokenProvider tokenProvider, YelpService yelpService, EateryDao eateryDao) {

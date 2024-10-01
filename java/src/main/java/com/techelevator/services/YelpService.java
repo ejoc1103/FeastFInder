@@ -7,12 +7,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.techelevator.model.Eatery;
 import com.techelevator.model.YelpResponse;
 
-
+@Component
 public class YelpService {
 
     private final String apiKey = "s-6tgUeg0KaH0SRa0ugTKBd3hWT9r51vvHf-ljwSnjtvcfEN9NcBy75Sn5WTLUstvU81iNM40hTaArVqNLzgYV_aPbDxkSopW5ImVZdPrf1Z81elmqeXJED_S9P6ZnYx";
