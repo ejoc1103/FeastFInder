@@ -14,9 +14,9 @@ import com.techelevator.model.Eatery;
 
 public class YelpService {
     
-    private final String apiKey = "s-6tgUeg0KaH0SRa0ugTKBd3hWT9r51vvHf-ljwSnjtvcfEN9NcBy75Sn5WTLUstvU81iNM40hTaArVqNLzgYV_aPbDxkSopW5ImVZdPrf1Z81elmqeXJED_S9P6ZnYx";
+    private static final String apiKey = "s-6tgUeg0KaH0SRa0ugTKBd3hWT9r51vvHf-ljwSnjtvcfEN9NcBy75Sn5WTLUstvU81iNM40hTaArVqNLzgYV_aPbDxkSopW5ImVZdPrf1Z81elmqeXJED_S9P6ZnYx";
     
-    private final String YELP_API_URL = "https://api.yelp.com/v3/businesses/search";
+    private static String YELP_API_URL = "https://api.yelp.com/v3/businesses/search";
 
     private final HttpHeaders headers = new HttpHeaders();
 
@@ -28,9 +28,9 @@ public class YelpService {
         String url = this.YELP_API_URL + "?location=" + data + "&categories=restaurants&limit=25";
         ResponseEntity<Eatery> response = restTemplate.exchange(url, HttpMethod.GET, entity, Eatery.class);
         List<Eatery> eateries = new ArrayList<>();
-        for(Eatery eatery : response.getBody()) {
-            eateries.add(eatery);
-        }
-        return response.getBody().;
+//        for(Eatery eatery : ) {
+//            eateries.add(eatery);
+//        }
+        return eateries;
     }
 }

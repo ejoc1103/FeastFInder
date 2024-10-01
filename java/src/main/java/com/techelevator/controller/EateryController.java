@@ -24,12 +24,16 @@ public class EateryController {
     private EateryDao eateryDao;
     private final TokenProvider tokenProvider;
 
-    public EateryController(TokenProvider tokenProvider) {
+    private YelpService yelpService;
+
+    public EateryController(TokenProvider tokenProvider, YelpService yelpService, EateryDao eateryDao) {
         this.tokenProvider = tokenProvider;
+        this.yelpService = yelpService;
+        this.eateryDao = eateryDao;
     }
 
     @RequestMapping(path = "/restaurants", method= RequestMethod.GET)
     public List<Eatery> getEateryList(@RequestBody String data) {
-        return YelpService.getEateries(data);
+        return yelpService.getEateries(data);
     }
 }
