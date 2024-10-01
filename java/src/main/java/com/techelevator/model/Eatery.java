@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Eatery {
     @JsonProperty("id")
-    private int id;
+    private String id;
     @JsonProperty("zip_code")
-    private int zipCode;
+    private String zipCode;
     @JsonProperty("name")
     private String name;
     @JsonProperty("address")
@@ -20,25 +20,25 @@ public class Eatery {
     @JsonProperty("close_times")
     private String[] closeTimes;
     @JsonProperty("has_takeout")
-    private boolean hasTakeout;
+    private String hasTakeout;
     @JsonProperty("rating")
-    private double rating;
+    private String rating;
     @JsonProperty("phone_number")
-    private int phoneNumber;
+    private String phoneNumber;
 
     public int getId() {
-        return id;
+        return Integer.parseInt(id);
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public int getZipCode() {
-        return zipCode;
+        return Integer.parseInt(zipCode);
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
@@ -91,26 +91,26 @@ public class Eatery {
     }
 
     public boolean isHasTakeout() {
-        return hasTakeout;
+        return Boolean.parseBoolean(hasTakeout);
     }
 
-    public void setHasTakeout(boolean hasTakeout) {
+    public void setHasTakeout(String hasTakeout) {
         this.hasTakeout = hasTakeout;
     }
 
     public double getRating() {
-        return rating;
+        return Double.parseDouble(rating);
     }
 
-    public void setRating(int rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
     public int getPhoneNumber() {
-        return phoneNumber;
+        return Integer.parseInt(phoneNumber);
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 }
