@@ -1,17 +1,16 @@
 package com.techelevator.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techelevator.model.Eatery;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.techelevator.model.Eatery;
-import com.techelevator.model.YelpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class YelpService {
@@ -21,21 +20,30 @@ public class YelpService {
     private final String YELP_API_URL = "https://api.yelp.com/v3/businesses/search";
 
 
-    private final RestTemplate restTemplate = new RestTemplate();
-    
-    public List<Eatery> getEateries(String data) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(apiKey);
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        String url = this.YELP_API_URL + "?location=" + data + "&categories=restaurants&limit="+ this.limit;
-        ResponseEntity<YelpResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity, YelpResponse.class);
-        YelpResponse responseBody = response.getBody();
-        if (responseBody != null) {
-            return responseBody.getBusinesses();
-        } else {
-            return new ArrayList<>();
+     List<Eatery> eateryList = new ArrayList<>(){
+
+        HttpEntity<String> httpEntity = new HttpEntity<>("");
+        RestTemplate restTemplate = new RestTemplate();
+
+        // These two are new! We'll see how they work.
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode;
+
+    String jsonResponseBody = restTemplate.exchange(YELP_API_URL, HttpMethod.GET, httpEntity, String.class).getBody();
+        try {
+            jsonNode = objectMapper.readTree(jsonResponseBody);
+        JsonNode root = jsonNode.path("businesses");
+        } catch (JsonProcessingException ex) {
+            throw new RuntimeException(ex);
         }
+        return eateryList;
 
-    }
+
+
+
+
+    };
+
+
 }

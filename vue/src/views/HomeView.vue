@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <eatery-finder-form-vue />
+    <EateryFinderFormVue />
     <div class="eatery-grid">
-      <eatery-card v-for="n in 25" v-bind:key="n"/>
+      <EateryCard v-for="n in 25" v-bind:key="n"/>
     </div>
   </div>
 </template>

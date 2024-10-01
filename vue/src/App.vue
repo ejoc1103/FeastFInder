@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div id="nav">
     <router-link v-bind:to="{ name: 'home' }" :style="{ color: 'white' }">Home</router-link>&nbsp;|&nbsp;
     <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''"
@@ -10,6 +11,7 @@
     </div>
 
   </div>
+</div>
 </template>
 
 <style>
