@@ -30,6 +30,7 @@ public class EateryController {
 
     @RequestMapping(path = "/restaurants", method= RequestMethod.GET)
     public List<Eatery> getEateryList(@RequestBody String data) {
-        return YelpService.getEateries(data);
+        YelpService yelp = new YelpService();
+        return yelp.getEateries(data);
     }
 }
