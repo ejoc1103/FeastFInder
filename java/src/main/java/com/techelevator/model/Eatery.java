@@ -1,17 +1,29 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Eatery {
+    @JsonProperty("id")
     private int id;
+    @JsonProperty("zip_code")
     private int zipCode;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("address")
     private String address;
+    @JsonProperty("city")
     private String city;
+    @JsonProperty("type")
     private String type;
+    @JsonProperty("open_times")
     private String[] openTimes;
+    @JsonProperty("close_times")
     private String[] closeTimes;
+    @JsonProperty("has_takeout")
     private boolean hasTakeout;
-    //greg thought this was an int
+    @JsonProperty("rating")
     private double rating;
+    @JsonProperty("phone_number")
     private int phoneNumber;
 
     public int getId() {
