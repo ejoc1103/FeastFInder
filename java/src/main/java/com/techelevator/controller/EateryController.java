@@ -4,11 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.techelevator.dao.EateryDao;
 import com.techelevator.model.Eatery;
@@ -32,8 +28,8 @@ public class EateryController {
         this.eateryDao = eateryDao;
     }
 
-    @RequestMapping(path = "/restaurants", method= RequestMethod.GET)
-    public List<Eatery> getEateryList(@RequestBody String data) {
+    @RequestMapping(path = "/restaurants/{data}", method= RequestMethod.GET)
+    public List<Eatery> getEateryList(@PathVariable String data) {
         return yelpService.getEateries(data);
     }
 }

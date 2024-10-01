@@ -1,27 +1,31 @@
 <template>
   <div id="login">
-    <form v-on:submit.prevent="login">
-      <h1>Please Sign In</h1>
-      <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
+    <form v-on:submit.prevent="login" id="login-form">
+      <h3>Please Sign In</h3>
+      <div id="form-info">
+
+        <div role="alert" v-if="invalidCredentials">
+          Invalid username and password!
+        </div>
+        <div role="alert" v-if="this.$route.query.registration">
+          Thank you for registering, please sign in.
+        </div>
+        <div class="form-input-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" v-model="user.username" required autofocus />
+        </div>
+        <div class="form-input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" v-model="user.password" required />
+        </div>
+        <button type="submit" id="sign-in">Sign in</button>
+        <p>
+          <router-link v-bind:to="{ name: 'register' }" :style="{ color: '#009688' }" v-on:click="changeBackground">Need
+            an
+            account? Sign
+            up.</router-link>
+        </p>
       </div>
-      <div role="alert" v-if="this.$route.query.registration">
-        Thank you for registering, please sign in.
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <button type="submit">Sign in</button>
-      <p>
-        <router-link v-bind:to="{ name: 'register' }" :style="{ color: 'white' }" v-on:click="changeBackground">Need an
-          account? Sign
-          up.</router-link>
-      </p>
     </form>
   </div>
 </template>
@@ -59,7 +63,7 @@ export default {
           }
         });
     },
-    changeBackground(){
+    changeBackground() {
       this.$store.commit('UPDATE_BACKGROUND', '../../fancyDinner.jpg');
     }
   }
@@ -68,13 +72,46 @@ export default {
 
 <style scoped>
 #login {
+  display: flex;
+  flex-direction: column;
   font-weight: bold;
   font-size: larger;
-  background: #2e4053;
-  color: white;
+  background: #009688;
+  color: #F5F5F5;
+  border-radius: 10px;
+  padding: 5%;
+  margin: 5%;
+  font-family: Poppins;
+  text-align: center;
+  ;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  width: 100%;
+}
+
+#form-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  width: 90%;
+  background-color: #F5F5F5;
+  color: #009688;
+  border-radius: 10px;
+}
+
+#sign-in {
+  background-color: #FFEB3B;
+  color: #424242;
+  font-size: larger;
   border-radius: 10px;
   padding: 3%;
-  margin: 3%;
+  margin: 1%;
 }
 
 .form-input-group {
@@ -83,10 +120,5 @@ export default {
 
 label {
   margin-right: 0.5rem;
-}
-#login {
-  display: flex;
-  justify-content: center;
-  height: 100vh;
 }
 </style>
