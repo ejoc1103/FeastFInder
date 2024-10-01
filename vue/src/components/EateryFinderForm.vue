@@ -1,7 +1,7 @@
 <template>
     <div class="eatery-finder-form">
         <h1>Eatery Finder</h1>
-        <form v-on:submit.prevent="findEatery">
+        <form v-on:submit.prevent="findEatery" v-if="showForm">
             <div class="form-input-group">
                 <label for="City">City</label>
                 <input type="text" v-model="eatery.city">
@@ -10,9 +10,11 @@
                 <label for="Zip Code">Zip Code</label>
                 <input type="number" v-model="eatery.zipCode">
             </div>
-            <button type="submit">Find Eatery</button>
-
+            <button type="submit" v-on:click="toggleForm">Find Eatery</button>
         </form>
+        <div v-else>
+            <button>Show Form</button>
+        </div>
     </div>
     
 </template>
@@ -25,12 +27,17 @@ export default {
                zipCode: "",
                city: "",
             },
+            showForm: true,
         };
     },
     methods: {
         findEatery() {
             console.log('Finding eatery...');
+            this.$router.push()
         },
+        toggleForm(){
+            this.showForm = !this.showForm;
+        }
     },
 };
 

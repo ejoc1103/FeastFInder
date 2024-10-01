@@ -47,7 +47,7 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  }
+  },
 ];
 
 // Create the router
