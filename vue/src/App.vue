@@ -26,8 +26,8 @@ body {
   display: grid;
   justify-content: center;
   align-items: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-repeat: repeat;
+  background-size: 100vw;
   background-position: center;
   height: 100%;
 }

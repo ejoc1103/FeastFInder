@@ -38,6 +38,7 @@ export default {
   justify-items: center;
   align-content: center;
   align-items: start;
+  text-align: center;
   border-radius: 10px;
   border: 5px solid #FF6F61;
   gap: 0 5px;
@@ -45,16 +46,15 @@ export default {
   margin: 5px;
   max-height: 250px;
   background-size: cover;
+  width: 90%;
 }
 
 #eatery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
   gap: 20px;
   justify-items: center;
   align-items: stretch;
-  height: 100%;
 }
 
 img {

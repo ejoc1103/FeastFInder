@@ -33,8 +33,8 @@ export function createStore(currentToken, currentUser) {
       SET_SEARCH_TERM(state, search){
         state.currentSearch = search;
       },
-      TOGGLE_RESTAURANTS(state){
-        state.showRestaurants = !state.showRestaurants;
+      TOGGLE_RESTAURANTS(state, show){
+        state.showRestaurants = show;
       }
     },
   });

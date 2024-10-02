@@ -1,32 +1,34 @@
 <template>
-  <div id="login">
-    <form v-on:submit.prevent="login" id="login-form">
-      <h3>Please Sign In</h3>
-      <div id="form-info">
-
-        <div role="alert" v-if="invalidCredentials">
-          Invalid username and password!
-        </div>
-        <div role="alert" v-if="this.$route.query.registration">
-          Thank you for registering, please sign in.
-        </div>
-        <div class="form-input-group">
-          <label for="username">Email Address</label>
-          <input type="text" id="username" v-model="user.username" required autofocus />
-        </div>
-        <div class="form-input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="user.password" required />
-        </div>
-        <button type="submit" id="sign-in">Sign in</button>
-        <p>
-          <router-link v-bind:to="{ name: 'register' }" :style="{ color: '#009688' }" v-on:click="changeBackground">Need
+  <div id="login-container">
+    <div id="login">
+      <form v-on:submit.prevent="login" id="login-form">
+        <h3>Please Sign In</h3>
+        <div id="form-info">
+          
+          <div role="alert" v-if="invalidCredentials">
+            Invalid username and password!
+          </div>
+          <div role="alert" v-if="this.$route.query.registration">
+            Thank you for registering, please sign in.
+          </div>
+          <div class="form-input-group">
+            <label for="username">Email Address</label>
+            <input type="text" id="username" v-model="user.username" required autofocus />
+          </div>
+          <div class="form-input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" v-model="user.password" required />
+          </div>
+          <button type="submit" id="sign-in">Sign in</button>
+          <p>
+            <router-link v-bind:to="{ name: 'register' }" :style="{ color: '#009688' }" v-on:click="changeBackground">Need
             an
             account? Sign
             up.</router-link>
-        </p>
-      </div>
-    </form>
+          </p>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -72,6 +74,9 @@ export default {
 </script>
 
 <style scoped>
+#login-container {
+  height: 100vh;
+}
 #login {
   display: flex;
   flex-direction: column;
@@ -84,7 +89,6 @@ export default {
   padding: 5%;
   margin: 5%;
   text-align: center;
-  ;
 }
 
 #login-form {
