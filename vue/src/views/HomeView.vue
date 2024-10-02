@@ -2,7 +2,7 @@
   <div class="home">
     <EateryFinderFormVue v-on:submit.prevent="findEatery()" />
     <div class="eatery-grid" v-if="$store.state.showRestaurants">
-      <EateryCard v-for="n in 12" v-bind:key="n" restaurant="restaurant" />
+      <EateryCard v-for="restaurant in restaurants" v-bind:key="restaurant.id" />
     </div>
   </div>
 </template>
@@ -28,6 +28,7 @@ export default {
     findEatery() {
       let search = this.$store.state.currentSearch;
       RestaurantService.getRestaurants(search).then((response) => {
+        console.log(response.data);
         this.restaurants = response.data;
       });
       this.$store.commit("TOGGLE_RESTAURANTS");

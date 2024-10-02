@@ -17,25 +17,7 @@
 </template>
 
 <script>
-export default {
-  // props: ['restaurant'],
-  data() {
-    return {
-      restaurant: {
-        name: "McDonald's",
-        status: true,
-        cuisine: "Fast Food",
-        openTime: "8:00 AM",
-        closeTime: "10:00 PM",
-        isOpen: "True",
-        address: "123 Main St",
-        phone: "123-456-7890",
-        img: "https://s3-media4.fl.yelpcdn.com/bphoto/9O7uFG4mR8quqynmj-vtiA/o.jpg",
-      },
-    }
-  }
 
-}
 </script>
 
 <style>

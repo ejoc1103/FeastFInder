@@ -8,6 +8,7 @@ public class Eatery {
     private String name;
     private String imageUrl;
 
+    //Try changing this to a Json node
     private String address;
 
     private String category;

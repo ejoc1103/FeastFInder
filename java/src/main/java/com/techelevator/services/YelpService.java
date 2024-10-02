@@ -59,6 +59,7 @@ public class YelpService {
                 String id = root.path(i).path("id").asText();
                 String name = root.path(i).path("name").asText();
                 String imageUrl = root.path(i).path("image_url").asText();
+                //Make a loop after display_address to build the string
                 String address = root.path(i).path("location").path("display_address").path(0).asText();
                 String category = root.path(i).path("categories").path(0).path("title").asText();
                 String openTime = root.path(i).path("business_hours").path(0).path("open").path(0).path("start").asText();
