@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <EateryFinderFormVue v-on:submit.prevent="findEatery()" />
+    <EateryFinderFormVue v-on:submit.prevent="findEatery" />
     <div v-if="$store.state.showRestaurants" class="eatery-grid-container">
       <EateryCard :restaurants="restaurants" />
       <button v-on:click="nextPage">Next Card</button>
@@ -32,6 +32,8 @@ export default {
     findEatery() {
       this.restaurants = [];
       this.currentResponse = [];
+      this.start = 0;
+      this.end = 8;
       let search = this.$store.state.currentSearch;
       RestaurantService.getRestaurants(search).then((response) => {
         this.currentResponse = response;
