@@ -1,23 +1,22 @@
 package com.techelevator.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.techelevator.model.Eatery;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techelevator.model.Eatery;
 
 
 @Component
-@CrossOrigin
 public class YelpService {
 
     @Value("${yelp.api.key}")
@@ -26,21 +25,13 @@ public class YelpService {
     @Value("${yelp.api.url}")
     private String apiUrl;
 
-
-
      public List<Eatery> getEateries(String searchString){
 
-         String url = this.apiUrl + "?location=" + searchString + "&limit=" + this.limit;
-
-         HttpHeaders headers = new HttpHeaders();
-
-         headers.set("Authorization", "Bearer " + this.apiKey);
-
-
-         headers.set("Content-Type", "application/json");
-
-
-         HttpEntity<String> httpEntity = new HttpEntity<>("", headers);
+        String url = this.apiUrl + "?location=" + searchString + "&limit=" + this.limit;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.apiKey);
+        headers.set("Content-Type", "application/json");
+        HttpEntity<String> httpEntity = new HttpEntity<>("", headers);
         RestTemplate restTemplate = new RestTemplate();
 
         // These two are new! We'll see how they work.
