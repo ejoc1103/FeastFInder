@@ -1,23 +1,29 @@
 <template>
-  <div id="card-view">
-    <h5 :style="{ gridArea: 'name' }">{{ restaurant.name }}</h5>
-    <img :style="{ gridArea: 'img' }" :src="restaurant.img" alt="restaurant image" />
-    <p :style="{ gridArea: 'status' }">{{ restaurant.status ? "Open Now" : "Closed" }}</p>
-    <p :style="{ gridArea: 'cuisine' }">{{ restaurant.cuisine }}</p>
-    <p :style="{ gridArea: 'isOpen' }">{{ restaurant.isOpen }}</p>
-    <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime }}</p>
-    <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime }}</p>
-    <p :style="{ gridArea: 'address' }">{{ restaurant.address }}</p>
-    <p :style="{ gridArea: 'phone' }">{{ restaurant.phone }}</p>
-    <div :style="{ gridArea: 'buttons' }">
-      <button>Call to Order</button>
-      <button>Add to Group</button>
+  <div id="eatery-grid">
+    <div v-for="restaurant in restaurants" v-bind:key="restaurant.id" id="card-view">
+      <h5 :style="{ gridArea: 'name' }">{{ restaurant.name }}</h5>
+      <img :style="{ gridArea: 'img' }" :src="restaurant.imageUrl" alt="restaurant image" />
+      <p :style="{ gridArea: 'status' }">{{ restaurant.status ? "Open Now" : "Closed" }}</p>
+      <p :style="{ gridArea: 'cuisine' }">{{ restaurant.cuisine }}</p>
+      <p :style="{ gridArea: 'isOpen' }">{{ restaurant.isOpen }}</p>
+      <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime }}</p>
+      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime }}</p>
+      <p :style="{ gridArea: 'address' }">{{ restaurant.address }}</p>
+      <p :style="{ gridArea: 'phone' }">{{ restaurant.phone }}</p>
+      <div :style="{ gridArea: 'buttons' }">
+        <button>Call to Order</button>
+        <button>Add to Group</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
+export default {
+  props: [
+    "restaurants",
+  ],
+};
 </script>
 
 <style>
@@ -40,6 +46,16 @@
   padding: 5px;
   margin: 5px;
   max-height: 250px;
+}
+
+#eatery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 20px;
+  justify-items: center;
+  align-items: stretch;
+  height: 100%;
 }
 
 img {
