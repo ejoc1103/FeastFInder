@@ -24,25 +24,22 @@ public class YelpService {
      List<Eatery> eateryList = new ArrayList<>(){
 
         HttpEntity<String> httpEntity = new HttpEntity<>("");
-        RestTemplate restTemplate = new RestTemplate();
+            RestTemplate restTemplate = new RestTemplate();
 
-        // These two are new! We'll see how they work.
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode;
+            // These two are new! We'll see how they work.
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode;
 
-    String jsonResponseBody = restTemplate.exchange(YELP_API_URL, HttpMethod.GET, httpEntity, String.class).getBody();
-        try {
-            jsonNode = objectMapper.readTree(jsonResponseBody);
-        JsonNode root = jsonNode.path("businesses");
-        } catch (JsonProcessingException ex) {
-            throw new RuntimeException(ex);
+            try {
+                String jsonResponseBody = restTemplate.exchange(YELP_API_URL, HttpMethod.GET, httpEntity, String.class).getBody();
+                jsonNode = objectMapper.readTree(jsonResponseBody);
+                JsonNode root = jsonNode.path("businesses");
+            } catch(Exception ex) {
+                throw new RuntimeException(ex);
+            }
+
+            return eateryList;
         }
-        return eateryList;
-
-
-
-
-
     };
 
 
