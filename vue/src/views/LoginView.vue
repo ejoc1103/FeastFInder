@@ -11,7 +11,7 @@
           Thank you for registering, please sign in.
         </div>
         <div class="form-input-group">
-          <label for="username">Username</label>
+          <label for="username">Email Address</label>
           <input type="text" id="username" v-model="user.username" required autofocus />
         </div>
         <div class="form-input-group">
@@ -118,6 +118,8 @@ export default {
 
 .form-input-group {
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 label {

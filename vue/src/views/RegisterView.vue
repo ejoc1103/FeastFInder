@@ -6,7 +6,7 @@
         {{ registrationErrorMsg }}
       </div>
       <div class="inputs-area">
-        <label for="username">Username</label>
+        <label for="username">Email Address</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
 
 

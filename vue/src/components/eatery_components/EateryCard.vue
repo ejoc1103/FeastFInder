@@ -1,8 +1,7 @@
 <template>
   <div id="eatery-grid">
-    <div v-for="restaurant in restaurants" v-bind:key="restaurant.id" id="card-view">
+    <div v-for="restaurant in restaurants" v-bind:key="restaurant.id" id="card-view" :style="{ backgroundImage:`url(${restaurant.imageUrl})` }">
       <h5 :style="{ gridArea: 'name' }">{{ restaurant.name }}</h5>
-      <img :style="{ gridArea: 'img' }" :src="restaurant.imageUrl" alt="restaurant image" />
       <p :style="{ gridArea: 'status' }">{{ restaurant.status ? "Open Now" : "Closed" }}</p>
       <p :style="{ gridArea: 'cuisine' }">{{ restaurant.cuisine }}</p>
       <p :style="{ gridArea: 'isOpen' }">{{ restaurant.isOpen }}</p>
@@ -41,11 +40,11 @@ export default {
   align-items: start;
   border-radius: 10px;
   border: 5px solid #FF6F61;
-  background-color: rgb(66, 66, 66, .5);
   gap: 0 5px;
   padding: 5px;
   margin: 5px;
   max-height: 250px;
+  background-size: cover;
 }
 
 #eatery-grid {
@@ -59,6 +58,26 @@ export default {
 }
 
 img {
-  max-width: 60%;
+  max-width: 80%;
+  max-height: 80%;
 }
+
+h5 {
+  font-size: 1.6em;
+  color: white;
+  background-color: rgba(255, 111, 97, 0.75);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0;
+}
+
+p {
+  font-size: 1.2em;
+  color: white;
+  background-color: rgba(255, 111, 97, 0.5);
+  border-radius: 2px;
+  padding: 2px;
+  margin: 0;
+}
+
 </style>
