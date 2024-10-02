@@ -2,7 +2,7 @@
   <div class="home">
     <EateryFinderFormVue v-on:submit.prevent="findEatery()" />
     <div class="eatery-grid" v-if="$store.state.showRestaurants">
-      <EateryCard v-for="n in 20" v-bind:key="n" restaurant="restaurant" />
+      <EateryCard v-for="n in 12" v-bind:key="n" restaurant="restaurant" />
     </div>
   </div>
 </template>
@@ -41,14 +41,15 @@ export default {
 .eatery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   gap: 20px;
   justify-items: center;
-  align-items: center;
+  align-items: stretch;
+  height: 100%;
 }
 
 .home {
   display: grid;
   justify-items: center;
-  width: 100%;
 }
 </style>

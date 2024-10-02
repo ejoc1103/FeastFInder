@@ -8,7 +8,7 @@ export function createStore(currentToken, currentUser) {
       user: currentUser || {},
       currentBackground: '../../dinerBackground.jpg',
       currentSearch: '',
-      showRestaurants: true,
+      showRestaurants: false,
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
