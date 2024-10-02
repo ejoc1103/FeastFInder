@@ -23,7 +23,6 @@ public class EateryController {
     private EateryDao eateryDao;
     @Autowired
     private YelpService yelpService;
-
     
     @RequestMapping(path = "/restaurants/{data}", method= RequestMethod.GET)
     public List<Eatery> getEateryList(@Valid @PathVariable String data) {

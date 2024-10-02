@@ -34,7 +34,6 @@ export default {
       this.currentResponse = [];
       let search = this.$store.state.currentSearch;
       RestaurantService.getRestaurants(search).then((response) => {
-        console.log(response.data);
         this.currentResponse = response;
         for(let i = this.start; i < this.end; i++) {
           this.restaurants.push(response.data[i]);

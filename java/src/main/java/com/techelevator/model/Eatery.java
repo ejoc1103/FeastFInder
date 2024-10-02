@@ -1,18 +1,11 @@
 package com.techelevator.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Eatery {
     private String id;
-
     private String name;
     private String imageUrl;
-
-    //Try changing this to a Json node
     private String address;
-
     private String category;
-
     private String openTime;
 
     public String getOpenTime() {
