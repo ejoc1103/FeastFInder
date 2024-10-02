@@ -21,7 +21,7 @@
           </div>
           <button type="submit" id="sign-in">Sign in</button>
           <p>
-            <router-link v-bind:to="{ name: 'register' }" :style="{ color: '#009688' }" v-on:click="changeBackground">Need
+            <router-link v-bind:to="{ name: 'register' }" :style="{ color: '#009688' }">Need
             an
             account? Sign
             up.</router-link>
@@ -54,7 +54,6 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
-            this.$store.commit("UPDATE_BACKGROUND", "../../tableView.jpg");
             this.$router.push("/");
           }
         })
@@ -66,9 +65,6 @@ export default {
           }
         });
     },
-    changeBackground() {
-      this.$store.commit('UPDATE_BACKGROUND', '../../fancyDinner.jpg');
-    }
   }
 };
 </script>

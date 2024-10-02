@@ -6,6 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
+import GroupView from '../views/GroupView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -48,6 +49,15 @@ const routes = [
       requiresAuth: false
     }
   },
+  {
+    path: '/group',
+    name: 'group',
+    component: GroupView,
+    meta: {
+      // I don't think we want this to have auth since it's where other people vote
+      requiresAuth: false
+    }
+  }
 ];
 
 // Create the router
@@ -66,7 +76,7 @@ router.beforeEach((to) => {
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
-    return {name: "login"};
+    return { name: "login" };
   }
   // Otherwise, do nothing and they'll go to their next destination
 });

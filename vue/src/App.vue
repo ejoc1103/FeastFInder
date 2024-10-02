@@ -1,18 +1,44 @@
 <template>
   <div>
-  <div id="nav">
-    <router-link v-bind:to="{ name: 'home' }" :style="{ color: 'white' }">Home</router-link>&nbsp;|&nbsp;
-    <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''"
-      :style="{ color: 'white' }">Logout</router-link>
-  </div>
-  <div id="capstone-app" :style="{ backgroundImage: `url(${$store.state.currentBackground})` }">
-    <div id="#main-view">
-      <router-view />
+    <div id="nav">
+      &nbsp;|&nbsp;<router-link v-bind:to="{ name: 'home' }" :style="{ color: 'white' }">Home</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''"
+        :style="{ color: 'white' }">Logout</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'group' }" :style="{ color: 'white' }">Group</router-link>&nbsp;|&nbsp;
     </div>
+    <div id="capstone-app" :style="{ backgroundImage: `url(${currentBackground})` }">
+      <div id="#main-view">
+        <router-view />
+        {{ $route.name }}
+      </div>
 
+    </div>
   </div>
-</div>
 </template>
+<script>
+export default {
+  //not sure if computed is the best way to do this for speed purposes but it works for now
+  computed: {
+    currentBackground() {
+      console.log("dad");
+      let pathName = this.$route.name;
+      if (pathName === 'home') {
+        return "../../homeBackground.jpg";
+      } else if (pathName === 'login') {
+        return "../../loginBackground.jpg";
+      } else if (pathName === 'register') {
+        return "../../registerBackground.jpg";
+      } else if (pathName === 'group') {
+        return "../../groupBackground.jpg";
+      } else {
+        return "../../dinerBackground.jpg";
+      }
+    },
+  },
+};
+
+</script>
+
 
 <style>
 body {
