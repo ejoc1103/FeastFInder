@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import EateryFinderFormVue from "../components/EateryFinderForm.vue";
-import EateryCard from "../components/EateryCard.vue";
+import EateryFinderFormVue from "../components/eatery_components/EateryFinderForm.vue";
+import EateryCard from "../components/eatery_components/EateryCard.vue";
 import RestaurantService from "../services/RestaurantService";
 
 
