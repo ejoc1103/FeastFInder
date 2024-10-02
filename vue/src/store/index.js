@@ -7,6 +7,8 @@ export function createStore(currentToken, currentUser) {
       token: currentToken || '',
       user: currentUser || {},
       currentBackground: '../../dinerBackground.jpg',
+      currentSearch: '',
+      showRestaurants: true,
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -25,8 +27,14 @@ export function createStore(currentToken, currentUser) {
         state.user = {};
         axios.defaults.headers.common = {};
       },
-      UPDATE_BACKGROUND(state, string){
+      UPDATE_BACKGROUND(state, string) {
         state.currentBackground = string;
+      },
+      SET_SEARCH_TERM(state, search){
+        state.currentSearch = search;
+      },
+      TOGGLE_RESTAURANTS(state){
+        state.showRestaurants = !state.showRestaurants;
       }
     },
   });

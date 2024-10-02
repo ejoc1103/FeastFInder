@@ -1,27 +1,28 @@
 <template>
-  <div id="register" class="text-center">
-    <form v-on:submit.prevent="register">
+ 
+    <form v-on:submit.prevent="register" id="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
-      <div class="form-input-group">
+      <div class="inputs-area">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
+
+
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <div class="form-input-group">
+
+
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+
       </div>
-      <button type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }" v-on:click="changeBackground">Already have an account? Log
+      <button type="submit" id="create-account">Create Account</button>
+      <p><router-link v-bind:to="{ name: 'login' }" :style="{ color: 'white' }" v-on:click="changeBackground">Already have an account? Log
           in.</router-link></p>
     </form>
-  </div>
+
 </template>
 
 <script>
@@ -42,24 +43,24 @@ export default {
   },
   methods: {
     isPasswordValid() {
-      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; 
+      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
       return pattern.test(this.user.password);
     },
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
-      }else if (!this.isPasswordValid()) {
+      } else if (!this.isPasswordValid()) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number.';
       }
-      
+
       else {
         authService
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
-              this.$store.commit('UPDATE_BACKGROUND', '../../dinerBackground.jpg');
+              this.changeBackground();
               this.$router.push({
                 path: '/login',
                 query: { registration: 'success' },
@@ -88,25 +89,31 @@ export default {
 
 <style scoped>
 #register {
-  font-weight: bold;
+  display: grid;
+  justify-items: center;
   font-size: larger;
   background: #2e4053;
   color: white;
   border-radius: 10px;
+  width: 100%;
+  gap: 10px;
   padding: 3%;
   margin: 3%;
 }
 
-.form-input-group {
-  margin-bottom: 1rem;
+#create-account {
+  background-color: #009688;
+  font-size: larger;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
 }
 
-label {
-  margin-right: 0.5rem;
-}
-#register {
-  display: flex;
-  justify-content: center;
-  height: 100vh;
+.inputs-area {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
 }
 </style>

@@ -18,6 +18,7 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: Poppins;
 }
 
 #capstone-app {
@@ -31,10 +32,8 @@ body {
 }
 
 #nav {
-  padding: 0 3%;
-  margin: 0 3%;
   font-size: xx-large;
   background-color: #009688;
-  width: 100vw;
+  width: 100%;
 }
 </style>
