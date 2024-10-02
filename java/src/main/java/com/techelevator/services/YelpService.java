@@ -45,22 +45,7 @@ public class YelpService {
             JsonNode root = jsonNode.path("businesses");
 
             for(int i = 0; i < root.size(); i++){
-
-                String id = root.path(i).path("id").asText();
-                String name = root.path(i).path("name").asText();
-                String imageUrl = root.path(i).path("image_url").asText();
-                //Make a loop after display_address to build the string
-                String address = root.path(i).path("location").path("display_address").path(0).asText();
-                String category = root.path(i).path("categories").path(0).path("title").asText();
-                String openTime = root.path(i).path("business_hours").path(0).path("open").path(0).path("start").asText();
-                String closeTime = root.path(i).path("business_hours").path(0).path("open").path(0).path("end").asText();
-                String hasTakeout = root.path(i).path("transactions").path(0).asText();
-                String price = root.path(i).path("price").asText();
-                String rating = root.path(i).path("rating").asText();
-                String phoneNumber = root.path(i).path("display_phone").asText();
-
-                Eatery eatery = new Eatery(id, name, imageUrl, address, category, openTime, closeTime, hasTakeout, rating, phoneNumber, price);
-                eateryList.add(eatery);
+                eateryList.add(mapEatery(root,i));
             }
         } catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
@@ -68,6 +53,35 @@ public class YelpService {
         return eateryList;
 
     };
-
-
+    private Eatery mapEatery(JsonNode root, int i) {
+        String id = root.path(i).path("id").asText();
+                String name = root.path(i).path("name").asText();
+                String imageUrl = root.path(i).path("image_url").asText();
+                //Make a loop after display_address to build the string
+                String address =  buildAsset(root.path(i).path("location"));
+                JsonNode categories = root.path(i).path("categories");
+                String category = "";
+                for(JsonNode cat : categories) {
+                    category += cat.path("title").asText() + " ";
+                }
+                String openTime = "";
+                String closeTime = "";
+                for(JsonNode time : root.path(i).path("business_hours").path(0).path("open")) {
+                    openTime += time.path("start").asText() + " ";
+                    closeTime += time.path("end").asText() + " ";
+                }
+                String hasTakeout = buildAsset(root.path(i).path("transactions"));
+                String price = root.path(i).path("price").asText();
+                String rating = root.path(i).path("rating").asText();
+                String phoneNumber = root.path(i).path("display_phone").asText();
+                String isClosed = root.path(i).path("is_closed").asText();
+                return new Eatery(id, name, imageUrl, address, category, openTime, closeTime, hasTakeout, rating, phoneNumber, price, isClosed);
+    }
+    private String buildAsset(JsonNode assetArray) {
+        String asset = "";
+        for(JsonNode add : assetArray) {
+            asset += add.asText() + " ";
+        }
+        return asset.trim();
+    }
 }

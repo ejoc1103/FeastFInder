@@ -1,5 +1,5 @@
 <template>
- 
+  <div id="register-page">
     <form v-on:submit.prevent="register" id="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
@@ -8,7 +8,7 @@
       <div class="inputs-area">
         <label for="username">Email Address</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
-
+        
 
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
@@ -16,12 +16,13 @@
 
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-
+        
       </div>
       <button type="submit" id="create-account">Create Account</button>
       <p><router-link v-bind:to="{ name: 'login' }" :style="{ color: 'white' }" v-on:click="changeBackground">Already have an account? Log
-          in.</router-link></p>
-    </form>
+        in.</router-link></p>
+      </form>
+    </div>
 
 </template>
 
@@ -88,6 +89,9 @@ export default {
 </script>
 
 <style scoped>
+#register-page {
+  height: 100vh;
+}
 #register {
   display: grid;
   justify-items: center;

@@ -7,6 +7,11 @@ public class Eatery {
     private String address;
     private String category;
     private String openTime;
+    private String isClosed;
+
+    public String getIsClosed() {
+        return isClosed;
+    }
 
     public String getOpenTime() {
         return openTime;
@@ -34,7 +39,7 @@ public class Eatery {
 
     private String price;
 
-    public Eatery(String id, String name, String imageUrl, String address, String category, String openTime, String closeTime, String hasTakeout, String rating, String phoneNumber, String price) {
+    public Eatery(String id, String name, String imageUrl, String address, String category, String openTime, String closeTime, String hasTakeout, String rating, String phoneNumber, String price, String isClosed) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -46,6 +51,7 @@ public class Eatery {
         this.rating = rating;
         this.phoneNumber = phoneNumber;
         this.price = price;
+        this.isClosed = isClosed;
     }
 
     public String getId() {

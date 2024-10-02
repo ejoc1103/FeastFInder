@@ -38,6 +38,7 @@ export default {
       RestaurantService.getRestaurants(search).then((response) => {
         this.currentResponse = response;
         for(let i = this.start; i < this.end; i++) {
+          console.log(response.data[i]);
           this.restaurants.push(response.data[i]);
         }
       });
@@ -63,7 +64,7 @@ export default {
   display: grid;
   justify-items: center;
   align-content: start;
-  height: 100%;
+  height: 100vh;
 }
 
 .eatery-grid-container {
