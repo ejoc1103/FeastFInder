@@ -18,6 +18,8 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: Poppins;
+  height: 100%;
 }
 
 #capstone-app {
@@ -27,14 +29,12 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: 100%;
 }
 
 #nav {
-  padding: 0 3%;
-  margin: 0 3%;
   font-size: xx-large;
   background-color: #009688;
-  width: 100vw;
+  width: 100%;
 }
 </style>

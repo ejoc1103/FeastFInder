@@ -52,6 +52,7 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
+            this.$store.commit("UPDATE_BACKGROUND", "../../tableView.jpg");
             this.$router.push("/");
           }
         })
@@ -79,9 +80,9 @@ export default {
   background: #009688;
   color: #F5F5F5;
   border-radius: 10px;
+  width: 100%;
   padding: 5%;
   margin: 5%;
-  font-family: Poppins;
   text-align: center;
   ;
 }
@@ -103,6 +104,7 @@ export default {
   background-color: #F5F5F5;
   color: #009688;
   border-radius: 10px;
+  padding: 10px 0;
 }
 
 #sign-in {
