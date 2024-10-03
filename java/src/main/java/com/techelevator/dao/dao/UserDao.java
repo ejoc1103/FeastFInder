@@ -1,9 +1,9 @@
-package com.techelevator.dao;
+package com.techelevator.dao.dao;
+
+import java.util.List;
 
 import com.techelevator.model.RegisterUserDto;
 import com.techelevator.model.User;
-
-import java.util.List;
 
 public interface UserDao {
 

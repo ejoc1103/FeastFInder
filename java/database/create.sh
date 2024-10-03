@@ -7,6 +7,3 @@ createdb -U postgres $DATABASE &&
 psql -U postgres -d $DATABASE -f "$BASEDIR/schema.sql" &&
 psql -U postgres -d $DATABASE -f "$BASEDIR/data.sql" &&
 psql -U postgres -d $DATABASE -f "$BASEDIR/user.sql"
-
-yelp.api.key=p1esKqYoAZ8FskOPXp8arx29CSaHpNqw
-yelp.api.url=https://api.giphy.com/v1/gifs/search?api_key=

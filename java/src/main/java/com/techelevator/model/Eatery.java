@@ -1,89 +1,70 @@
 package com.techelevator.model;
 
+import java.sql.Date;
+
+import org.springframework.jca.cci.core.InteractionCallback;
+
 public class Eatery {
-    private String id;
-    private String name;
-    private String imageUrl;
-    private String address;
+    private int eatery_id;
+    private String eatery_name;
+    private String image_url;
+    private String eatery_address;
     private String category;
-    private String openTime;
-    private String isClosed;
-
-    public String getIsClosed() {
-        return isClosed;
-    }
-
-    public String getOpenTime() {
-        return openTime;
-    }
-
-    public void setOpenTime(String openTime) {
-        this.openTime = openTime;
-    }
-
-    public String getCloseTime() {
-        return closeTime;
-    }
-
-    public void setCloseTime(String closeTime) {
-        this.closeTime = closeTime;
-    }
-
-    private String closeTime;
-
-    private String hasTakeout;
-
-    private String rating;
-
-    private String phoneNumber;
-
+    private String website;
+    private Date open_time;
+    private Date close_time;
+    private boolean has_takeout;
+    private double rating;
+    private String phone;
     private String price;
+    private boolean isClosed;
 
-    public Eatery(String id, String name, String imageUrl, String address, String category, String openTime, String closeTime, String hasTakeout, String rating, String phoneNumber, String price, String isClosed) {
-        this.id = id;
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.address = address;
+    public Eatery(String category, String close_time, String eatery_address, String eatery_id, String eatery_name, String has_takeout, String image_url, String open_time, String phone, String price, String rating, String website, String isClosed) {
         this.category = category;
-        this.openTime = openTime;
-        this.closeTime = closeTime;
-        this.hasTakeout = hasTakeout;
-        this.rating = rating;
-        this.phoneNumber = phoneNumber;
+        this.close_time = Date.valueOf(close_time);
+        this.eatery_address = eatery_address;
+        this.eatery_id = Integer.parseInt(eatery_id);
+        this.eatery_name = eatery_name;
+        this.has_takeout = Boolean.parseBoolean(has_takeout);
+        this.image_url = image_url;
+        this.open_time = Date.valueOf(open_time);
+        this.phone = phone;
         this.price = price;
-        this.isClosed = isClosed;
+        this.rating = Double.parseDouble(rating);
+        this.website = website;
+        this.isClosed = Boolean.parseBoolean(isClosed);
     }
 
-    public String getId() {
-        return id;
+    public int getEatery_id() {
+        return eatery_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setEatery_id(int eatery_id) {
+        this.eatery_id = eatery_id;
     }
 
-    public String getName() {
-        return name;
+    public String getEatery_name() {
+        return eatery_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEatery_name(String eatery_name) {
+        this.eatery_name = eatery_name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEatery_address() {
+        return eatery_address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEatery_address(String eatery_address) {
+        this.eatery_address = eatery_address;
     }
 
     public String getCategory() {
@@ -94,28 +75,52 @@ public class Eatery {
         this.category = category;
     }
 
-    public String getHasTakeout() {
-        return hasTakeout;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setHasTakeout(String hasTakeout) {
-        this.hasTakeout = hasTakeout;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
-    public String getRating() {
+    public Date getOpen_time() {
+        return open_time;
+    }
+
+    public void setOpen_time(Date open_time) {
+        this.open_time = open_time;
+    }
+
+    public Date getClose_time() {
+        return close_time;
+    }
+
+    public void setClose_time(Date close_time) {
+        this.close_time = close_time;
+    }
+
+    public boolean isHas_takeout() {
+        return has_takeout;
+    }
+
+    public void setHas_takeout(boolean has_takeout) {
+        this.has_takeout = has_takeout;
+    }
+
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPrice() {
@@ -125,4 +130,5 @@ public class Eatery {
     public void setPrice(String price) {
         this.price = price;
     }
+
 }

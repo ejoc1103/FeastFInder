@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techelevator.dao.dao.EateryDao;
+import com.techelevator.dao.dao.VoteDao;
 
 @RestController
 @CrossOrigin
-public class EateryController {
+public class VoteController {
+
     @Autowired
-    private EateryDao eateryDao;
+    private VoteDao voteDao;
 }

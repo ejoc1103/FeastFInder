@@ -74,8 +74,9 @@ public class YelpService {
                 String price = root.path(i).path("price").asText();
                 String rating = root.path(i).path("rating").asText();
                 String phoneNumber = root.path(i).path("display_phone").asText();
+                String website = buildAsset(root.path(i).path("attributes"));
                 String isClosed = root.path(i).path("is_closed").asText();
-                return new Eatery(id, name, imageUrl, address, category, openTime, closeTime, hasTakeout, rating, phoneNumber, price, isClosed);
+                return new Eatery(category, closeTime, address, null, name, hasTakeout, imageUrl, openTime, phoneNumber, price, rating, website, isClosed);
     }
     private String buildAsset(JsonNode assetArray) {
         String asset = "";
