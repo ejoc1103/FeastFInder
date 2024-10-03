@@ -9,6 +9,6 @@ import com.techelevator.dao.dao.EateryDao;
 @RestController
 @CrossOrigin
 public class EateryController {
-    @Autowired
+    //@Autowired
     private EateryDao eateryDao;
 }
