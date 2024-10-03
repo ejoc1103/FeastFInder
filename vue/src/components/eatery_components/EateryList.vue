@@ -1,5 +1,6 @@
 <template>
     <div v-if="$store.state.showRestaurants" class="eatery-grid-container">
+      <h1>{{restaurants[0]}}</h1>
       <EateryCard :restaurants="restaurants" />
       <button v-on:click="nextPage">Next Card</button>
     </div>

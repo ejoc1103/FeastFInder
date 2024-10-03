@@ -4,7 +4,7 @@
         <div>
 
             <div class="groups" v-if="showOneGroup">
-                <div v-for="n in 8" v-bind:key="n"> </div>
+            <EateryList :restaurants="makeRestaurantArray"/>
                 <!-- this is where I am working on the group view -->
                 <button v-on:click="hideGroup(idToShow)" class="view-group">Show All Groups</button>
 
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import EateryList from '../components/eatery_components/EateryList.vue';
 
 export default {
 
@@ -34,7 +35,7 @@ export default {
                 { id: 3, name: 'Blah blah blha', showFull: false },
                 { id: 4, name: 'Dad, Dad, Dad', showFull: false },
             ],
-            restaurants: [{
+            restaurant: {
                 id: "c3fv6l74jJcoppmV43RrSw",
                 name: "The Poached Pear",
                 imageUrl: "https://s3-media1.fl.yelpcdn.com/bphoto/BzXy5EeF71nx54PBokFKRA/o.jpg",
@@ -47,9 +48,12 @@ export default {
                 rating: "4.6",
                 phoneNumber: "(732) 701-1700",
                 price: "$$$",
-            }],
+            },
             idToShow: null,
         }
+    },
+    components: {
+        EateryList,
     },
     //probably needs to be "created" on actual data
     computed: {
@@ -60,16 +64,25 @@ export default {
                 }
             }
             return false;
+        },
+        makeRestaurantArray(){
+            let restaurantArray = [];
+            for (let i = 0; i <8; i++) {
+                restaurantArray.push(this.restaurant);
+            }           
+            return restaurantArray;
         }
     },
     methods: {
         showGroup(id) {
             this.idToShow = id;
             this.groups[id].showFull = !this.groups[id].showFull;
+            this.$store.commit("TOGGLE_RESTAURANTS", true);
         },
         hideGroup(id) {
             this.idToShow = null;
             this.groups[id].showFull = !this.groups[id].showFull;
+            this.$store.commit("TOGGLE_RESTAURANTS", false);
         }
     }
 }
