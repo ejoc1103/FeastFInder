@@ -1,23 +1,23 @@
 <template>
     <div class="groups-container">
+
         <h1>Group View</h1>
-        <div>
 
-            <div class="groups" v-if="showOneGroup">
-            <EateryList :restaurants="makeRestaurantArray"/>
-                <!-- this is where I am working on the group view -->
-                <button v-on:click="hideGroup(idToShow)" class="view-group">Show All Groups</button>
 
-            </div>
-
-            <div class="groups" v-else>
-                <div v-for="group in groups" v-bind:key="group" class="group">
-                    <h1>{{ group.name }}</h1>
-                    <button v-on:click="showGroup(group.id)" class="view-group">View Group</button>
-                </div>
-            </div>
-
+        <div class="voting" v-if="showOneGroup">
+            <!-- this is where I am working on the group view -->
+            <EateryList :restaurants="makeRestaurantArray" />
+            <button v-on:click="hideGroup(idToShow)" class="view-group">Show All Groups</button>
         </div>
+
+        <div class="groups" v-else>
+            <div v-for="group in groups" v-bind:key="group" class="group">
+                <h1>{{ group.name }}</h1>
+                <button v-on:click="showGroup(group.id)" class="view-group">View Group</button>
+            </div>
+        </div>
+
+
     </div>
 </template>
 
@@ -50,6 +50,16 @@ export default {
                 price: "$$$",
             },
             idToShow: null,
+            colorScheme: [
+                "#FF69B4", // Bright Pink
+                "#FFFF66", // Neon Yellow
+                "#00FFFF", // Aqua Blue
+                "#E6E6FA", // Lavender
+                "#8A2BE2", // Bright Purple
+                "#7FFF00", // Electric Green
+                "#2F4F4F", // Dark Slate Gray (for text)
+                "#36454F"  // Charcoal (for text)
+            ]
         }
     },
     components: {
@@ -65,11 +75,11 @@ export default {
             }
             return false;
         },
-        makeRestaurantArray(){
+        makeRestaurantArray() {
             let restaurantArray = [];
-            for (let i = 0; i <8; i++) {
+            for (let i = 0; i < 8; i++) {
                 restaurantArray.push(this.restaurant);
-            }           
+            }
             return restaurantArray;
         }
     },
@@ -90,25 +100,23 @@ export default {
 
 <style>
 .groups-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
 }
 
 .groups {
     display: grid;
-    justify-items: center;
-    align-content: start;
     grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
     gap: 20px;
 }
 
 .group {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    align-items: center;
+    width: 100%;
     background-color: #FF6F61;
 }
 
@@ -120,5 +128,16 @@ export default {
     margin: 10px;
     border-radius: 5px;
     cursor: pointer;
+    width: 50%;
+}
+
+.voting {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 20px;
+    background-color: rgb(255, 105, 180, 0.5);
+    padding: 5%;
+    border-radius: 10%;
 }
 </style>

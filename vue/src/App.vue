@@ -8,7 +8,7 @@
       </span>
     </div>
     <div id="capstone-app" :style="{ backgroundImage: `url(${currentBackground})` }">
-      <div id="main-view">
+      <div :id="idSelector">
         <router-view />
       </div>
     </div>
@@ -32,6 +32,14 @@ export default {
         return "../../dinerBackground.jpg";
       }
     },
+    idSelector() {
+      let pathName = this.$route.name;
+      if (pathName === 'groups'){
+        return 'groups-main';
+      } else {
+        return 'home-main';
+      }
+    }
   },
 };
 </script>
@@ -47,7 +55,7 @@ body {
 
 #capstone-app {
   display: grid;
-  justify-content: center;
+  justify-items: center;
   align-items: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -56,18 +64,28 @@ body {
   width: 100vw;
 }
 
-#nav {
-  font-size: xx-large;
-  background-color: #009688;
-  width: 100%;
-  text-align: center;
+#groups-main {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  width: 90%;
+  height: 100%;
 }
 
-#main-view {
+#home-main {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
 }
+
+#nav {
+  font-size: xx-large;
+  background-color: #8A2BE2;
+  width: 100%;
+  text-align: center;
+}
+
 </style>

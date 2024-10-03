@@ -54,7 +54,7 @@ const routes = [
     name: 'groups',
     component: GroupsView,
     meta: {
-      // I don't think we want this to have auth since it's where other people vote
+      // Leave false for testing but will need to be true for production
       requiresAuth: true
     }
   }

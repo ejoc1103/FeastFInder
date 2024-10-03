@@ -2,18 +2,38 @@
   <div id="eatery-grid">
     <div v-for="restaurant in restaurants" v-bind:key="restaurant.id" id="card-view"
       :style="{ backgroundImage: `url(${restaurant.imageUrl})` }">
+
+
       <h5 :style="{ gridArea: 'name' }">{{ restaurant.name }}</h5>
+
+
       <p :style="{ gridArea: 'status' }">{{ restaurant.status ? "Open Now" : "Closed" }}</p>
-      <p :style="{ gridArea: 'cuisine' }">{{ restaurant.cuisine }}</p>
-      <p :style="{ gridArea: 'isOpen' }">{{ restaurant.isOpen }}</p>
-      <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime.slice(0, restaurant.openTime.indexOf(' ')) }}</p>
-      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime.slice(0, restaurant.closeTime.indexOf(' ')) }}</p>
-      <p :style="{ gridArea: 'address' }">{{ restaurant.address }}</p>
+
       <p :style="{ gridArea: 'phone' }">{{ restaurant.phone }}</p>
-      <div :style="{ gridArea: 'buttons' }">
-        <button >More Info</button>
+
+      <p :style="{ gridArea: 'cuisine' }">{{ restaurant.cuisine }}</p>
+
+
+      <p :style="{ gridArea: 'isOpen' }">{{ restaurant.isOpen }}</p>
+
+
+      <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime.slice(0, restaurant.openTime.indexOf(' ')) }}</p>
+
+
+      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime.slice(0, restaurant.closeTime.indexOf(' ')) }}</p>
+
+
+      <p :style="{ gridArea: 'address' }">{{ restaurant.address }}</p>
+
+      <h2 :style="{color: 'white'}">3 Votes</h2>
+
+
+      <div v-if="!isVoting" :style="{ gridArea: 'buttons' }">
+        <button>More Info</button>
         <button>Add to Group</button>
       </div>
+
+
     </div>
   </div>
 </template>
@@ -23,6 +43,16 @@ export default {
   props: [
     "restaurants",
   ],
+  computed: {
+    isVoting() {
+      let pathName = this.$route.name;
+      if (pathName === "groups") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 };
 </script>
 

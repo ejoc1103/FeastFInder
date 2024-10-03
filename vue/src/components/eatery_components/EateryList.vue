@@ -1,6 +1,5 @@
 <template>
     <div v-if="$store.state.showRestaurants" class="eatery-grid-container">
-      <h1>{{restaurants[0]}}</h1>
       <EateryCard :restaurants="restaurants" />
       <button v-on:click="nextPage">Next Card</button>
     </div>
@@ -13,12 +12,14 @@
   export default {
     data() {
       return {
-        restaurants: [],
+        // restaurants: [],
         currentResponse: [],
         start: 0,
         end: 8,
       };
     },
+    //Will need to remove this once we have the data
+    props: ['restaurants'],
     components: {
       EateryCard,
     },
@@ -28,7 +29,7 @@
     },
     methods: {
       findEatery() {
-        this.restaurants = [];
+        // this.restaurants = [];
         this.currentResponse = [];
         this.start = 0;
         this.end = 8;
@@ -43,14 +44,14 @@
         this.end += 8;
         this.updateRestaurants();
       },
-      updateRestaurants() {
-        this.restaurants = [];
-        for (let i = this.start; i < this.end; i++) {
-          if (this.currentResponse.data[i]) {
-            this.restaurants.push(this.currentResponse.data[i]);
-          }
-        }
-      },
+      // updateRestaurants() {
+      //   this.restaurants = [];
+      //   for (let i = this.start; i < this.end; i++) {
+      //     if (this.currentResponse.data[i]) {
+      //       this.restaurants.push(this.currentResponse.data[i]);
+      //     }
+      //   }
+      // },
     },
   };
   </script>
