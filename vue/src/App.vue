@@ -52,8 +52,8 @@ html, body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 100vh; /* Full viewport height */
-  width: 100vw; /* Full viewport width */
+  height: 100vh;
+  width: 100vw;
 }
 
 #nav {

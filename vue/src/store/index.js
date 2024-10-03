@@ -9,6 +9,7 @@ export function createStore(currentToken, currentUser) {
       currentBackground: '../../dinerBackground.jpg',
       currentSearch: '',
       showRestaurants: false,
+      category: '',
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -35,7 +36,10 @@ export function createStore(currentToken, currentUser) {
       },
       TOGGLE_RESTAURANTS(state, show){
         state.showRestaurants = show;
-      }
+      },
+      SET_CATEGORY(state, category) {
+        state.category = category;
+      },
     },
   });
   return store;

@@ -11,7 +11,7 @@
       <p :style="{ gridArea: 'address' }">{{ restaurant.address }}</p>
       <p :style="{ gridArea: 'phone' }">{{ restaurant.phone }}</p>
       <div :style="{ gridArea: 'buttons' }">
-        <button>View</button>
+        <button >More Info</button>
         <button>Add to Group</button>
       </div>
     </div>

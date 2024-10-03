@@ -6,7 +6,7 @@
         v-for="category in categories" 
         :key="category"
       >
-        {{ category }}
+        <button class="button-category" @click="findEatery(category.toString())">{{ category }}</button>
       </div>
     </div>
     <EateryFinderFormVue v-on:submit.prevent="findEatery" />
@@ -41,8 +41,11 @@ export default {
     EateryList,
   },
   methods: {
-    findEatery() {
+    findEatery(cat) {
       this.restaurants = [];
+      if(cat != '') {
+        this.$store.commit("SET_CATEGORY", cat);
+      }
       this.$store.commit("TOGGLE_RESTAURANTS", true);
     },
   },
@@ -69,6 +72,16 @@ export default {
   font-size: 1.2em;
   color: white;
   background-color: rgba(41, 41, 173, 0.8);
+  margin: 0;
+}
+
+.button-category {
+  font-size: 1em;
+  color: white;
+  background-color: rgba(41, 41, 173, 0);
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
   margin: 0;
 }
 </style>

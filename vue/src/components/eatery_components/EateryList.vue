@@ -23,6 +23,7 @@
     },
     watch: {
       "$store.state.currentSearch": "findEatery",
+      "$store.state.category": "findEatery",
     },
     methods: {
       findEatery() {
@@ -30,9 +31,7 @@
         this.currentResponse = [];
         this.start = 0;
         this.end = 8;
-        
-        let search = this.$store.state.currentSearch;
-  
+        let search = `${this.$store.state.currentSearch}&categories=${this.$store.state.category}`;
         RestaurantService.getRestaurants(search).then((response) => {
           this.currentResponse = response;
           this.updateRestaurants();

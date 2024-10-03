@@ -1,7 +1,7 @@
 <template>
     <div class="eatery-finder-form">
         <h3>Restaurant Finder</h3>
-        <form @submit.prevent="setSearchTerm" id="form"> <!-- Add .prevent here to prevent page reload -->
+        <form @submit.prevent="setSearchTerm" id="form">
             <div class="form-input-group">
                 <label for="search">Zipcode/City:</label>
                 <input type="text" v-model="search" />
@@ -15,12 +15,11 @@
 export default {
     data() {
         return {
-            search: "",  // The search input model
+            search: "", 
         };
     },
     methods: {
         setSearchTerm() {
-            // Commit the search term to the Vuex store
             this.$store.commit('SET_SEARCH_TERM', this.search);
         }
     },
