@@ -32,7 +32,7 @@ export default {
     flex-direction: row;
     width: 50%;
     justify-content: center;
-    background-color: red;
+    background-color: #fa0626;
 }
 .eatery-finder-form > * {
     margin: 10px;

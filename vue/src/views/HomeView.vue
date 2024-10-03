@@ -57,31 +57,31 @@ export default {
   display: grid;
   justify-items: center;
   align-content: start;
+  padding: 10px;
   height: 100vh;
 }
 .category-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: 5px;
   justify-items: center;
-  align-content: start;
-  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .category {
   font-size: 1.2em;
   color: white;
-  background-color: rgba(41, 41, 173, 0.8);
+  background-color: #06fada;
   margin: 0;
 }
 
 .button-category {
   font-size: 1em;
-  color: white;
+  color: #424242;
   background-color: rgba(41, 41, 173, 0);
-  border: none;
+  border: 2px solid white;
   border-radius: 5px;
-  padding: 5px;
+  width: 100%;
   margin: 0;
 }
 </style>

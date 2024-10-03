@@ -42,7 +42,6 @@ html, body {
   padding: 0;
   font-family: Poppins;
   height: 100%;
-  overflow: hidden;
 }
 
 #capstone-app {
