@@ -10,6 +10,6 @@ import com.techelevator.dao.dao.VoteDao;
 @CrossOrigin
 public class VoteController {
 
-    @Autowired
+   // @Autowired
     private VoteDao voteDao;
 }
