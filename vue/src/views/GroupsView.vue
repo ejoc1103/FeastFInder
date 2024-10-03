@@ -4,7 +4,10 @@
         <div>
 
             <div class="groups" v-if="showOneGroup">
-                <h1>{{ groups[idToShow] }}</h1>
+                <div v-for="n in 8" v-bind:key="n"> </div>
+                <!-- this is where I am working on the group view -->
+                <button v-on:click="hideGroup(idToShow)" class="view-group">Show All Groups</button>
+
             </div>
 
             <div class="groups" v-else>
@@ -31,7 +34,6 @@ export default {
                 { id: 3, name: 'Blah blah blha', showFull: false },
                 { id: 4, name: 'Dad, Dad, Dad', showFull: false },
             ],
-
             restaurants: [{
                 id: "c3fv6l74jJcoppmV43RrSw",
                 name: "The Poached Pear",
@@ -49,6 +51,7 @@ export default {
             idToShow: null,
         }
     },
+    //probably needs to be "created" on actual data
     computed: {
         showOneGroup() {
             for (let i = 0; i < this.groups.length; i++) {
@@ -62,6 +65,10 @@ export default {
     methods: {
         showGroup(id) {
             this.idToShow = id;
+            this.groups[id].showFull = !this.groups[id].showFull;
+        },
+        hideGroup(id) {
+            this.idToShow = null;
             this.groups[id].showFull = !this.groups[id].showFull;
         }
     }
