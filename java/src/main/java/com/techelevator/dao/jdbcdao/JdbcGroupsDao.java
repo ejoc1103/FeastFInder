@@ -25,15 +25,33 @@ public class JdbcGroupsDao implements GroupsDao {
     }
 
     @Override
-    public List<Groups> getGroups(int id) {
-        String sql = "SELECT * FROM groups;";
+    public Groups getGroup(int id) {
+        String sql = "SELECT * FROM groups WHERE group_id = ?;";
         try {
             SqlRowSet results = template.queryForRowSet(sql, id);
+            if(results.next()) {
+                return mapRowToGroups(results);
+            }
+
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+        return null;
+    }
+    @Override
+    public List<Groups> getGroups (String name) {
+        String sql = "SELECT * FROM groups JOIN user_group ON groups.group_id = user_group.group_id " +
+                "JOIN users ON user_group.user_id = users.user_id " +
+                "WHERE users.username = ?;";
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, name);
             List<Groups> groups = new ArrayList<>();
             while(results.next()) {
-                groups.add(mapRowToGroups(results));
+                groups.add( mapRowToGroups(results));
+
             }
-            return groups;
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
