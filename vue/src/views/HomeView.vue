@@ -83,5 +83,6 @@ export default {
   border-radius: 5px;
   width: 100%;
   margin: 0;
+  cursor: pointer;
 }
 </style>

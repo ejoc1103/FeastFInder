@@ -2,9 +2,9 @@
   <div>
     <div id="nav">
       &nbsp;|&nbsp;<router-link v-bind:to="{ name: 'home' }" :style="{ color: 'white' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'group' }" :style="{ color: 'white' }">Group</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'groups' }" :style="{ color: 'white' }">Groups</router-link>&nbsp;|&nbsp;
       <span v-if="$store.state.token != ''">
-        <router-link v-bind:to="{ name: 'logout' }" :style="{ color: 'white' }">Logout</router-link> | 
+        <router-link v-bind:to="{ name: 'logout' }" :style="{ color: 'white' }">Logout</router-link> |
       </span>
     </div>
     <div id="capstone-app" :style="{ backgroundImage: `url(${currentBackground})` }">
@@ -26,8 +26,8 @@ export default {
         return "../../loginBackground.jpg";
       } else if (pathName === 'register') {
         return "../../registerBackground.jpg";
-      } else if (pathName === 'group') {
-        return "../../groupBackground.jpg";
+      } else if (pathName === 'groups') {
+        return "../../groupsBackground.jpg";
       } else {
         return "../../dinerBackground.jpg";
       }
@@ -37,7 +37,8 @@ export default {
 </script>
 
 <style>
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: Poppins;
