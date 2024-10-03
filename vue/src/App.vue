@@ -2,25 +2,23 @@
   <div>
     <div id="nav">
       &nbsp;|&nbsp;<router-link v-bind:to="{ name: 'home' }" :style="{ color: 'white' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''"
-        :style="{ color: 'white' }">Logout</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'group' }" :style="{ color: 'white' }">Group</router-link>&nbsp;|&nbsp;
+      <span v-if="$store.state.token != ''">
+        <router-link v-bind:to="{ name: 'logout' }" :style="{ color: 'white' }">Logout</router-link> | 
+      </span>
     </div>
     <div id="capstone-app" :style="{ backgroundImage: `url(${currentBackground})` }">
-      <div id="#main-view">
+      <div id="main-view">
         <router-view />
-        {{ $route.name }}
       </div>
-
     </div>
   </div>
 </template>
+
 <script>
 export default {
-  //not sure if computed is the best way to do this for speed purposes but it works for now
   computed: {
     currentBackground() {
-      console.log("dad");
       let pathName = this.$route.name;
       if (pathName === 'home') {
         return "../../homeBackground.jpg";
@@ -36,31 +34,40 @@ export default {
     },
   },
 };
-
 </script>
 
-
 <style>
-body {
+html, body {
   margin: 0;
   padding: 0;
   font-family: Poppins;
   height: 100%;
+  overflow: hidden;
 }
 
 #capstone-app {
   display: grid;
   justify-content: center;
   align-items: center;
-  background-repeat: repeat;
-  background-size: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
-  height: 100%;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
 }
 
 #nav {
   font-size: xx-large;
   background-color: #009688;
   width: 100%;
+  text-align: center;
+}
+
+#main-view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 </style>

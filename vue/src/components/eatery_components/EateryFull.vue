@@ -1,1 +1,0 @@
-//entire eatery information page

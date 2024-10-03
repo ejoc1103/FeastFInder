@@ -1,64 +1,54 @@
 <template>
   <div class="home">
-    <EateryFinderFormVue v-on:submit.prevent="findEatery" />
-    <div v-if="$store.state.showRestaurants" class="eatery-grid-container">
-      <EateryCard :restaurants="restaurants" />
-      <button v-on:click="nextPage">Next Card</button>
+    <div class="category-container">
+      <div 
+        class="category" 
+        v-for="category in categories" 
+        :key="category"
+      >
+        {{ category }}
+      </div>
     </div>
+    <EateryFinderFormVue v-on:submit.prevent="findEatery" />
+    <EateryList :restaurants="restaurants" />
   </div>
 </template>
 
 <script>
 import EateryFinderFormVue from "../components/eatery_components/EateryFinderForm.vue";
-import EateryCard from "../components/eatery_components/EateryCard.vue";
-import RestaurantService from "../services/RestaurantService";
-
+import EateryList from "../components/eatery_components/EateryList.vue";
 
 export default {
   data() {
     return {
       restaurants: [],
-      currentResponse: [],
-      isLoading: false,
-      start: 0,
-      end: 8,
+      categories: [
+        "Restaurants",
+        "Bars",
+        "Coffee & Tea",
+        "Bakeries",
+        "Pizza",
+        "Sushi Bars",
+        "Vegan",
+        "Ice Cream & Frozen Yogurt",
+        "Burgers",
+        "Seafood",
+      ],
     };
   },
   components: {
     EateryFinderFormVue,
-    EateryCard,
+    EateryList,
   },
   methods: {
     findEatery() {
       this.restaurants = [];
-      this.currentResponse = [];
-      this.start = 0;
-      this.end = 8;
-      let search = this.$store.state.currentSearch;
-      RestaurantService.getRestaurants(search).then((response) => {
-        this.currentResponse = response;
-        for(let i = this.start; i < this.end; i++) {
-          console.log(response.data[i]);
-          this.restaurants.push(response.data[i]);
-        }
-      });
       this.$store.commit("TOGGLE_RESTAURANTS", true);
     },
-    nextPage(){
-      console.log(this.currentResponse.data.length);
-      this.start += 8;
-      this.end += 8;
-      this.restaurants = [];
-      for(let i = this.start; i < this.end; i++) {
-          this.restaurants.push(this.currentResponse.data[i]);
-        }
-    },
-    }
-  }
-
-
-
+  },
+};
 </script>
+
 <style scoped>
 .home {
   display: grid;
@@ -66,11 +56,19 @@ export default {
   align-content: start;
   height: 100vh;
 }
-
-.eatery-grid-container {
+.category-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
   justify-items: center;
-  width: 95%;
+  align-content: start;
+  margin-top: 20px;
+}
+
+.category {
+  font-size: 1.2em;
+  color: white;
+  background-color: rgba(41, 41, 173, 0.8);
+  margin: 0;
 }
 </style>
