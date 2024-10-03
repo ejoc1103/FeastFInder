@@ -6,7 +6,7 @@ import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
-import GroupView from '../views/GroupView.vue';
+import GroupsView from '../views/GroupsView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -50,12 +50,12 @@ const routes = [
     }
   },
   {
-    path: '/group',
-    name: 'group',
-    component: GroupView,
+    path: '/groups',
+    name: 'groups',
+    component: GroupsView,
     meta: {
       // I don't think we want this to have auth since it's where other people vote
-      requiresAuth: false
+      requiresAuth: true
     }
   }
 ];
