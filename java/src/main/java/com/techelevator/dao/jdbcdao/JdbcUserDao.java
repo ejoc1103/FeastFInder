@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ import com.techelevator.model.RegisterUserDto;
 import com.techelevator.model.User;
 
 @Component
+@PreAuthorize("isAuthenticated()")
 public class JdbcUserDao implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;

@@ -25,7 +25,6 @@ public class YelpService {
     private String apiUrl;
 
      public List<Eatery> getEateries(String searchString){
-
         String url = this.apiUrl + "?location=" + searchString + "&limit=" + this.limit;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + this.apiKey);
@@ -33,13 +32,14 @@ public class YelpService {
         HttpEntity<String> httpEntity = new HttpEntity<>("", headers);
         RestTemplate restTemplate = new RestTemplate();
 
-        // These two are new! We'll see how they work.
+        return buildEateryList(restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class).getBody());
+    };
+    
+    private List<Eatery> buildEateryList(String jsonResponseBody) {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode;
 
         List <Eatery> eateryList = new ArrayList<>();
-
-        String jsonResponseBody = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class).getBody();
         try {
             jsonNode = objectMapper.readTree(jsonResponseBody);
             JsonNode root = jsonNode.path("businesses");
@@ -51,8 +51,8 @@ public class YelpService {
             throw new RuntimeException(ex);
         }
         return eateryList;
+    }
 
-    };
     private Eatery mapEatery(JsonNode root, int i) {
         String id = root.path(i).path("id").asText();
                 String name = root.path(i).path("name").asText();
