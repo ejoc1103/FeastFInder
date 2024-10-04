@@ -1,9 +1,13 @@
 <template>
     <div class="groups-container">
         <div class="group-banner">
-            <h1>My Groups</h1>
+            <h1 v-if="!showGroupForm">My Groups</h1>
+            <h1 v-else>Create New Group</h1>
         </div>
-
+        <create-group-form v-if="showGroupForm"/>
+        <button v-if="idToShow !== null" v-on:click="showGroup(idToShow)" class="show-all-groups">See All
+            Groups</button>
+        <button v-if="!showGroupForm" v-on:click="showGroupForm = !showGroupForm">Create a New Group</button>
         <div v-if="showOneGroup" class="voting">
             <!-- this is where I am working on the group view -->
             <EateryList :restaurants="makeRestaurantArray" />
@@ -14,7 +18,6 @@
             <div v-for="group in groups" v-bind:key="group" class="group">
                 <h1>{{ group.name }}</h1>
                 <button v-if="idToShow === null" v-on:click="showGroup(group.id)" class="view-group">View Group</button>
-                <button v-else v-on:click="showGroup(group.id)" class="show-all-groups">See All Groups</button>
             </div>
         </div>
 
@@ -23,7 +26,7 @@
 
 <script>
 import EateryList from '../components/eatery_components/EateryList.vue';
-
+import CreateGroupForm from '../components/group_components/CreateGroupForm.vue';
 export default {
 
     data() {
@@ -50,6 +53,7 @@ export default {
                 price: "$$$",
             },
             idToShow: null,
+            showGroupForm: false,
             colorScheme: [
                 "#FF69B4", // Bright Pink
                 "#00FFFF", // Aqua Blue
@@ -61,6 +65,7 @@ export default {
     },
     components: {
         EateryList,
+        CreateGroupForm
     },
     //probably needs to be "created" on actual data
     computed: {
@@ -134,8 +139,10 @@ export default {
     font-size: 1.2em;
     background-color: #E6E6FA;
     border-radius: 30%;
-    border: 10px solid #7FFF00;
+    border-image: url('../../public/borderImage.png') 30 round;
+    border: 10px solid;
 }
+
 .group-banner h1 {
     margin: 20px;
 }
@@ -167,6 +174,5 @@ export default {
     background-color: rgb(255, 105, 180, 0.5);
     padding: 5%;
     border-radius: 10%;
-    overflow-x: hidden;
 }
 </style>

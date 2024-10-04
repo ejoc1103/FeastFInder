@@ -22,7 +22,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
