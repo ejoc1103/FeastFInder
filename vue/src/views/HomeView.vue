@@ -1,15 +1,11 @@
 <template>
   <div class="home">
     <div class="category-container">
-      <div 
-        class="category" 
-        v-for="category in categories" 
-        :key="category"
-      >
-        <button class="button-category" @click="findEatery(category.toString())">{{ category }}</button>
+      <div class="category" v-for="category in categories" :key="category">
+        <button class="button-category" @click="setCategory(category)">{{ category }}</button>
       </div>
     </div>
-    <EateryFinderFormVue v-on:submit.prevent="findEatery" />
+    <EateryFinderFormVue />
     <EateryList :restaurants="restaurants" />
   </div>
 </template>
@@ -17,7 +13,6 @@
 <script>
 import EateryFinderFormVue from "../components/eatery_components/EateryFinderForm.vue";
 import EateryList from "../components/eatery_components/EateryList.vue";
-
 export default {
   data() {
     return {
@@ -41,14 +36,23 @@ export default {
     EateryList,
   },
   methods: {
-    findEatery(cat) {
-      this.restaurants = [];
-      if(cat != '') {
-        this.$store.commit("SET_CATEGORY", cat);
-      }
-      this.$store.commit("TOGGLE_RESTAURANTS", true);
+    setCategory(category) {
+      this.$store.commit("SET_CATEGORY", category);
     },
   },
+  created() {
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      Math.floor(coords.latitude),
+        Math.floor(coords.longitude),
+        this.$store.commit("SET_LOCATION", {
+          latitude: Math.floor(coords.latitude),
+          longitude: Math.floor(coords.longitude),
+        });
+    }
+    );
+
+  }
+
 };
 </script>
 
@@ -60,6 +64,7 @@ export default {
   padding: 10px;
   max-height: 92vh;
 }
+
 .category-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

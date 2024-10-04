@@ -10,7 +10,7 @@
         <button v-if="!showGroupForm" v-on:click="showGroupForm = !showGroupForm">Create a New Group</button>
         <div v-if="showOneGroup" class="voting">
             <!-- this is where I am working on the group view -->
-            <!-- <EateryList :restaurants="makeRestaurantArray" /> -->
+            <EateryList :restaurants="makeRestaurantArray" />
             <button v-on:click="hideGroup(idToShow)" class="view-group">Show All Groups</button>
         </div>
 
