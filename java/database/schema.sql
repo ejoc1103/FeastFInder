@@ -11,10 +11,6 @@ DROP TABLE IF EXISTS groups;
 CREATE TABLE users (
 	user_id SERIAL,
 	username varchar(50) NOT NULL UNIQUE,
-<<<<<<< HEAD
-=======
-
->>>>>>> 2001d4244fca602811bb39b9eea2476767434010
 	password_hash varchar(200) NOT NULL,
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
