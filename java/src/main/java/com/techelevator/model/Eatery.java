@@ -1,9 +1,5 @@
 package com.techelevator.model;
 
-import java.sql.Date;
-
-import org.springframework.jca.cci.core.InteractionCallback;
-
 public class Eatery {
     private int eatery_id;
     private String eatery_name;
@@ -11,8 +7,8 @@ public class Eatery {
     private String eatery_address;
     private String category;
     private String website;
-    private Date open_time;
-    private Date close_time;
+    private String open_time;
+    private String close_time;
     private boolean has_takeout;
     private double rating;
     private String phone;
@@ -21,18 +17,22 @@ public class Eatery {
 
     public Eatery(String category, String close_time, String eatery_address, String eatery_id, String eatery_name, String has_takeout, String image_url, String open_time, String phone, String price, String rating, String website, String isClosed) {
         this.category = category;
-        this.close_time = Date.valueOf(close_time);
+        this.close_time = close_time;
         this.eatery_address = eatery_address;
-        this.eatery_id = Integer.parseInt(eatery_id);
+        if(eatery_id != null)
+            this.eatery_id = Integer.parseInt(eatery_id);
         this.eatery_name = eatery_name;
-        this.has_takeout = Boolean.parseBoolean(has_takeout);
+        if(has_takeout != null)
+            this.has_takeout = Boolean.parseBoolean(has_takeout);
         this.image_url = image_url;
-        this.open_time = Date.valueOf(open_time);
+        this.open_time = open_time;
         this.phone = phone;
         this.price = price;
-        this.rating = Double.parseDouble(rating);
+        if(rating != null)
+            this.rating = Double.parseDouble(rating);
         this.website = website;
-        this.isClosed = Boolean.parseBoolean(isClosed);
+        if(isClosed != null)
+            this.isClosed = Boolean.parseBoolean(isClosed);
     }
 
     public int getEatery_id() {
@@ -83,19 +83,19 @@ public class Eatery {
         this.website = website;
     }
 
-    public Date getOpen_time() {
+    public String getOpen_time() {
         return open_time;
     }
 
-    public void setOpen_time(Date open_time) {
+    public void setOpen_time(String open_time) {
         this.open_time = open_time;
     }
 
-    public Date getClose_time() {
+    public String getClose_time() {
         return close_time;
     }
 
-    public void setClose_time(Date close_time) {
+    public void setClose_time(String close_time) {
         this.close_time = close_time;
     }
 
@@ -129,6 +129,14 @@ public class Eatery {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public boolean isIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(boolean isClosed) {
+        this.isClosed = isClosed;
     }
 
 }

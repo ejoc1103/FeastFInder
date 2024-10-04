@@ -12,7 +12,7 @@ public class Groups {
     public void setGroup_id(int group_id) {
         this.group_id = group_id;
     }
-
+    
     public String getGroup_name() {
         return group_name;
     }
