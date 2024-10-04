@@ -69,7 +69,8 @@ export default {
             }
           })
           .catch((error) => {
-            const response = error.response;
+            console.log(error.message)
+            const response = error.message;
             this.registrationErrors = true;
             if (response.status === 400) {
               this.registrationErrorMsg = 'Bad Request: Validation Errors';

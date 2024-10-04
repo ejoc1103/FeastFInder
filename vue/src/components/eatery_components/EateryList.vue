@@ -8,8 +8,11 @@
   <script>
   import EateryCard from "./EateryCard.vue";
   import RestaurantService from "../../services/RestaurantService";
-  
+  //remove props once we have real data
   export default {
+    props: [
+      "restaurants",
+    ],
     data() {
       return {
         // restaurants: [],
@@ -18,8 +21,6 @@
         end: 8,
       };
     },
-    //Will need to remove this once we have the data
-    props: ['restaurants'],
     components: {
       EateryCard,
     },
@@ -61,7 +62,7 @@
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
-    width: 95%;
+    max-width: 95%;
   }
   </style>
   

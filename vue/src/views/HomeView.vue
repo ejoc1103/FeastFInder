@@ -56,9 +56,9 @@ export default {
 .home {
   display: grid;
   justify-items: center;
-  align-content: start;
+  align-items: start;
   padding: 10px;
-  height: 100vh;
+  max-height: 92vh;
 }
 .category-container {
   display: grid;
@@ -71,7 +71,7 @@ export default {
 .category {
   font-size: 1.2em;
   color: white;
-  background-color: #06fada;
+  background-color: #00FFFF;
   margin: 0;
 }
 

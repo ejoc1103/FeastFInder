@@ -17,15 +17,16 @@
       <p :style="{ gridArea: 'isOpen' }">{{ restaurant.isOpen }}</p>
 
 
-      <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime.slice(0, restaurant.openTime.indexOf(' ')) }}</p>
+      <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime.slice(0, this.restaurants[0].openTime.indexOf(' '))
+        }}</p>
 
 
-      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime.slice(0, restaurant.closeTime.indexOf(' ')) }}</p>
+      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime.slice(0, this.restaurants[0].openTime.indexOf(' '))
+        }}</p>
 
 
       <p :style="{ gridArea: 'address' }">{{ restaurant.address }}</p>
 
-      <h2 :style="{color: 'white'}">3 Votes</h2>
 
 
       <div v-if="!isVoting" :style="{ gridArea: 'buttons' }">
@@ -33,6 +34,7 @@
         <button>Add to Group</button>
       </div>
 
+      <h2 v-else class="votes">3 Votes</h2>
 
     </div>
   </div>
@@ -51,6 +53,17 @@ export default {
       } else {
         return false;
       }
+    },
+    getTime(time) {
+      let string = time.slice(0, this.restaurants[0].openTime.indexOf(' '));
+      if (string > '1200') {
+        string = string.slice(0, 2) - 12 + ':' + string.slice(2);
+        string += ' PM';
+      } else {
+        string += ' AM';
+      }
+      console.log(string);
+      return string;
     }
   }
 };
@@ -71,13 +84,10 @@ export default {
   align-items: start;
   text-align: center;
   border-radius: 10px;
-  border: 5px solid #FF6F61;
-  gap: 0 5px;
+  border: 5px solid #7FFF00;
   padding: 5px;
   margin: 5px;
-  max-height: 250px;
   background-size: cover;
-  width: 90%;
 }
 
 #eatery-grid {
@@ -85,29 +95,32 @@ export default {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
   justify-items: center;
-  align-items: stretch;
-}
-
-img {
-  max-width: 80%;
-  max-height: 80%;
 }
 
 h5 {
-  font-size: 1.6em;
-  color: white;
-  background-color: rgba(255, 111, 97, 0.75);
+  font-size: 1.2em;
+  background-color: rgb(138, 43, 226, 0.5);
+  color: #00FFFF;
   border-radius: 5px;
   padding: 5px;
   margin: 0;
 }
 
 p {
-  font-size: 1.2em;
-  color: white;
-  background-color: rgba(255, 111, 97, 0.5);
+  font-size: 1em;
+  background-color: rgb(138, 43, 226, 0.5);
+  color: #00FFFF;
   border-radius: 2px;
   padding: 2px;
+  margin: 0;
+}
+
+.votes {
+  font-size: 1em;
+  background-color: rgb(138, 43, 226, 0.5);
+  color: #00FFFF;
+  border-radius: 5px;
+  padding: 5px;
   margin: 0;
 }
 </style>

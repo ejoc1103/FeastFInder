@@ -1,10 +1,10 @@
 <template>
     <div class="groups-container">
+        <div class="group-banner">
+            <h1>My Groups</h1>
+        </div>
 
-        <h1>Group View</h1>
-
-
-        <div class="voting" v-if="showOneGroup">
+        <div v-if="showOneGroup" class="voting">
             <!-- this is where I am working on the group view -->
             <EateryList :restaurants="makeRestaurantArray" />
             <button v-on:click="hideGroup(idToShow)" class="view-group">Show All Groups</button>
@@ -13,10 +13,10 @@
         <div class="groups" v-else>
             <div v-for="group in groups" v-bind:key="group" class="group">
                 <h1>{{ group.name }}</h1>
-                <button v-on:click="showGroup(group.id)" class="view-group">View Group</button>
+                <button v-if="idToShow === null" v-on:click="showGroup(group.id)" class="view-group">View Group</button>
+                <button v-else v-on:click="showGroup(group.id)" class="show-all-groups">See All Groups</button>
             </div>
         </div>
-
 
     </div>
 </template>
@@ -52,12 +52,9 @@ export default {
             idToShow: null,
             colorScheme: [
                 "#FF69B4", // Bright Pink
-                "#FFFF66", // Neon Yellow
                 "#00FFFF", // Aqua Blue
                 "#E6E6FA", // Lavender
                 "#8A2BE2", // Bright Purple
-                "#7FFF00", // Electric Green
-                "#2F4F4F", // Dark Slate Gray (for text)
                 "#36454F"  // Charcoal (for text)
             ]
         }
@@ -77,7 +74,7 @@ export default {
         },
         makeRestaurantArray() {
             let restaurantArray = [];
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 4; i++) {
                 restaurantArray.push(this.restaurant);
             }
             return restaurantArray;
@@ -100,15 +97,19 @@ export default {
 
 <style>
 .groups-container {
+    color: #E6E6FA;
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
+    gap: 40px;
+    max-height: 92vh;
+    padding-top: 2vh;
 }
 
 .groups {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     gap: 20px;
 }
 
@@ -116,19 +117,46 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    background-color: #FF6F61;
+    background-color: #00FFFF;
+    color: #36454F;
+    width: 25vw;
+    padding: 5px;
+    border-radius: 50px;
+}
+
+.group h1 {
+    color: #8A2BE2;
+    font-size: 1.4em;
+}
+
+.group-banner {
+    color: #8A2BE2;
+    font-size: 1.2em;
+    background-color: #E6E6FA;
+    border-radius: 30%;
+    border: 10px solid #7FFF00;
+}
+.group-banner h1 {
+    margin: 20px;
 }
 
 .view-group {
-    background-color: lightblue;
-    color: white;
     border: none;
     padding: 10px;
-    margin: 10px;
     border-radius: 5px;
     cursor: pointer;
     width: 50%;
+    background-color: #8A2BE2;
+    color: #E6E6FA;
+}
+
+.show-all-groups {
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #FF69B4;
+    color: #E6E6FA;
 }
 
 .voting {
@@ -139,5 +167,6 @@ export default {
     background-color: rgb(255, 105, 180, 0.5);
     padding: 5%;
     border-radius: 10%;
+    overflow-x: hidden;
 }
 </style>
