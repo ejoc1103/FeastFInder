@@ -1,10 +1,9 @@
 <template>
   <div id="eatery-grid">
-    <div v-for="restaurant in restaurants" v-bind:key="restaurant.id" id="card-view"
-      :style="{ backgroundImage: `url(${restaurant.imageUrl})` }">
+    <div v-for="restaurant in restaurants" v-bind:key="restaurant.eatery_id" id="card-view"
+      :style="{ backgroundImage: `url(${restaurant.image_url})` }">
 
-
-      <h5 :style="{ gridArea: 'name' }">{{ restaurant.name }}</h5>
+      <h5 :style="{ gridArea: 'name' }">{{ restaurant.eatery_name }}</h5>
 
 
       <p :style="{ gridArea: 'status' }">{{ restaurant.status ? "Open Now" : "Closed" }}</p>
@@ -17,15 +16,15 @@
       <p :style="{ gridArea: 'isOpen' }">{{ restaurant.isOpen }}</p>
 
 
-      <!-- <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime.slice(0, restaurant.openTime.indexOf(' '))
+      <p :style="{ gridArea: 'openTime' }">{{ restaurant.open_time.slice(0, restaurant.open_time.indexOf(' '))
         }}</p>
 
 
-      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime.slice(0, restaurant.closeTime.indexOf(' '))
-        }}</p> -->
+      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.close_time.slice(0, restaurant.close_time.indexOf(' '))
+        }}</p>
 
 
-      <p :style="{ gridArea: 'address' }">{{ restaurant.address }}</p>
+      <p :style="{ gridArea: 'address' }">{{ restaurant.eatery_address }}</p>
 
 
 
@@ -47,6 +46,7 @@ export default {
   ],
   computed: {
     isVoting() {
+      console.log(this.$route.name);
       let pathName = this.$route.name;
       if (pathName === "groups") {
         return true;
@@ -71,17 +71,10 @@ export default {
 
 <style>
 #card-view {
-  display: grid;
-  grid-template-areas:
-    "name name name"
-    "img cuisine status"
-    "img phone phone"
-    "isOpen openTime closeTime"
-    "address address address"
-    "buttons buttons buttons";
-  justify-items: center;
-  align-content: center;
-  align-items: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   text-align: center;
   border-radius: 10px;
   border: 5px solid #7FFF00;

@@ -3,6 +3,8 @@
         <form id="create-group-form">
             <label for="group-name">Group Name</label>
             <input type="text" id="group-name" name="groupName">
+            <label for="group-description"></label>
+            <input type="text" id="group-description" name = "groupDescription">
             <button type="submit">Create This Group</button>
         </form>
         <button v-if="showGroupForm" v-on:click="hideGroup">Hide Create Form</button>

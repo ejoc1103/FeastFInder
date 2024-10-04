@@ -10,6 +10,8 @@ export function createStore(currentToken, currentUser) {
       currentSearch: '',
       showRestaurants: false,
       category: '',
+      longitude: '',
+      latitude: '',
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -40,6 +42,10 @@ export function createStore(currentToken, currentUser) {
       SET_CATEGORY(state, category) {
         state.category = category;
       },
+      SET_LOCATION(state, location) {
+        state.longitude = location.longitude;
+        state.latitude = location.latitude;
+      }
     },
   });
   return store;

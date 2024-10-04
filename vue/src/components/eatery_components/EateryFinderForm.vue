@@ -1,29 +1,30 @@
 <template>
-    <div class="eatery-finder-form">
-        <h3>Restaurant Finder</h3>
-        <form @submit.prevent="setSearchTerm" id="form">
+    <form id="eater-finder-form" v-on:submit.prevent="setSearch">
+        <div class="form">
+            <h3>Restaurant Finder</h3>
             <div class="form-input-group">
                 <label for="search">Zipcode/City:</label>
                 <input type="text" v-model="search" />
             </div>
             <button type="submit">Find Eatery</button>
-        </form>
-    </div>
+        </div>
+    </form>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            search: "", 
+            search: "",
         };
     },
     methods: {
-        setSearchTerm() {
+        setSearch() {
             this.$store.commit('SET_SEARCH_TERM', this.search);
-        }
+        },
     },
 };
+
 </script>
 
 <style scoped>
@@ -34,13 +35,16 @@ export default {
     justify-content: center;
     background-color: #fa0626;
 }
-.eatery-finder-form > * {
+
+.eatery-finder-form>* {
     margin: 10px;
 }
+
 .form-input-group {
     display: flex;
     flex-direction: row;
 }
+
 #form {
     display: flex;
     flex-direction: row;

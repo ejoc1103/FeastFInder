@@ -6,7 +6,6 @@ import axios from 'axios';
 
 export default {
     getRestaurants(data) {
-        console.log(data);
         return axios.get(`/restaurants/${data}`);
     },
     // getRestaurant(id) {
