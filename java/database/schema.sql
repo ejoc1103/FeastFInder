@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS eatery;
 DROP TABLE IF EXISTS user_group;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS groups;
+DROP TABLE IF EXISTS eatery_vote;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -47,12 +48,13 @@ CREATE TABLE eatery (
 
 CREATE TABLE vote (
 	vote_id SERIAL,
-	vote_name varchar(50),
+	vote_name varchar(50) NOT NULL,
 	vote_description varchar(200),
 	vote_start_date date NOT NULL,
-	vote_end_date date NOT NULL,
+	vote_end_date date,
 	is_active boolean NOT NULL,
-	eatery_id int NOT NULL,
+	eatery_id int,
+	user_vote_id int,
 	CONSTRAINT PK_vote PRIMARY KEY (vote_id),
 	CONSTRAINT FK_eatery_id FOREIGN KEY (eatery_id) REFERENCES eatery(eatery_id)
 );
@@ -72,6 +74,13 @@ CREATE TABLE user_voter (
 	voter_id int NOT NULL,
 	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 	CONSTRAINT FK_voter_id FOREIGN KEY (voter_id) REFERENCES voter(voter_id)
+);
+
+CREATE TABLE eatery_vote (
+	eatery_id int NOT NULL,
+	vote_id int NOT NULL,
+	CONSTRAINT FK_eatery_id FOREIGN KEY (eatery_id) REFERENCES eatery(eatery_id),
+	CONSTRAINT FK_vote_id FOREIGN KEY (vote_id) REFERENCES vote(vote_id)
 );
 
 COMMIT TRANSACTION;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
+import javax.validation.OverridesAttribute;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -53,6 +54,22 @@ public class JdbcGroupsDao implements GroupsDao {
             System.out.println("Problem connecting");
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data problems");
+        }
+        return null;
+    }
+
+    @Override
+    public Groups addGroup(Groups group, String name) {
+        String sql = "INSERT INTO groups (group_name) VALUES (?) RETURNING group_id;";
+        try {
+            int id = template.queryForObject(sql, Integer.class, group.getGroup_name());
+            String sql2 = "INSERT INTO user_group (user_id, group_id) VALUES ((SELECT user_id FROM users WHERE username = ?), ?);";
+            template.update(sql2, name, id);
+            return getGroup(id);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems" + e);
         }
         return null;
     }
