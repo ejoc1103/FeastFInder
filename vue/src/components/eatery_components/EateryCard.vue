@@ -17,12 +17,12 @@
       <p :style="{ gridArea: 'isOpen' }">{{ restaurant.isOpen }}</p>
 
 
-      <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime.slice(0, this.restaurants[0].openTime.indexOf(' '))
+      <!-- <p :style="{ gridArea: 'openTime' }">{{ restaurant.openTime.slice(0, restaurant.openTime.indexOf(' '))
         }}</p>
 
 
-      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime.slice(0, this.restaurants[0].openTime.indexOf(' '))
-        }}</p>
+      <p :style="{ gridArea: 'closeTime' }">{{ restaurant.closeTime.slice(0, restaurant.closeTime.indexOf(' '))
+        }}</p> -->
 
 
       <p :style="{ gridArea: 'address' }">{{ restaurant.address }}</p>
@@ -54,17 +54,17 @@ export default {
         return false;
       }
     },
-    getTime(time) {
-      let string = time.slice(0, this.restaurants[0].openTime.indexOf(' '));
-      if (string > '1200') {
-        string = string.slice(0, 2) - 12 + ':' + string.slice(2);
-        string += ' PM';
-      } else {
-        string += ' AM';
-      }
-      console.log(string);
-      return string;
-    }
+    // getTime(time) {
+    //   let string = time.slice(0, this.restaurants[0].openTime.indexOf(' '));
+    //   if (string > '1200') {
+    //     string = string.slice(0, 2) - 12 + ':' + string.slice(2);
+    //     string += ' PM';
+    //   } else {
+    //     string += ' AM';
+    //   }
+    //   console.log(string);
+    //   return string;
+    // }
   }
 };
 </script>
