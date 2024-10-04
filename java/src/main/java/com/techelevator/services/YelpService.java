@@ -57,7 +57,6 @@ public class YelpService {
         String id = root.path(i).path("id").asText();
                 String name = root.path(i).path("name").asText();
                 String imageUrl = root.path(i).path("image_url").asText();
-                //Make a loop after display_address to build the string
                 String address =  buildAsset(root.path(i).path("location"));
                 JsonNode categories = root.path(i).path("categories");
                 String category = "";
