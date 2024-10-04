@@ -29,5 +29,15 @@ public class Groups {
         this.vote_id = vote_id;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Groups{");
+        sb.append("group_id=").append(group_id);
+        sb.append(", group_name=").append(group_name);
+        sb.append(", vote_id=").append(vote_id);
+        sb.append('}');
+        return sb.toString();
+    }
 
 }

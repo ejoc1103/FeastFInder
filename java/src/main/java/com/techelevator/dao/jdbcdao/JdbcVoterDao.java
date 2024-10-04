@@ -1,4 +1,6 @@
 package com.techelevator.dao.jdbcdao;
 
-public class JdbcVoterDao {
+import com.techelevator.dao.dao.VoterDao;
+
+public class JdbcVoterDao implements VoterDao {
 }
