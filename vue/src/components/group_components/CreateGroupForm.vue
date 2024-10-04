@@ -1,13 +1,22 @@
 <template>
     <div id="create-group-container">
-        <form id="create-group-form">
+        <form id="create-group-form" v-on:submit.prevent="submitGroup">
             <label for="group-name">Group Name</label>
-            <input type="text" id="group-name" name="groupName">
-            <label for="group-description"></label>
-            <input type="text" id="group-description" name = "groupDescription">
+            <input type="text" id="group-name" name="groupName" v-model="groupName">
+            
+            <label for="group-description">Description</label>
+            <input type="text" id="group-description" name = "groupDescription" v-model="groupDescription">
+            
+            <label for="start-date">Start Date</label>
+            <input type="date" id="start-date" name="startDate" v-model="startDate" required>
+            
+            <label for = "end-date">End Date</label>
+            <input type="date" id="end-date" name="endDate" v-model="endDate">
+            
             <button type="submit">Create This Group</button>
         </form>
-        <button v-if="showGroupForm" v-on:click="hideGroup">Hide Create Form</button>
+        <h1>{{ currentDate }}</h1>
+        <button  v-on:click="hideGroup">Hide Create Form</button>
     </div>
 </template>
 
@@ -16,8 +25,28 @@ export default {
     data() {
         return {
             groupName: '',
+            groupDescription: '',
+            startDate: '',
+            endDate: '',
+            isActive : true
+        }
+    
+    },
+    computed:{
+        currentDate() {
+            console.log(new Date());
+            return new Date().toISOString().split('T')[0];
         }
     },
+    methods: {
+        submitGroup() {
+            console.log(this.endDate.getTime()<this.startDate.getTime());
+            console.log(this.endDate.getTime()< new Date().getTime());
+        },
+        hideGroup() {
+            this.isActive = false;
+        }
+    }
 }
 </script>
 
