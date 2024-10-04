@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -24,9 +25,15 @@ public class GroupsController {
     private GroupsDao groupsDao;
     
     //return group from 
-    @RequestMapping(path = "/groups/{id}", method= RequestMethod.GET)
-    public List<Groups> getGroups(@Valid @PathVariable int id) {
-        return groupsDao.getGroups(id);
+    @RequestMapping(path = "/group/{id}", method= RequestMethod.GET)
+    public Groups getGroup(@Valid @PathVariable int id) {
+
+        return groupsDao.getGroup(id);
+    }
+    @RequestMapping(path = "/groups", method = RequestMethod.GET)
+    public List<Groups> getGroups(Principal principal) {
+        return groupsDao.getGroups(principal.getName());
+
     }
 
     //call all of groups from that user

@@ -5,5 +5,6 @@ import java.util.List;
 import com.techelevator.model.Groups;
 
 public interface GroupsDao {
-    List<Groups> getGroups(int id);
+    Groups getGroup(int id);
+    List<Groups> getGroups(String name);
 }
