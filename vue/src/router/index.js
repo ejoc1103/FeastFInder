@@ -55,7 +55,7 @@ const routes = [
     component: GroupsView,
     meta: {
       // Leave false for testing but will need to be true for production
-      requiresAuth: false
+      requiresAuth: true
     }
   }
 ];
