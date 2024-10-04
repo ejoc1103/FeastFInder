@@ -13,6 +13,7 @@ export default {
   },
 
   register(user) {
+    console.log(user);
     return http.post('/register', user)
   }
 

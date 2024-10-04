@@ -22,7 +22,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -54,8 +54,8 @@ const routes = [
     name: 'groups',
     component: GroupsView,
     meta: {
-      // I don't think we want this to have auth since it's where other people vote
-      requiresAuth: true
+      // Leave false for testing but will need to be true for production
+      requiresAuth: false
     }
   }
 ];

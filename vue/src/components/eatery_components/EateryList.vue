@@ -1,6 +1,5 @@
 <template>
     <div v-if="$store.state.showRestaurants" class="eatery-grid-container">
-      <h1>{{restaurants[0]}}</h1>
       <EateryCard :restaurants="restaurants" />
       <button v-on:click="nextPage">Next Card</button>
     </div>
@@ -9,11 +8,14 @@
   <script>
   import EateryCard from "./EateryCard.vue";
   import RestaurantService from "../../services/RestaurantService";
-  
+  //remove props once we have real data
   export default {
+    props: [
+      "restaurants",
+    ],
     data() {
       return {
-        restaurants: [],
+        // restaurants: [],
         currentResponse: [],
         start: 0,
         end: 8,
@@ -28,7 +30,7 @@
     },
     methods: {
       findEatery() {
-        this.restaurants = [];
+        // this.restaurants = [];
         this.currentResponse = [];
         this.start = 0;
         this.end = 8;
@@ -43,14 +45,14 @@
         this.end += 8;
         this.updateRestaurants();
       },
-      updateRestaurants() {
-        this.restaurants = [];
-        for (let i = this.start; i < this.end; i++) {
-          if (this.currentResponse.data[i]) {
-            this.restaurants.push(this.currentResponse.data[i]);
-          }
-        }
-      },
+      // updateRestaurants() {
+      //   this.restaurants = [];
+      //   for (let i = this.start; i < this.end; i++) {
+      //     if (this.currentResponse.data[i]) {
+      //       this.restaurants.push(this.currentResponse.data[i]);
+      //     }
+      //   }
+      // },
     },
   };
   </script>
@@ -60,7 +62,7 @@
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
-    width: 95%;
+    max-width: 95%;
   }
   </style>
   
