@@ -15,6 +15,9 @@ public class Eatery {
     private String price;
     private boolean isClosed;
 
+    public Eatery() {
+    }
+    
     public Eatery(String category, String close_time, String eatery_address, String eatery_id, String eatery_name, String has_takeout, String image_url, String open_time, String phone, String price, String rating, String website, String isClosed) {
         this.category = category;
         this.close_time = close_time;
@@ -139,4 +142,25 @@ public class Eatery {
         this.isClosed = isClosed;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Eatery{");
+        sb.append("eatery_id=").append(eatery_id);
+        sb.append(", eatery_name=").append(eatery_name);
+        sb.append(", image_url=").append(image_url);
+        sb.append(", eatery_address=").append(eatery_address);
+        sb.append(", category=").append(category);
+        sb.append(", website=").append(website);
+        sb.append(", open_time=").append(open_time);
+        sb.append(", close_time=").append(close_time);
+        sb.append(", has_takeout=").append(has_takeout);
+        sb.append(", rating=").append(rating);
+        sb.append(", phone=").append(phone);
+        sb.append(", price=").append(price);
+        sb.append(", isClosed=").append(isClosed);
+        sb.append('}');
+        return sb.toString();
+    }
+    
 }

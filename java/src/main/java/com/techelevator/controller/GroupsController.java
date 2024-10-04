@@ -24,17 +24,14 @@ public class GroupsController {
     @Autowired
     private GroupsDao groupsDao;
     
-    //return group from 
+    //return group by id
     @RequestMapping(path = "/group/{id}", method= RequestMethod.GET)
     public Groups getGroup(@Valid @PathVariable int id) {
-
         return groupsDao.getGroup(id);
     }
+    //call all of groups from that user
     @RequestMapping(path = "/groups", method = RequestMethod.GET)
     public List<Groups> getGroups(Principal principal) {
         return groupsDao.getGroups(principal.getName());
-
     }
-
-    //call all of groups from that user
 }
