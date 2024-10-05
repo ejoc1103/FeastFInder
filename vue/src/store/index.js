@@ -12,6 +12,8 @@ export function createStore(currentToken, currentUser) {
       category: '',
       longitude: '',
       latitude: '',
+      //from here down will need to be removed when end points are created
+      groups: [],
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -33,10 +35,10 @@ export function createStore(currentToken, currentUser) {
       UPDATE_BACKGROUND(state, string) {
         state.currentBackground = string;
       },
-      SET_SEARCH_TERM(state, search){
+      SET_SEARCH_TERM(state, search) {
         state.currentSearch = search;
       },
-      TOGGLE_RESTAURANTS(state, show){
+      TOGGLE_RESTAURANTS(state, show) {
         state.showRestaurants = show;
       },
       SET_CATEGORY(state, category) {

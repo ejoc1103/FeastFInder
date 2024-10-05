@@ -4,17 +4,17 @@
             <h1 v-if="!showGroupForm">My Groups</h1>
             <h1 v-else>Create New Group</h1>
         </div>
-        <create-group-form v-if="showGroupForm"/>
+        <create-group-form/>
         <button v-if="idToShow !== null" v-on:click="showGroup(idToShow)" class="show-all-groups">See All
             Groups</button>
         <button v-if="!showGroupForm" v-on:click="showGroupForm = !showGroupForm">Create a New Group</button>
-        <div v-if="showOneGroup" class="voting">
+        <div class="voting">
             <!-- this is where I am working on the group view -->
             <EateryList :restaurants="makeRestaurantArray" />
             <button v-on:click="hideGroup(idToShow)" class="view-group">Show All Groups</button>
         </div>
 
-        <div class="groups" v-else>
+        <div class="groups">
             <div v-for="group in groups" v-bind:key="group" class="group">
                 <h1>{{ group.name }}</h1>
                 <button v-if="idToShow === null" v-on:click="showGroup(group.id)" class="view-group">View Group</button>
@@ -24,20 +24,24 @@
     </div>
 </template>
 
+<!-- groups: [
+{ id: 0, name: 'Dinner with friends', showFull: false },
+{ id: 1, name: 'Dinner with co-workers', showFull: false },
+{ id: 2, name: 'Dinner with family', showFull: false },
+{ id: 3, name: 'Blah blah blha', showFull: false },
+{ id: 4, name: 'Dad, Dad, Dad', showFull: false },
+], -->
+
 <script>
 import EateryList from '../components/eatery_components/EateryList.vue';
 import CreateGroupForm from '../components/group_components/CreateGroupForm.vue';
+// import VoteService from '../services/VoteService.js';
+
 export default {
 
     data() {
         return {
-            groups: [
-                { id: 0, name: 'Dinner with friends', showFull: false },
-                { id: 1, name: 'Dinner with co-workers', showFull: false },
-                { id: 2, name: 'Dinner with family', showFull: false },
-                { id: 3, name: 'Blah blah blha', showFull: false },
-                { id: 4, name: 'Dad, Dad, Dad', showFull: false },
-            ],
+            groups: [],
             restaurant: {
                 id: "c3fv6l74jJcoppmV43RrSw",
                 name: "The Poached Pear",
@@ -69,20 +73,20 @@ export default {
     },
     //probably needs to be "created" on actual data
     computed: {
-        showOneGroup() {
-            for (let i = 0; i < this.groups.length; i++) {
-                if (this.groups[i].showFull) {
-                    return true;
-                }
-            }
-            return false;
-        },
         makeRestaurantArray() {
             let restaurantArray = [];
             for (let i = 0; i < 4; i++) {
                 restaurantArray.push(this.restaurant);
             }
             return restaurantArray;
+        },
+        getGroups(){
+            // will move to created and not need a return when end point is made
+            // VoteService.getVotes().then(response => {
+            //     this.groups = response.data;
+            // })
+            // For now we 
+            return this.$store.state.groups;
         }
     },
     methods: {
