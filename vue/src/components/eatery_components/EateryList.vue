@@ -38,16 +38,26 @@ export default {
       let search = ``
 
       let location = this.$store.state.currentSearch;
-      let term = this.$store.state.category;
+      let term = this.$store.state.term;
+      let category = this.$store.state.category;
+
       if (location === '') {
         search = `latitude=${this.$store.state.latitude}&longitude=${this.$store.state.longitude}`;
       } else {
         search = `location=${this.$store.state.currentSearch}`;
-        if (term !== '') {
-          search += `&term=${this.$store.state.category}`;
-        }
       }
 
+
+      if (term !== '' && category !== '') {
+        search += `&term=${this.$store.state.category}${this.$store.state.term}`;
+      } else if (term !== '') {
+        search += `&term=${this.$store.state.term}`;
+      }
+      if (category !== '') {
+        // Can definitely refine this later
+        search += `&term=${this.$store.state.category}`;
+
+      }
       console.log(search);
       RestaurantService.getRestaurants(search).then((response) => {
         this.currentResponse = response;

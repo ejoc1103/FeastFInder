@@ -8,11 +8,13 @@
         <div class="popular-search-area">
 
           <h3 class="form-head">Popular Quick Searches</h3>
-          <div class="category-container">
+          <div v-if="seePopular" class="category-container">
             <button v-for="category in categories" :key="category" class="category" @click="setCategory(category)">{{
-              category }}</button>
+            category }}</button>
+            <button @click="toggleSeePopular">Hide Popular Searches</button>
 
           </div>
+          <button v-else @click="toggleSeePopular">Show Popular Quick Searches</button>
         </div>
       </div>
     </div>
@@ -49,6 +51,7 @@ export default {
         // "Mexican restaurants near me",
         // "Asian cuisine near me"
       ],
+      seePopular: false,
     };
   },
   components: {
@@ -59,15 +62,16 @@ export default {
     setCategory(category) {
       this.$store.commit("SET_CATEGORY", category);
     },
+    toggleSeePopular() {
+      this.seePopular = !this.seePopular;
+    },
   },
   created() {
     navigator.geolocation.getCurrentPosition(({ coords }) => {
-      Math.floor(coords.latitude),
-        Math.floor(coords.longitude),
-        this.$store.commit("SET_LOCATION", {
-          latitude: Math.floor(coords.latitude),
-          longitude: Math.floor(coords.longitude),
-        });
+      this.$store.commit("SET_LOCATION", {
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      });
     }
     );
 
@@ -104,7 +108,7 @@ export default {
 
 .full-search-form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   justify-items: center;
   align-items: start;
 }

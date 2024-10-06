@@ -11,6 +11,7 @@ export function createStore(currentToken, currentUser) {
       showRestaurants: false,
       showGroupForm: false,
       category: '',
+      term: '',
       longitude: '',
       latitude: '',
       //from here down will need to be removed when end points are created
@@ -40,6 +41,9 @@ export function createStore(currentToken, currentUser) {
       SET_SEARCH_TERM(state, search) {
         state.currentSearch = search;
       },
+      SET_NARROW_TERM(state, term) {
+        state.term = term;
+      },
       TOGGLE_RESTAURANTS(state, show) {
         state.showRestaurants = show;
       },
@@ -53,9 +57,9 @@ export function createStore(currentToken, currentUser) {
         state.longitude = location.longitude;
         state.latitude = location.latitude;
       },
-      TOGGLE_VOTE_VIEW(state, view){
+      TOGGLE_VOTE_VIEW(state, view) {
         state.showVoteView = view;
-      }, 
+      },
       //from here down will need to be removed when end points are created
       ADD_GROUP(state, group) {
         state.groups.push(group);
