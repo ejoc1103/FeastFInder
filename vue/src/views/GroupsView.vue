@@ -1,100 +1,93 @@
 <template>
     <div class="groups-container">
         <div class="group-banner">
-            <h1 v-if="!showGroupForm">My Groups</h1>
+            <h1 v-if="!$store.state.showGroupForm">My Groups</h1>
             <h1 v-else>Create New Group</h1>
         </div>
-        <create-group-form v-if="showGroupForm"/>
-        <button v-if="idToShow !== null" v-on:click="showGroup(idToShow)" class="show-all-groups">See All
+        <create-group-form v-if="$store.state.showGroupForm" />
+        <button v-if="$store.state.showVoteView" v-on:click="showGroup(idToShow)" class="show-all-groups">See All
             Groups</button>
-        <button v-if="!showGroupForm" v-on:click="showGroupForm = !showGroupForm">Create a New Group</button>
-        <div v-if="showOneGroup" class="voting">
-            <!-- this is where I am working on the group view -->
-            <EateryList :restaurants="makeRestaurantArray" />
-            <button v-on:click="hideGroup(idToShow)" class="view-group">Show All Groups</button>
-        </div>
+        <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
 
-        <div class="groups" v-else>
-            <div v-for="group in groups" v-bind:key="group" class="group">
-                <h1>{{ group.name }}</h1>
-                <button v-if="idToShow === null" v-on:click="showGroup(group.id)" class="view-group">View Group</button>
+        <div v-if="!$store.state.showVoteView && getGroups.length > 0" class="groups">
+            <div v-for="group in getGroups" v-bind:key="group.id" class="group">
+                <h1>{{ group.vote_name }}</h1>
+                <button v-on:click="getEateries(group.vote_id)" class="view-group">View Group</button>
             </div>
         </div>
 
+        <div v-if="$store.state.showVoteView && $store.state.showVoteView" class="voting">
+            <!-- this is where I am working on the group view -->
+            <EateryCard :restaurants="restaurants"/>
+            <button v-on:click="hideGroup(idToShow)" class="view-group">Back To Groups View</button>
+        </div>
     </div>
 </template>
 
 <script>
-import EateryList from '../components/eatery_components/EateryList.vue';
+import EateryCard from '../components/eatery_components/EateryCard.vue';
 import CreateGroupForm from '../components/group_components/CreateGroupForm.vue';
+// import VoteService from '../services/VoteService.js';
+
 export default {
 
     data() {
         return {
-            groups: [
-                { id: 0, name: 'Dinner with friends', showFull: false },
-                { id: 1, name: 'Dinner with co-workers', showFull: false },
-                { id: 2, name: 'Dinner with family', showFull: false },
-                { id: 3, name: 'Blah blah blha', showFull: false },
-                { id: 4, name: 'Dad, Dad, Dad', showFull: false },
-            ],
-            restaurant: {
-                id: "c3fv6l74jJcoppmV43RrSw",
-                name: "The Poached Pear",
-                imageUrl: "https://s3-media1.fl.yelpcdn.com/bphoto/BzXy5EeF71nx54PBokFKRA/o.jpg",
-                address: "816 Arnold Ave   Point Pleasant Beach 08742 US NJ",
-                category: "Desserts New American Steakhouses ",
-                openTime: "1700 1700 1700 1700 1700 1700 ",
-                isClosed: "false",
-                closeTime: "2030 2030 2030 2130 2130 2030 ",
-                hasTakeout: "delivery",
-                rating: "4.6",
-                phoneNumber: "(732) 701-1700",
-                price: "$$$",
-            },
-            idToShow: null,
-            showGroupForm: false,
+            groups: [],
+            //here down is just for testing no for development
             colorScheme: [
                 "#FF69B4", // Bright Pink
                 "#00FFFF", // Aqua Blue
                 "#E6E6FA", // Lavender
                 "#8A2BE2", // Bright Purple
-                "#36454F"  // Charcoal (for text)
-            ]
+                "#36454F",  // Charcoal (for text)
+                '#7FFF00', // Bright green
+                '#228B22'
+            ],
+            restaurants : [],
         }
     },
     components: {
-        EateryList,
+        EateryCard,
         CreateGroupForm
     },
-    //probably needs to be "created" on actual data
     computed: {
-        showOneGroup() {
-            for (let i = 0; i < this.groups.length; i++) {
-                if (this.groups[i].showFull) {
-                    return true;
-                }
-            }
-            return false;
-        },
-        makeRestaurantArray() {
-            let restaurantArray = [];
-            for (let i = 0; i < 4; i++) {
-                restaurantArray.push(this.restaurant);
-            }
-            return restaurantArray;
+
+        // having it in computed like this allows it to be called the same 
+        // in the template for testing purposes 
+        getGroups() {
+            return this.$store.state.groups;
         }
+
     },
+    // I commented this out fully and left it in place because We should be 
+    // able to just remove the comments, delete the other method with the same name 
+    // and it should work
+    // created: {
+    //     getGroups() {
+    //          This should work when we have a get all votes endpoint
+    //          return VoteService.getVotes().then(response => {
+    //              this.groups = response.data;
+    //          }).catch(e => {
+    //              console.log(e);
+    //          }); 
+
+    //     }
+    // },
     methods: {
-        showGroup(id) {
-            this.idToShow = id;
-            this.groups[id].showFull = !this.groups[id].showFull;
-            this.$store.commit("TOGGLE_RESTAURANTS", true);
+        getEateries(id) {
+            this.restaurants =  this.$store.state.groups[id].eateries;
+            this.showGroup();
+            console.log(this.restaurants);
         },
-        hideGroup(id) {
-            this.idToShow = null;
-            this.groups[id].showFull = !this.groups[id].showFull;
-            this.$store.commit("TOGGLE_RESTAURANTS", false);
+        toggleGroup() {
+            this.$store.commit("TOGGLE_GROUP_FORM", !this.$store.state.showGroupForm);
+        },
+        showGroup() {
+            this.$store.commit("TOGGLE_VOTE_VIEW", true);
+        },
+        hideGroup() {
+            this.$store.commit("TOGGLE_VOTE_VIEW", false);
         }
     }
 }

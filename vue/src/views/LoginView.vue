@@ -1,10 +1,13 @@
 <template>
   <div id="login-container">
+    <div class="logo-display">
+
+    </div>
     <div id="login">
       <form v-on:submit.prevent="login" id="login-form">
         <h3>Please Sign In</h3>
         <div id="form-info">
-          
+
           <div role="alert" v-if="invalidCredentials">
             Invalid username and password!
           </div>
@@ -20,12 +23,12 @@
             <input type="password" id="password" v-model="user.password" required />
           </div>
           <button type="submit" id="sign-in">Sign in</button>
-          <p>
-            <router-link v-bind:to="{ name: 'register' }" :style="{ color: '#009688' }">Need
+
+          <router-link v-bind:to="{ name: 'register' }" :style="{ color: '#f7a94d' }">Need
             an
             account? Sign
             up.</router-link>
-          </p>
+
         </div>
       </form>
     </div>
@@ -71,21 +74,36 @@ export default {
 </script>
 
 <style scoped>
-#login-container {
-  height: 100vh;
+.logo-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-image: url('../../src/logo.png');
+  background-position: top;
+  background-size: cover;
+  border-radius: 10px 0 0 10px;
 }
+
+#login-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-height: 70vh;
+  justify-items: center;
+  background-image: url('../../public/borderImage.png');
+  border-radius: 20px;
+  padding: 30px;
+}
+
 #login {
   display: flex;
   flex-direction: column;
   font-weight: bold;
   font-size: larger;
-  background: #009688;
-  color: #F5F5F5;
-  border-radius: 10px;
-  width: 100%;
+  background: #FF69B4;
   padding: 5%;
-  margin: 5%;
   text-align: center;
+  border-radius: 0 10px 10px 0;
 }
 
 #login-form {
@@ -94,6 +112,11 @@ export default {
   align-items: center;
   justify-items: center;
   width: 100%;
+  gap: 5px;
+}
+
+#login-form h3 {
+  color: #E6E6FA;
 }
 
 #form-info {
@@ -102,28 +125,25 @@ export default {
   align-items: center;
   justify-items: center;
   width: 90%;
-  background-color: #F5F5F5;
-  color: #009688;
+  background-color: #00FFFF;
+  color: #8A2BE2;
   border-radius: 10px;
   padding: 10px 0;
 }
 
 #sign-in {
-  background-color: #FFEB3B;
-  color: #424242;
+  background-color: #8A2BE2;
+  color: #E6E6FA;
   font-size: larger;
   border-radius: 10px;
-  padding: 3%;
-  margin: 1%;
+  font-family: "Poppins", sans-serif;
+  padding: 10px;
+  margin: 20px;
 }
 
 .form-input-group {
   margin-bottom: 1rem;
   display: flex;
   flex-direction: column;
-}
-
-label {
-  margin-right: 0.5rem;
 }
 </style>

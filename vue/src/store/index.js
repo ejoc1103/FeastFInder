@@ -9,9 +9,13 @@ export function createStore(currentToken, currentUser) {
       currentBackground: '../../dinerBackground.jpg',
       currentSearch: '',
       showRestaurants: false,
+      showGroupForm: false,
       category: '',
       longitude: '',
       latitude: '',
+      //from here down will need to be removed when end points are created
+      groups: [],
+      showVoteView: false
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -33,11 +37,14 @@ export function createStore(currentToken, currentUser) {
       UPDATE_BACKGROUND(state, string) {
         state.currentBackground = string;
       },
-      SET_SEARCH_TERM(state, search){
+      SET_SEARCH_TERM(state, search) {
         state.currentSearch = search;
       },
-      TOGGLE_RESTAURANTS(state, show){
+      TOGGLE_RESTAURANTS(state, show) {
         state.showRestaurants = show;
+      },
+      TOGGLE_GROUP_FORM(state, show) {
+        state.showGroupForm = show;
       },
       SET_CATEGORY(state, category) {
         state.category = category;
@@ -45,6 +52,21 @@ export function createStore(currentToken, currentUser) {
       SET_LOCATION(state, location) {
         state.longitude = location.longitude;
         state.latitude = location.latitude;
+      },
+      TOGGLE_VOTE_VIEW(state, view){
+        state.showVoteView = view;
+      }, 
+      //from here down will need to be removed when end points are created
+      ADD_GROUP(state, group) {
+        state.groups.push(group);
+      },
+      ADD_EATERY_TO_VOTE(state, data) {
+        console.log(data);
+        if (state.groups[data.id].eateries === undefined) {
+          state.groups[data.id].eateries = [data.eatery];
+        } else {
+          state.groups[data.id].eateries.push(data.eatery);
+        }
       }
     },
   });
