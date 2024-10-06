@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <div v-if="$store.state.showRestaurants" class="eatery-grid-container">
-      <LoadingComponent v-if="isLoading"/>
-      <EateryCard :restaurants="restaurants" />
-      <button v-if="!isLoading" v-on:click="nextPage">Next Card</button>
-    </div>
+
+  <div v-if="$store.state.showRestaurants" class="eatery-grid-container">
+    <LoadingComponent v-if="isLoading" />
+    <EateryCard :restaurants="restaurants" />
+    <button v-if="!isLoading" v-on:click="nextPage">Next Card</button>
   </div>
+
 </template>
 
 <script>
@@ -19,7 +19,7 @@ export default {
       restaurants: [],
       currentResponse: [],
       start: 0,
-      end: 8,
+      end: 6,
       isLoading: false,
     };
   },
@@ -33,16 +33,23 @@ export default {
       this.restaurants = [];
       this.currentResponse = [];
       this.start = 0;
-      this.end = 8;
-      let searchTerm = this.$store.state.currentSearch;
-      if (searchTerm === "") {
-        searchTerm = this.getLocation;
-      }
-    
-      let search = `${this.$store.state.currentSearch}&categories="${this.$store.state.category}`;
+      this.end = 6;
 
+      let search = ``
+
+      let location = this.$store.state.currentSearch;
+      let term = this.$store.state.category;
+      if (location === '') {
+        search = `latitude=${this.$store.state.latitude}&longitude=${this.$store.state.longitude}`;
+      } else {
+        search = `location=${this.$store.state.currentSearch}`;
+        if (term !== '') {
+          search += `&term=${this.$store.state.category}`;
+        }
+      }
+
+      console.log(search);
       RestaurantService.getRestaurants(search).then((response) => {
-        console.log(response);
         this.currentResponse = response;
         this.updateRestaurants();
         this.$store.commit("TOGGLE_RESTAURANTS", true);
@@ -50,14 +57,15 @@ export default {
       });
     },
     nextPage() {
-      this.start += 8;
-      this.end += 8;
+      this.start += 6;
+      this.end += 6;
       this.updateRestaurants();
     },
     updateRestaurants() {
       this.restaurants = [];
       for (let i = this.start; i < this.end; i++) {
         if (this.currentResponse.data[i]) {
+          this.currentResponse.data[i].eatery_id = i;
           this.restaurants.push(this.currentResponse.data[i]);
         }
       }
@@ -65,10 +73,13 @@ export default {
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'SET_CATEGORY' || mutation.type === 'SET_SEARCH_TERM') {
+      if (mutation.type === 'SET_CATEGORY' || mutation.type === 'SET_SEARCH_TERM' || mutation.type === 'SET_LOCATION') {
         this.findEatery();
       }
     });
+    if (this.$store.state.longitude !== '') {
+      this.findEatery();
+    }
   }
 };
 </script>
@@ -78,6 +89,5 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
-  max-width: 95%;
 }
 </style>

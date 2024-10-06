@@ -1,12 +1,22 @@
 <template>
   <div class="home">
-    <div class="category-container">
-      <div class="category" v-for="category in categories" :key="category">
-        <button class="button-category" @click="setCategory(category)">{{ category }}</button>
+    <div class="search-form-container">
+      <h3 class="form-head">Restaurant Finder</h3>
+      <div class='full-search-form'>
+
+        <EateryFinderFormVue />
+        <div class="popular-search-area">
+
+          <h3 class="form-head">Popular Quick Searches</h3>
+          <div class="category-container">
+            <button v-for="category in categories" :key="category" class="category" @click="setCategory(category)">{{
+              category }}</button>
+
+          </div>
+        </div>
       </div>
     </div>
-    <EateryFinderFormVue />
-    <EateryList :restaurants="restaurants" />
+    <EateryList v-show="restaurants.length < 2" :restaurants="restaurants" />
   </div>
 </template>
 
@@ -18,16 +28,26 @@ export default {
     return {
       restaurants: [],
       categories: [
-        "Restaurants",
-        "Bars",
-        "Coffee & Tea",
-        "Bakeries",
-        "Pizza",
-        "Sushi Bars",
-        "Vegan",
-        "Ice Cream & Frozen Yogurt",
-        "Burgers",
-        "Seafood",
+        "Best restaurants near me",
+        "Top-rated restaurants",
+        "Popular restaurants in my area",
+        "Family-friendly restaurants",
+        "Romantic restaurants",
+        "Cheap eats near me",
+        "Best places to eat",
+        "Vegan restaurants near me",
+        "Gluten-free restaurants",
+        "Healthy restaurants",
+        // "Restaurants with outdoor seating",
+        // "Late-night restaurants",
+        // "Restaurants with delivery",
+        // "Seafood restaurants near me",
+        // "Fine dining restaurants",
+        // "Fast food near me",
+        // "Best brunch spots",
+        // "Restaurants with live music",
+        // "Mexican restaurants near me",
+        // "Asian cuisine near me"
       ],
     };
   },
@@ -62,7 +82,7 @@ export default {
   justify-items: center;
   align-items: start;
   padding: 10px;
-  max-height: 92vh;
+
 }
 
 .category-container {
@@ -70,24 +90,36 @@ export default {
   grid-template-columns: repeat(5, 1fr);
   gap: 5px;
   justify-items: center;
-  margin-bottom: 10px;
 }
 
 .category {
-  font-size: 1.2em;
-  color: white;
-  background-color: #00FFFF;
+  color: #E6E6FA;
+  font-size: 1em;
+  background-color: #8A2BE2;
+  min-width: 10vw;
+  border-radius: 20px;
+  padding: 5px;
   margin: 0;
 }
 
-.button-category {
-  font-size: 1em;
-  color: #424242;
-  background-color: rgba(41, 41, 173, 0);
-  border: 2px solid white;
-  border-radius: 5px;
-  width: 100%;
-  margin: 0;
-  cursor: pointer;
+.full-search-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-items: start;
+}
+
+.popular-search-area {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.search-form-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: #228B22;
+  border-radius: 30px;
+  justify-items: center;
 }
 </style>

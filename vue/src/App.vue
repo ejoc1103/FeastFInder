@@ -1,16 +1,16 @@
 <template>
   <div class="full-app-body">
-    <div class="nav">
+    <div class="nav" v-show="$store.state.token != ''">
       <!-- Do nav next -->
       <div class="nav-links">
-        <router-link v-bind:to="{ name: 'home' }">Home</router-link>
-        <span v-if="$store.state.token != ''">
-          <router-link v-bind:to="{ name: 'groups' }">Groups</router-link>
-          <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
-        </span>
+        <router-link v-show="getPathName !== 'home'" v-bind:to="{ name: 'home' }">Home</router-link>
+        <router-link v-show="getPathName !== 'groups'" v-bind:to="{ name: 'groups' }">Groups</router-link>
+        <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
       </div>
 
       <h1 class="logo">Feast Finder</h1>
+      <router-link v-if="$store.state.groups.length > 0" v-bind:to="{ name: 'voting', params: { id: '0' } }">View
+        Votes</router-link>
     </div>
     <div id="capstone-app" :style="{ backgroundImage: `url(${currentBackground})` }">
       <div :id="idSelector">
@@ -23,6 +23,9 @@
 <script>
 export default {
   computed: {
+    getPathName() {
+      return this.$route.name;
+    },
     currentBackground() {
       let pathName = this.$route.name;
       if (pathName === 'home') {
@@ -41,7 +44,12 @@ export default {
       let pathName = this.$route.name;
       if (pathName === 'groups') {
         return 'groups-main';
-      } else {
+      } else if (pathName === 'login') {
+        return 'login-main';
+      } else if (pathName === 'register') {
+        return 'register-main';
+      }
+      else {
         return 'home-main';
       }
     }
@@ -57,7 +65,7 @@ body {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-style: italic;
-  max-height: 100%;
+  height: 100%;
   background-color: #00FFFF;
 }
 
@@ -71,14 +79,10 @@ body {
 #capstone-app {
   display: grid;
   justify-items: center;
-  align-items: start;
   color: #E6E6FA;
-  background-repeat: repeat-x;
-  /* Repeat horizontally */
-  background-size: 100vw auto;
-  /* Expand to full width of the viewport, auto height */
-  background-position: top;
-  height: 92vh;
+  background-repeat: repeat;
+  background-size: cover;
+  height: 100vh;
   width: 100%;
 }
 
@@ -93,12 +97,30 @@ body {
 #home-main {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  max-width: 90vw;
+  max-height: 92vh;
+}
+
+#login-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: center;
+  justify-content: center;
+  max-height: 92vh;
+}
+
+#register-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: center;
+  justify-content: center;
+  max-height: 92vh;
 }
 
 .nav {
   display: grid;
-  grid-template-columns: 2fr 5fr 2fr;
+  grid-template-columns: 3fr 5fr 3fr;
   background-color: #8A2BE2;
   align-content: center;
   font-size: 1.2em;
@@ -108,14 +130,12 @@ body {
 }
 
 .nav-links {
-  display: flex;
+  display: grid;
+  gap: 1vw;
+  grid-template-columns: 1fr 1fr 1fr;
   font-size: 1.2em;
-  justify-content: space-around;
   align-items: center;
-
-  gap: 0 20px;
-  width: 100%;
-  font-family: Poppins, sans-serif;
+  justify-items: center;
 }
 
 .nav-links a {

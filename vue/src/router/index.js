@@ -7,7 +7,7 @@ import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import GroupsView from '../views/GroupsView.vue';
-
+import VotingView from '../views/VotingView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -45,6 +45,14 @@ const routes = [
     path: "/register",
     name: "register",
     component: RegisterView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/voting/:id',
+    name: 'voting',
+    component: VotingView,
     meta: {
       requiresAuth: false
     }
