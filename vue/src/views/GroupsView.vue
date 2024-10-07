@@ -9,8 +9,8 @@
             Groups</button>
         <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
 
-        <div v-if="!$store.state.showVoteView && getGroups.length > 0" class="groups">
-            <div v-for="group in getGroups" v-bind:key="group.id" class="group">
+        <div v-if="!$store.state.showVoteView && groups.length > 0" class="groups">
+            <div v-for="group in groups" v-bind:key="group.id" class="group">
                 <h1>{{ group.vote_name }}</h1>
                 <button v-on:click="getEateries(group.vote_id)" class="view-group">View Group</button>
             </div>
@@ -27,7 +27,7 @@
 <script>
 import EateryCard from '../components/eatery_components/EateryCard.vue';
 import CreateGroupForm from '../components/group_components/CreateGroupForm.vue';
-// import VoteService from '../services/VoteService.js';
+import VoteService from '../services/VoteService.js';
 
 export default {
 
@@ -52,29 +52,23 @@ export default {
         EateryCard,
         CreateGroupForm
     },
-    computed: {
-
-        // having it in computed like this allows it to be called the same 
-        // in the template for testing purposes 
-        getGroups() {
-            return this.$store.state.groups;
-        }
-
-    },
+    // computed: {
+    //     getGroups() {
+    //         return this.$store.state.groups;
+    //     }
+    // },
     // I commented this out fully and left it in place because We should be 
     // able to just remove the comments, delete the other method with the same name 
     // and it should work
-    // created: {
-    //     getGroups() {
-    //          This should work when we have a get all votes endpoint
-    //          return VoteService.getVotes().then(response => {
-    //              this.groups = response.data;
-    //          }).catch(e => {
-    //              console.log(e);
-    //          }); 
-
-    //     }
-    // },
+    created() {
+            //  This should work when we have a get all votes endpoint
+             return VoteService.getVotes().then(response => {
+                console.log(response.data);
+                 this.groups = response.data;
+             }).catch(e => {
+                 console.log(e);
+             }); 
+    },
     methods: {
         getEateries(id) {
             this.restaurants =  this.$store.state.groups[id].eateries;

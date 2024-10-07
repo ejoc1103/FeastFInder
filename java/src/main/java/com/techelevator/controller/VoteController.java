@@ -1,5 +1,7 @@
 package com.techelevator.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,10 @@ public class VoteController {
     @RequestMapping(path = "/vote", method= RequestMethod.POST)
     public Vote addVote(@Valid @RequestBody Vote vote) {
         return voteDao.addVote(vote);
+    }
+
+    @RequestMapping(path = "/votes", method= RequestMethod.GET)
+    public List<Vote> getAllVotes() {
+        return voteDao.getAllVotes();
     }
 }

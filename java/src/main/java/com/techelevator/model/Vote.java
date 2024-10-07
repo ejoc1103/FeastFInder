@@ -6,8 +6,8 @@ public class Vote {
     private int vote_id;
     private String vote_name;
     private String vote_description;
-    private Date vote_start_date;
-    private Date vote_end_date;
+    private Date event_date;
+    private Date vote_date;
     private int eatery_id;
     private boolean is_active;
     private int user_vote_id;
@@ -36,22 +36,6 @@ public class Vote {
         this.vote_description = vote_description;
     }
 
-    public Date getVote_start_date() {
-        return vote_start_date;
-    }
-
-    public void setVote_start_date(Date vote_start_date) {
-        this.vote_start_date = vote_start_date;
-    }
-
-    public Date getVote_end_date() {
-        return vote_end_date;
-    }
-
-    public void setVote_end_date(Date vote_end_date) {
-        this.vote_end_date = vote_end_date;
-    }
-
     public int getEatery_id() {
         return eatery_id;
     }
@@ -74,6 +58,22 @@ public class Vote {
 
     public void setUser_vote_id(int user_vote_id) {
         this.user_vote_id = user_vote_id;
+    }
+
+    public Date getEvent_date() {
+        return event_date;
+    }
+
+    public void setEvent_date(Date event_date) {
+        this.event_date = event_date;
+    }
+
+    public Date getVote_date() {
+        return vote_date;
+    }
+
+    public void setVote_date(Date vote_date) {
+        this.vote_date = vote_date;
     }
 
 }

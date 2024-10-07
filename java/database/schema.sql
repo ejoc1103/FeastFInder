@@ -48,15 +48,14 @@ CREATE TABLE eatery (
 
 CREATE TABLE vote (
 	vote_id SERIAL,
-	vote_name varchar(50) NOT NULL,
+	vote_name varchar(50) NOT NULL UNIQUE,
 	vote_description varchar(200),
-	vote_start_date date NOT NULL,
+	vote_start_date date,
 	vote_end_date date,
-	is_active boolean NOT NULL,
+	is_active boolean,
 	eatery_id int,
 	user_vote_id int,
-	CONSTRAINT PK_vote PRIMARY KEY (vote_id),
-	CONSTRAINT FK_eatery_id FOREIGN KEY (eatery_id) REFERENCES eatery(eatery_id)
+	CONSTRAINT PK_vote PRIMARY KEY (vote_id)
 );
 
 CREATE TABLE voter (

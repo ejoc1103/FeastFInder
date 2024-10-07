@@ -17,6 +17,7 @@
       </div>
     </div>
     <div v-else>
+      <button @click="showForm = !showForm">Create Event</button>
       <button @click="showForm = !showForm">Search Filters</button>
     </div>
     <EateryList v-show="restaurants.length < 2" :restaurants="restaurants" />

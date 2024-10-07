@@ -1,7 +1,9 @@
 package com.techelevator.dao.jdbcdao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
-import javax.validation.OverridesAttribute;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -32,10 +34,21 @@ public class JdbcVoteDao implements VoteDao{
 
     @Override
     public Vote addVote(Vote vote) {
-        String sql = "INSERT INTO vote(vote_name, vote_description, vote_start, vote_end, eatery_id) VALUES (?, ?, ?, ?, ?) RETURNING vote_id";
-        int voteId = template.queryForObject(sql, Integer.class, vote.getVote_name(), vote.getVote_description(), vote.getVote_start_date(), vote.getVote_end_date(), vote.getEatery_id());
+        String sql = "INSERT INTO vote(vote_name, vote_description, vote_start_date, vote_end_date, eatery_id) VALUES (?, ?, ?, ?, ?) RETURNING vote_id";
+        int voteId = template.queryForObject(sql, Integer.class, vote.getVote_name(), vote.getVote_description(), vote.getVote_date(), vote.getEvent_date(), vote.getEatery_id());
         vote.setVote_id(voteId);
         return vote;
+    }
+
+    @Override
+    public List<Vote> getAllVotes() {
+        List<Vote> votes = new ArrayList<>();
+        String sql = "SELECT * FROM vote";
+        SqlRowSet results = template.queryForRowSet(sql);
+        while (results.next()) {
+            votes.add(mapRowToVote(results));
+        }
+        return votes;
     }
 
     public Vote mapRowToVote(SqlRowSet results) {
@@ -43,8 +56,8 @@ public class JdbcVoteDao implements VoteDao{
         vote.setVote_id(results.getInt("vote_id"));
         vote.setVote_name(results.getString("vote_name"));
         vote.setVote_description(results.getString("vote_description"));
-        vote.setVote_start_date(results.getDate("vote_start_date"));
-        vote.setVote_end_date(results.getDate("vote_end_date"));
+        vote.setVote_date(results.getDate("vote_start_date"));
+        vote.setEvent_date(results.getDate("vote_end_date"));
         vote.setEatery_id(results.getInt("eatery_id"));
         vote.setIs_active(results.getBoolean("is_active"));
         vote.setUser_vote_id(results.getInt("user_vote_id"));

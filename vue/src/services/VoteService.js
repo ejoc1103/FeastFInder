@@ -9,7 +9,6 @@ export default {
     },
     createGroup(poll) {
         console.log(poll);
-        // return axios.post('/votes', poll)
+        return axios.post(`/vote`, poll);
     },
-
 }

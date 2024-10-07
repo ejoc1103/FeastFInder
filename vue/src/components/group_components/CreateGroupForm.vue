@@ -53,18 +53,18 @@ export default {
                 this.$store.commit('ADD_GROUP', this.newGroup);
                 console.log(this.$store.state.groups[0]);
                 // I believe this will work when there is an end point for creating a vote
-                //VoteService.createGroup(this.newGroup)
-                //     .then(response => {
-                //         console.log(response.data);
-                //         if (response.status === 201) {
-                //             alert("New Group Created");
-                //             this.newGroup = {};
-                //             this.$store.commit('TOGGLE_GROUP_FORM', !this.$store.state.showGroupForm);
-                //         }
-                //     })
-                //     .catch(e => {
-                //         console.log(e);
-                //     });
+                VoteService.createGroup(this.newGroup)
+                    .then(response => {
+                        console.log(response.data);
+                        if (response.status === 201) {
+                            alert("New Group Created");
+                            this.newGroup = {};
+                            this.$store.commit('TOGGLE_GROUP_FORM', !this.$store.state.showGroupForm);
+                        }
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
                 console.log(this.$store.state.groups.length);
                 this.resetForm();
             }
