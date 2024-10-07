@@ -31,7 +31,7 @@
   <p>{{ restaurant.has_takeout }}</p> -->
 
         <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
-          <div v-for="group in getGroups" :key="group.vote_id" :name="group.vote_id">{{ group.vote_name }}
+          <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">{{ group.vote_name }}
             <button @click="addEateryToVote(group.vote_id, restaurant.eatery_id)">Add to Group</button>
           </div>
 
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import VoteService from '../../services/VoteService';
 export default {
   data() {
     return {
@@ -70,6 +71,7 @@ export default {
         thumbs_down: 0,
       },
       seeAddress: false,
+      groups: [],
     }
   },
   props: [
@@ -78,8 +80,13 @@ export default {
   methods: {
     addEateryToVote(vote_id, eatery_id) {
       this.newRestaurant = this.restaurants[eatery_id];
-      console.log(this.newRestaurant);
-      this.$store.commit('ADD_EATERY_TO_VOTE', { id: vote_id, eatery: this.newRestaurant });
+      VoteService.addEatery(vote_id, this.newRestaurant)
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
     formatTime(time) {
       let [hours, minutes] = time.split(':');
@@ -116,11 +123,16 @@ export default {
     //   return string;
     // }
   },
-  // created() {
-  //   getGroups() {
-  //     real call to a service will go here 
-  //   }
-  // }
+  created() {
+    this.groups =
+      VoteService.getVotes()
+        .then(response => {
+          this.groups = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+  },
 };
 </script>
 

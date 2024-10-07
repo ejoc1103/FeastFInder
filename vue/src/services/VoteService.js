@@ -11,4 +11,10 @@ export default {
         console.log(poll);
         return axios.post(`/vote`, poll);
     },
+    addEatery(voteId, eatery) {
+        return axios.post(`/eatery/${voteId}`, eatery);
+    },
+    getEateries(voteId) {
+        return axios.get(`/eatery/${voteId}/eateries`);
+    }
 }

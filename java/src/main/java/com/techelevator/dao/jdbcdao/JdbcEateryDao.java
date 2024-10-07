@@ -1,7 +1,6 @@
 package com.techelevator.dao.jdbcdao;
 
 import javax.sql.DataSource;
-import javax.validation.OverridesAttribute;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -36,9 +35,9 @@ public class JdbcEateryDao implements EateryDao {
     }
 
     @Override
-    public Eatery addEatery(Eatery eatery) {
-        String sql = "INSERT INTO eatery (eatery_name, image_url, eatery_address, category, website, open_time, close_time, has_takeout, rating, phone, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING eatery_id;";
+    public Eatery addEatery(Eatery eatery, int voteId) {
         try {
+            String sql = "INSERT INTO eatery (eatery_name, image_url, eatery_address, category, website, open_time, close_time, has_takeout, rating, phone, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING eatery_id;";
             int id = template.queryForObject(sql, 
                 Integer.class, 
                     eatery.getEatery_name(), 
@@ -52,6 +51,8 @@ public class JdbcEateryDao implements EateryDao {
                     eatery.getRating(), 
                     eatery.getPhone(), 
                     eatery.getPrice());
+            sql = "INSERT INTO eatery_vote(eatery_id, vote_id) VALUES (?,?);";
+            template.update(sql, id, voteId);
             return getEatery(id);
         } catch (CannotGetJdbcConnectionException e) {
             System.out.println("Problem connecting");

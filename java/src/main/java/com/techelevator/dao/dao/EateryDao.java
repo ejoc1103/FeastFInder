@@ -4,5 +4,5 @@ import com.techelevator.model.Eatery;
 
 public interface EateryDao {
     Eatery getEatery(int id);
-    Eatery addEatery(Eatery eatery);
+    Eatery addEatery(Eatery eatery, int voteId);
 }

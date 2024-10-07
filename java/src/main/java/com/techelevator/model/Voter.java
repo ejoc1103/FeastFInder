@@ -2,8 +2,17 @@ package com.techelevator.model;
 
 public class Voter {
     private int voter_id;
+    private String voter_name;
     private boolean user_response;
     private int user_id;
+
+    public void setVoter_name() {
+        this.voter_name = voter_name;
+    }
+
+    public String getVoter_name() {
+        return voter_name;
+    }
 
     public int getVoter_id() {
         return voter_id;
@@ -27,5 +36,9 @@ public class Voter {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public void setVoter_name(String string) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

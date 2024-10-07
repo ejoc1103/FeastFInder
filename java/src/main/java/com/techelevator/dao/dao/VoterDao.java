@@ -1,8 +1,9 @@
 package com.techelevator.dao.dao;
 
-import org.springframework.stereotype.Component;
+import com.techelevator.model.Voter;
 
-@Component
+
 public interface VoterDao {
-
+    Voter addVoter(Voter voter);
+    Voter getVoter(int id);
 }

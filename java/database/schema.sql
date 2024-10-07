@@ -63,6 +63,7 @@ CREATE TABLE voter (
 	user_response boolean,
 	user_id int,
 	vote_id int NOT NULL,
+	voter_name varchar(50),
 	CONSTRAINT PK_voter PRIMARY KEY (voter_id),
 	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 	CONSTRAINT FK_vote_id FOREIGN KEY (vote_id) REFERENCES vote(vote_id)

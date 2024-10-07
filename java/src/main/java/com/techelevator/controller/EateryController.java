@@ -26,9 +26,8 @@ public class EateryController {
         return eateryDao.getEatery(id);
     }
 
-    @RequestMapping(path = "/eatery", method= RequestMethod.POST)
-    public Eatery addEatery(@Valid @RequestBody Eatery eatery) {
-        System.out.println(eatery.toString() + "\n\n");
-        return eateryDao.addEatery(eatery);
+    @RequestMapping(path = "/eatery/{voteId}", method= RequestMethod.POST)
+    public Eatery addEatery(@Valid @RequestBody Eatery eatery, @PathVariable int voteId) {
+        return eateryDao.addEatery(eatery, voteId);
     }
 }
