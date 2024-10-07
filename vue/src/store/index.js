@@ -14,6 +14,7 @@ export function createStore(currentToken, currentUser) {
       term: '',
       longitude: '',
       latitude: '',
+      isLoading: false,
       //from here down will need to be removed when end points are created
       groups: [],
       showVoteView: false
@@ -59,6 +60,9 @@ export function createStore(currentToken, currentUser) {
       },
       TOGGLE_VOTE_VIEW(state, view) {
         state.showVoteView = view;
+      },
+      SET_LOADING(state, loading) {
+        state.isLoading = loading;
       },
       //from here down will need to be removed when end points are created
       ADD_GROUP(state, group) {

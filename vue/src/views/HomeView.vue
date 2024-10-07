@@ -1,16 +1,18 @@
 <template>
   <div class="home">
-    <div class="search-form-container">
+
+    <div v-if="showForm" class="search-form-container">
       <h3 class="form-head">Restaurant Finder</h3>
       <div class='full-search-form'>
 
         <EateryFinderFormVue />
+        <button @click="showForm = !showForm">Hide Form</button>
         <div class="popular-search-area">
 
           <h3 class="form-head">Popular Quick Searches</h3>
           <div v-if="seePopular" class="category-container">
             <button v-for="category in categories" :key="category" class="category" @click="setCategory(category)">{{
-            category }}</button>
+      category }}</button>
             <button @click="toggleSeePopular">Hide Popular Searches</button>
 
           </div>
@@ -18,8 +20,12 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <button @click="showForm = !showForm">Show From</button>
+    </div>
     <EateryList v-show="restaurants.length < 2" :restaurants="restaurants" />
   </div>
+
 </template>
 
 <script>
@@ -52,6 +58,7 @@ export default {
         // "Asian cuisine near me"
       ],
       seePopular: false,
+      showForm: false,
     };
   },
   components: {
@@ -60,6 +67,7 @@ export default {
   },
   methods: {
     setCategory(category) {
+      this.$store.commit('SET_CATEGORY', '');
       this.$store.commit("SET_CATEGORY", category);
     },
     toggleSeePopular() {
@@ -85,8 +93,6 @@ export default {
   display: grid;
   justify-items: center;
   align-items: start;
-  padding: 10px;
-
 }
 
 .category-container {
