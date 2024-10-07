@@ -119,6 +119,7 @@ export default {
   border-radius: 30px;
   justify-items: center;
   padding: 15px 25px 5px 25px;
+  box-shadow: 0px 0px 25px #8A2BE2;
 }
 
 button {
@@ -127,6 +128,7 @@ button {
   border-radius: 20px;
   padding: 15px;
   margin: 5px;
+  box-shadow: 0px 0px 10px #8A2BE2;
 }
 
 .options {

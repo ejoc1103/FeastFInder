@@ -101,4 +101,12 @@ export default {
   grid-template-columns: 1fr;
   justify-items: center;
 }
+button {
+  color: #f2fae6;
+  background-color: #228B22;
+  border-radius: 20px;
+  padding: 15px;
+  margin: 5px;
+  box-shadow: 0px 0px 10px #8A2BE2;
+}
 </style>
