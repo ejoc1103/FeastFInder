@@ -17,8 +17,14 @@
 
         <p :style="{ gridArea: 'closeTime' }">{{ restaurant.close_time.slice(0, restaurant.close_time.indexOf(' '))
           }}</p>
-
-        <p :style="{ gridArea: 'address' }">{{ restaurant.eatery_address }} </p>
+        <!-- //Place holder for now we can change to all city from yelp 
+        for smaller view and use this somewhere from more info without the slice -->
+        <div @click="seeAddress = !seeAddress">
+          <p v-if="!seeAddress" :style="{ gridArea: 'address' }">{{
+      restaurant.eatery_address.slice(0, 10) }} </p>
+          <p v-if="seeAddress" :style="{ gridArea: 'address' }">{{
+      restaurant.eatery_address }} </p>
+        </div>
         <!-- 
   <p>{{ restaurant.phone }}</p>
   
@@ -65,6 +71,7 @@ export default {
         thumbs_up: 0,
         thumbs_down: 0,
       },
+      seeAddress: false,
     }
   },
   props: [
@@ -111,10 +118,11 @@ export default {
 #card-view {
   border-radius: 10px;
   border: 5px solid #7FFF00;
+  text-align: center;
   padding: 5px;
   margin: 5px;
   background-size: cover;
-  width: 20vw;
+  width: 27vw;
 }
 
 #card-grid {
@@ -127,33 +135,28 @@ export default {
     "buttons buttons buttons";
   justify-items: center;
   background-color: rgb(255, 105, 180, .5);
-  padding: 10px;
 }
 
 #eatery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
   justify-items: center;
 }
 
 h2 {
   font-size: 2em;
   border-radius: 5px;
-  padding: 5px;
   margin: 0;
 }
 
 p {
   font-size: 1.4em;
   border-radius: 2px;
-  padding: 2px;
   margin: 0;
 }
 
 .votes {
   border-radius: 5px;
-  padding: 5px;
   margin: 0;
 }
 </style>

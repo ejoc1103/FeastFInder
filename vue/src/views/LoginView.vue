@@ -90,7 +90,7 @@ export default {
   grid-template-columns: 1fr 1fr;
   max-height: 70vh;
   justify-items: center;
-  background-image: url('../../public/borderImage.png');
+  background-image: url('../../borderImage.png');
   border-radius: 20px;
   padding: 30px;
 }

@@ -42,7 +42,8 @@ export default {
                 "#8A2BE2", // Bright Purple
                 "#36454F",  // Charcoal (for text)
                 '#7FFF00', // Bright green
-                '#228B22'
+                '#228B22', // Darker Green
+                '#f7a029', // Orange 
             ],
             restaurants : [],
         }

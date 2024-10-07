@@ -25,7 +25,7 @@ public class YelpService {
     private String apiUrl;
 
      public List<Eatery> getEateries(String searchString){
-        String url = this.apiUrl + "?location=" + searchString + "&limit=" + this.limit;
+        String url = this.apiUrl + "?" + searchString + "&limit=" + this.limit;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + this.apiKey);
         headers.set("Content-Type", "application/json");

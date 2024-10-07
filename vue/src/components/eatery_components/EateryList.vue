@@ -1,9 +1,11 @@
 <template>
 
   <div v-if="$store.state.showRestaurants" class="eatery-grid-container">
-    <LoadingComponent v-if="isLoading" />
+    <!-- for now this can be helpful for debugging api calls may also be part
+    of an added feature later -->
+    <!-- <h1>{{ this.search }}</h1> -->
     <EateryCard :restaurants="restaurants" />
-    <button v-if="!isLoading" v-on:click="nextPage">Next Card</button>
+    <button v-on:click="nextPage">Next Card</button>
   </div>
 
 </template>
@@ -11,7 +13,6 @@
 <script>
 import EateryCard from "./EateryCard.vue";
 import RestaurantService from "../../services/RestaurantService";
-import LoadingComponent from '../loading_components/LoadingComponent.vue';
 
 export default {
   data() {
@@ -19,13 +20,12 @@ export default {
       restaurants: [],
       currentResponse: [],
       start: 0,
-      end: 6,
-      isLoading: false,
+      end: 3,
+      search: '',
     };
   },
   components: {
     EateryCard,
-    LoadingComponent
   },
   methods: {
     findEatery() {
@@ -33,32 +33,42 @@ export default {
       this.restaurants = [];
       this.currentResponse = [];
       this.start = 0;
-      this.end = 6;
+      this.end = 3;
 
-      let search = ``
+      this.search = ``
 
       let location = this.$store.state.currentSearch;
-      let term = this.$store.state.category;
-      if (location === '') {
-        search = `latitude=${this.$store.state.latitude}&longitude=${this.$store.state.longitude}`;
+      let term = this.$store.state.term;
+      let category = this.$store.state.category;
+
+      if (location === ``) {
+        this.search = `latitude=${this.$store.state.latitude}&longitude=${this.$store.state.longitude}`;
       } else {
-        search = `location=${this.$store.state.currentSearch}`;
-        if (term !== '') {
-          search += `&term=${this.$store.state.category}`;
-        }
+        this.search = `location=${this.$store.state.currentSearch}`;
       }
 
-      console.log(search);
-      RestaurantService.getRestaurants(search).then((response) => {
+
+      if (term !== `` && category !== ``) {
+        this.search += `&term=${this.$store.state.category} ${this.$store.state.term}`;
+      } else if (term !== ``) {
+        this.search += `&term=${this.$store.state.term}`;
+      } else if (category !== ``) {
+        // Can definitely refine this later
+        this.search += `&term=${this.$store.state.category}`;
+
+      }
+      this.$store.commit('SET_LOADING', true);
+      RestaurantService.getRestaurants(this.search).then((response) => {
         this.currentResponse = response;
         this.updateRestaurants();
         this.$store.commit("TOGGLE_RESTAURANTS", true);
-        this.isLoading = false;
+        this.$store.commit('SET_LOADING', false);
       });
+
     },
     nextPage() {
-      this.start += 6;
-      this.end += 6;
+      this.start += 3;
+      this.end += 3;
       this.updateRestaurants();
     },
     updateRestaurants() {
@@ -73,10 +83,11 @@ export default {
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'SET_CATEGORY' || mutation.type === 'SET_SEARCH_TERM' || mutation.type === 'SET_LOCATION') {
+      if (mutation.type === 'SET_SEARCH_TERM' || mutation.type === 'SET_LOCATION') {
         this.findEatery();
       }
     });
+    
     if (this.$store.state.longitude !== '') {
       this.findEatery();
     }

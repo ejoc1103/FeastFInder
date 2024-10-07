@@ -82,7 +82,8 @@ body {
   color: #E6E6FA;
   background-repeat: repeat;
   background-size: cover;
-  height: 100vh;
+  max-height: 100vh;
+  min-height: 92vh;
   width: 100%;
 }
 
@@ -99,7 +100,6 @@ body {
   justify-content: center;
   align-items: start;
   max-width: 90vw;
-  max-height: 92vh;
 }
 
 #login-main {
@@ -107,7 +107,7 @@ body {
   grid-template-columns: 1fr;
   align-content: center;
   justify-content: center;
-  max-height: 92vh;
+  height: 100vh;
 }
 
 #register-main {
@@ -115,7 +115,7 @@ body {
   grid-template-columns: 1fr;
   align-content: center;
   justify-content: center;
-  max-height: 92vh;
+  height: 100vh;
 }
 
 .nav {
