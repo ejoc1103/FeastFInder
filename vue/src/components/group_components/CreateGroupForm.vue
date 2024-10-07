@@ -36,17 +36,18 @@ export default {
                 //group Id will be removed when we have an endpoint
                 vote_id: '',
             }
+            
         }
 
     },
     methods: {
         submitGroup() {
-            let currentDate = new Date();
-            let newEventDate = new Date(this.newGroup.eventDate);
-            let newVoteDate = new Date(this.newGroup.voteDate);
-            if (currentDate > newEventDate || currentDate > newVoteDate) {
-                console.log("Date cannot be in the past");
-            } else {
+            // let currentDate = new Date();
+            // let newEventDate = new Date(this.newGroup.eventDate);
+            // let newVoteDate = new Date(this.newGroup.voteDate);
+            // if (currentDate > newEventDate || currentDate > newVoteDate) {
+            //     console.log("Date cannot be in the past");
+            // } else {
                 // From here to next comment is a placeholder for the actual endpoint
                 // the id part wont be needed when we have an endpoint
                 this.newGroup.vote_id = this.$store.state.groups.length;
@@ -81,7 +82,7 @@ export default {
             }
         }
     }
-}
+// }
 </script>
 
 <style>

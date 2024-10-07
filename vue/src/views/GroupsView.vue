@@ -11,14 +11,20 @@
 
         <div v-if="!$store.state.showVoteView && groups.length > 0" class="groups">
             <div v-for="group in groups" v-bind:key="group.id" class="group">
-                <h1>{{ group.vote_name }}</h1>
-                <button v-on:click="getEateries(group.vote_id)" class="view-group">View Group</button>
+                <div v-if="group.isActive" :style="{backgroundColor: 'green'}">
+                    <h1>{{ group.vote_name }}</h1>
+                    <button v-on:click="getEateries(group.vote_id)" class="view-group">View Group</button>
+                </div>
+                <div v-else :style="{backgroundColor: 'mauve'}">
+                    <h1>{{ group.vote_name }}</h1>
+                    <button v-on:click="getEateries(group.vote_id)" class="view-group">View Group</button>
+                </div>
             </div>
         </div>
 
         <div v-if="$store.state.showVoteView && $store.state.showVoteView" class="voting">
             <!-- this is where I am working on the group view -->
-            <EateryCard :restaurants="restaurants"/>
+            <EateryCard :restaurants="restaurants" />
             <button v-on:click="hideGroup(idToShow)" class="view-group">Back To Groups View</button>
         </div>
     </div>
@@ -45,7 +51,7 @@ export default {
                 '#228B22', // Darker Green
                 '#f7a029', // Orange 
             ],
-            restaurants : [],
+            restaurants: [],
         }
     },
     components: {
@@ -61,17 +67,17 @@ export default {
     // able to just remove the comments, delete the other method with the same name 
     // and it should work
     created() {
-            //  This should work when we have a get all votes endpoint
-             return VoteService.getVotes().then(response => {
-                console.log(response.data);
-                 this.groups = response.data;
-             }).catch(e => {
-                 console.log(e);
-             }); 
+        //  This should work when we have a get all votes endpoint
+        return VoteService.getVotes().then(response => {
+            console.log(response.data);
+            this.groups = response.data;
+        }).catch(e => {
+            console.log(e);
+        });
     },
     methods: {
         getEateries(id) {
-            this.restaurants =  this.$store.state.groups[id].eateries;
+            this.restaurants = this.$store.state.groups[id].eateries;
             this.showGroup();
             console.log(this.restaurants);
         },
