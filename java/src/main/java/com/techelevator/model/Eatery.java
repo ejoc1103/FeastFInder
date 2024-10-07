@@ -17,7 +17,6 @@ public class Eatery {
 
     public Eatery() {
     }
-    
     public Eatery(String category, String close_time, String eatery_address, String eatery_id, String eatery_name, String has_takeout, String image_url, String open_time, String phone, String price, String rating, String website, String isClosed) {
         this.category = category;
         this.close_time = close_time;

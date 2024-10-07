@@ -50,8 +50,6 @@ export default {
                 // From here to next comment is a placeholder for the actual endpoint
                 // the id part wont be needed when we have an endpoint
                 this.newGroup.vote_id = this.$store.state.groups.length;
-                this.$store.commit('ADD_GROUP', this.newGroup);
-                console.log(this.$store.state.groups[0]);
                 // I believe this will work when there is an end point for creating a vote
                 VoteService.createGroup(this.newGroup)
                     .then(response => {
