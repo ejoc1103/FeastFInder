@@ -2,26 +2,22 @@
   <div class="home">
 
     <div v-if="showForm" class="search-form-container">
-      <h3 class="form-head">Restaurant Finder</h3>
       <div class='full-search-form'>
-
         <EateryFinderFormVue />
-        <button @click="showForm = !showForm">Hide Form</button>
+        <div class="options">
         <div class="popular-search-area">
-
-          <h3 class="form-head">Popular Quick Searches</h3>
           <div v-if="seePopular" class="category-container">
             <button v-for="category in categories" :key="category" class="category" @click="setCategory(category)">{{
-      category }}</button>
-            <button @click="toggleSeePopular">Hide Popular Searches</button>
-
+              category }}</button>
           </div>
-          <button v-else @click="toggleSeePopular">Show Popular Quick Searches</button>
+        </div>
+        <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches' }}</button>
+        <button @click="showForm = !showForm">Hide Form</button>
         </div>
       </div>
     </div>
     <div v-else>
-      <button @click="showForm = !showForm">Show From</button>
+      <button @click="showForm = !showForm">Search Filters</button>
     </div>
     <EateryList v-show="restaurants.length < 2" :restaurants="restaurants" />
   </div>
@@ -74,17 +70,6 @@ export default {
       this.seePopular = !this.seePopular;
     },
   },
-  created() {
-    navigator.geolocation.getCurrentPosition(({ coords }) => {
-      this.$store.commit("SET_LOCATION", {
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-      });
-    }
-    );
-
-  }
-
 };
 </script>
 
@@ -98,12 +83,12 @@ export default {
 .category-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 5px;
+  gap: 10px;
   justify-items: center;
 }
 
 .category {
-  color: #E6E6FA;
+  color: #e6faeb;
   font-size: 1em;
   background-color: #8A2BE2;
   min-width: 10vw;
@@ -128,8 +113,25 @@ export default {
 .search-form-container {
   display: grid;
   grid-template-columns: 1fr;
-  background-color: #228B22;
+  color: #8A2BE2;
+  font-size: 1.2em;
+  background-color: #E6E6FA;
   border-radius: 30px;
   justify-items: center;
+  padding: 15px 25px 5px 25px;
+}
+
+button {
+  color: #f2fae6;
+  background-color: #228B22;
+  border-radius: 20px;
+  padding: 15px;
+  margin: 5px;
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
 }
 </style>

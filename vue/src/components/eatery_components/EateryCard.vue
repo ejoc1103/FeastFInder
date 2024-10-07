@@ -12,11 +12,9 @@
 
         <p :style="{ gridArea: 'category' }">{{ restaurant.category }}</p>
 
-        <p :style="{ gridArea: 'openTime' }">{{ restaurant.open_time.slice(0, restaurant.open_time.indexOf(' '))
-          }}</p>
+        <p :style="{ gridArea: 'openTime' }">Opens: {{ formatTime(restaurant.open_time) }}</p>
 
-        <p :style="{ gridArea: 'closeTime' }">{{ restaurant.close_time.slice(0, restaurant.close_time.indexOf(' '))
-          }}</p>
+        <p :style="{ gridArea: 'closeTime' }">Closes: {{ formatTime(restaurant.close_time) }}</p>
         <!-- //Place holder for now we can change to all city from yelp 
         for smaller view and use this somewhere from more info without the slice -->
         <div @click="seeAddress = !seeAddress">
@@ -82,6 +80,18 @@ export default {
       this.newRestaurant = this.restaurants[eatery_id];
       console.log(this.newRestaurant);
       this.$store.commit('ADD_EATERY_TO_VOTE', { id: vote_id, eatery: this.newRestaurant });
+    },
+    formatTime(time) {
+      let [hours, minutes] = time.split(':');
+
+      if (!minutes) {
+        hours = time.slice(0, 2);
+        minutes = time.slice(2, 4);
+      }
+      hours = parseInt(hours, 10);
+      let suffix = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      return `${hours}:${minutes} ${suffix}`;
     }
   },
   computed: {
@@ -129,12 +139,13 @@ export default {
   display: grid;
   grid-template-areas:
     "name name name"
-    "isClosed openTime closeTime"
-    "category category category"
-    "address address address"
-    "buttons buttons buttons";
+    "isClosed openTime openTime"
+    "isClosed closeTime closeTime"
+    "buttons buttons buttons"
+    "category category category";
   justify-items: center;
   background-color: rgb(255, 105, 180, .5);
+  height: 100%;
 }
 
 #eatery-grid {

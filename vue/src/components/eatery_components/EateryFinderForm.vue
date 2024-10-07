@@ -3,7 +3,7 @@
 
             <label for="zipcode">Zipcode/City:</label>
             <input type="text" v-model="zipcode" />
-            <label for="term">Narrow your search:</label>
+            <label for="term">Filter:</label>
             <input type="text" v-model="term" />
             <button type="submit">Find Eatery</button>
     </form>
@@ -34,4 +34,26 @@ export default {
 
 </script>
 
-<style></style>
+<style>
+.eatery-finder-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+    gap: 15px;
+    border: 1px solid #36454F;
+    border-radius: 5px;
+    background-color: #E6E6FA;
+    width: 95%;
+    justify-content: space-evenly;
+}
+
+.eatery-finder-form input {
+    width: 100px;
+}
+
+.eatery-finder-form input:nth-child(4) {
+    width: 200px;
+}
+
+</style>

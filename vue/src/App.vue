@@ -77,6 +77,7 @@ body {
 }
 
 #capstone-app {
+  padding-top: 10px;
   display: grid;
   justify-items: center;
   color: #E6E6FA;
@@ -85,6 +86,8 @@ body {
   max-height: 100vh;
   min-height: 92vh;
   width: 100%;
+  padding: 15px;
+  box-sizing: border-box; 
 }
 
 #groups-main {
