@@ -61,8 +61,8 @@ public class JdbcVoteDao implements VoteDao{
         vote.setVote_id(results.getInt("vote_id"));
         vote.setVote_name(results.getString("vote_name"));
         vote.setVote_description(results.getString("vote_description"));
-        vote.setVote_date(results.getDate("vote_start_date"));
-        vote.setEvent_date(results.getDate("vote_end_date"));
+        vote.setVote_date(results.getString("vote_start_date"));
+        vote.setEvent_date(results.getString("vote_end_date"));
         vote.setEatery_id(results.getInt("eatery_id"));
         vote.setIs_active(results.getBoolean("is_active"));
         vote.setUser_vote_id(results.getInt("user_vote_id"));
