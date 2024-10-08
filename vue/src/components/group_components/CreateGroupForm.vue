@@ -31,7 +31,6 @@ export default {
                 vote_date: '',
                 is_active: true,
                 eateries: [],
-                vote_id: '',
             }
 
         }
@@ -39,15 +38,17 @@ export default {
     },
     methods: {
         submitGroup() {
-            // let currentDate = new Date();
-            // let newEventDate = new Date(this.newGroup.eventDate);
-            // let newVoteDate = new Date(this.newGroup.voteDate);
+            let currentDate = new Date();
+            let newEventDate = new Date(this.newGroup.event_date);
+            let newVoteDate = new Date(this.newGroup.vote_date);
+            this.newGroup.event_date = newEventDate;
+            this.newGroup.vote_date = newVoteDate;
             // if (currentDate > newEventDate || currentDate > newVoteDate) {
             //     console.log("Date cannot be in the past");
             // } else {
             // From here to next comment is a placeholder for the actual endpoint
             // the id part wont be needed when we have an endpoint
-            this.newGroup.vote_id = this.$store.state.groups.length;
+          
             // I believe this will work when there is an end point for creating a vote
             console.log(this.newGroup);
             VoteService.createGroup(this.newGroup)
@@ -70,7 +71,7 @@ export default {
                 vote_description: '',
                 event_date: '',
                 vote_date: '',
-                isActive: true
+                is_active: true
             }
         }
     },
