@@ -60,14 +60,21 @@ CREATE TABLE vote (
 );
 
 CREATE TABLE voter (
-	voter_id SERIAL,
-	user_response boolean,
-	user_id int,
-	vote_id int NOT NULL,
-	voter_name varchar(50),
-	CONSTRAINT PK_voter PRIMARY KEY (voter_id),
-	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT FK_vote_id FOREIGN KEY (vote_id) REFERENCES vote(vote_id)
+    voter_id SERIAL,
+    vote_id int NOT NULL,
+    voter_name varchar(50),
+    user_id int,
+    CONSTRAINT PK_voter PRIMARY KEY (voter_id),
+    CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
+    CONSTRAINT FK_vote_id FOREIGN KEY (vote_id) REFERENCES vote(vote_id)
+);
+
+CREATE TABLE eatery_voter (
+	voter_id int NOT NULL,
+	eatery_id int NOT NULL,
+	eatery_response boolean,
+	CONSTRAINT FK_voter_id FOREIGN KEY (voter_id) REFERENCES voter(voter_id),
+	CONSTRAINT FK_eatery_id FOREIGN KEY (eatery_id) REFERENCES eatery(eatery_id)
 );
 
 CREATE TABLE eatery_vote (
@@ -76,5 +83,6 @@ CREATE TABLE eatery_vote (
 	CONSTRAINT FK_eatery_id FOREIGN KEY (eatery_id) REFERENCES eatery(eatery_id),
 	CONSTRAINT FK_vote_id FOREIGN KEY (vote_id) REFERENCES vote(vote_id)
 );
+
 
 COMMIT TRANSACTION;

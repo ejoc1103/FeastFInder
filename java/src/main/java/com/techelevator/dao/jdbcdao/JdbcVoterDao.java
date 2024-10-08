@@ -15,10 +15,9 @@ public class JdbcVoterDao implements VoterDao {
     }
 
     @Override
-    public Voter addVoter(Voter voter) {
+    public Voter addVoter(String voter_name) {
         String sql = "INSERT INTO voter(voter_name) VALUES (?) RETURNING voter_id";
-        int voterId = template.queryForObject(sql, Integer.class, voter.getVoter_id());
-        voter.setVoter_id(voterId);
+        int voterId = template.queryForObject(sql, Integer.class, voter_name);
         return getVoter(voterId);
     }
 

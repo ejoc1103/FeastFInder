@@ -4,6 +4,6 @@ import com.techelevator.model.Voter;
 
 
 public interface VoterDao {
-    Voter addVoter(Voter voter);
+    Voter addVoter(String voter_name);
     Voter getVoter(int id);
 }
