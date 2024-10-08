@@ -10,6 +10,22 @@ public class Vote {
     private boolean is_active;
     private int user_vote_id;
 
+    public String getEvent_date() {
+        return event_date;
+    }
+
+    public void setEvent_date(String event_date) {
+        this.event_date = event_date;
+    }
+
+    public String getVote_date() {
+        return vote_date;
+    }
+
+    public void setVote_date(String vote_date) {
+        this.vote_date = vote_date;
+    }
+
     public int getVote_id() {
         return vote_id;
     }
@@ -57,22 +73,4 @@ public class Vote {
     public void setUser_vote_id(int user_vote_id) {
         this.user_vote_id = user_vote_id;
     }
-
-    public String getEvent_date() {
-        return event_date;
-    }
-
-    public void setEvent_date(String event_date) {
-        this.event_date = event_date;
-    }
-
-    public String getVote_date() {
-        return vote_date;
-    }
-
-    public void setVote_date(String vote_date) {
-        this.vote_date = vote_date;
-    }
-
-
 }

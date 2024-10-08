@@ -21,5 +21,5 @@ export default {
     getEatery(voteId) {
         return axios.get(`/eatery/${voteId}`);
     }
-    
+
 }

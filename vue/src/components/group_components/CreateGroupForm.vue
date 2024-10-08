@@ -41,8 +41,7 @@ export default {
             let currentDate = new Date();
             let newEventDate = new Date(this.newGroup.event_date);
             let newVoteDate = new Date(this.newGroup.vote_date);
-            this.newGroup.event_date = newEventDate;
-            this.newGroup.vote_date = newVoteDate;
+
             // if (currentDate > newEventDate || currentDate > newVoteDate) {
             //     console.log("Date cannot be in the past");
             // } else {
@@ -50,10 +49,8 @@ export default {
             // the id part wont be needed when we have an endpoint
           
             // I believe this will work when there is an end point for creating a vote
-            console.log(this.newGroup);
             VoteService.createGroup(this.newGroup)
                 .then(response => {
-                    console.log(response.data);
                     if (response.status === 201) {
                         alert("New Group Created");
                         this.newGroup = {};
