@@ -52,9 +52,33 @@
           <button>Thumbs Up</button>
           <button>Thumbs Down</button>
         </div>
+        <div>
+ 
+          <button @click="showMoreInfo">{{this.showMoreOrLess?"Show Less" : "Show More" }}</button>
+          <p>
+            {{ moreDetailsView ? restaurant.eatery_address : "" }}
+          </p>
+          <p>
+            {{ moreDetailsView ? restaurant.phone : "" }}
+          </p>
+          <p>
+            {{ moreDetailsView ? restaurant.website : "" }}
+          </p>
+          <p>
+            {{ moreDetailsView ? restaurant.price : "" }}
+          </p>
+          <p>
+            {{ moreDetailsView ? restaurant.has_takeout : "" }}
+          </p>
+          <p>
+            {{ moreDetailsView ? restaurant.rating : "" }}
+          </p>
+        
+        </div>
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -62,6 +86,8 @@ import VoteService from "../../services/VoteService";
 export default {
   data() {
     return {
+      showMoreOrLess: false,
+      moreDetailsView: false,
       newRestaurant: {
         eatery_id: "",
         eatery_name: "",
@@ -86,6 +112,12 @@ export default {
   },
   props: ["restaurants"],
   methods: {
+    showMoreOrLessMethod() {
+      this.showMoreOrLess = !this.showMoreOrLess;
+    },
+    showMoreInfo() {
+      this.moreDetailsView = !this.moreDetailsView;
+    },
     addEateryToVote(vote_id, eatery_id) {
       this.newRestaurant = this.restaurants[eatery_id];
       VoteService.addEatery(vote_id, this.newRestaurant)
@@ -110,6 +142,9 @@ export default {
     },
   },
   computed: {
+    buttonName() {
+      return this.showMoreOrLess ? "Show Less" : "Show More";
+    },
     getPathName() {
       console.log(this.$route.name);
       let pathName = this.$route.name;
