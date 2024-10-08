@@ -10,31 +10,26 @@
         <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
         <button v-else v-on:click="toggleGroup">Hide Create Form</button>
 
-        <div v-if="!$store.state.showVoteView && groups.length > 0" class="groups">
+        <div class="groups">
             <div v-for="group in groups" v-bind:key="group.id" class="group">
-                <div v-if="group.isActive" :style="{backgroundColor: 'green'}">
+                <div v-if="!$store.state.showVoteView">
                     <h1>{{ group.vote_name }}</h1>
-                    <button v-on:click="getEateries(group.vote_id)" class="view-group">View Group</button>
+                    <button v-on:click="showGroup" class="view-group">View Group</button>
                 </div>
-                <div v-else :style="{backgroundColor: 'mauve'}">
-                    <h1>{{ group.vote_name }}</h1>
-                    <button v-on:click="getEateries(group.vote_id)" class="view-group">View Group</button>
+                <div v-if="$store.state.showVoteView" class="voting">
+                    <!-- this is where I am working on the group view -->
+                    <GroupCard :group="group"/>
                 </div>
             </div>
         </div>
-
-        <div v-if="$store.state.showVoteView && $store.state.showVoteView" class="voting">
-            <!-- this is where I am working on the group view -->
-            <EateryCard :restaurants="restaurants" />
-            <button v-on:click="hideGroup(idToShow)" class="view-group">Back To Groups View</button>
-        </div>
+        <button v-on:click="hideGroup(idToShow)" class="view-group">Back To Groups View</button>
     </div>
 </template>
 
 <script>
-import EateryCard from '../components/eatery_components/EateryCard.vue';
 import CreateGroupForm from '../components/group_components/CreateGroupForm.vue';
 import VoteService from '../services/VoteService.js';
+import GroupCard from '../components/group_components/GroupCard.vue';
 
 export default {
 
@@ -56,8 +51,8 @@ export default {
         }
     },
     components: {
-        EateryCard,
-        CreateGroupForm
+        CreateGroupForm,
+        GroupCard,
     },
     // computed: {
     //     getGroups() {
@@ -85,14 +80,6 @@ export default {
         },
         hideGroup() {
             this.$store.commit("TOGGLE_VOTE_VIEW", false);
-        },
-        getEateries(vote_id) {
-            return VoteService.getEateries(vote_id).then(response => {
-                console.log(response.data);
-                this.restaurants = response.data;
-            }).catch(e => {
-                console.log(e);
-            });
         }
     }
 }
