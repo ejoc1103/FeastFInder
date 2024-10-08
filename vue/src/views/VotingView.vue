@@ -1,22 +1,34 @@
 <template>
   <div>
-    <EateryCard :restaurants="getRestaurants" />
+    <h1>DAD</h1>
+    <EateryCard :restaurants="restaurants" />
   </div>
 </template>
 
 <script>
+import VoteService from '../services/VoteService.js';
 import EateryCard from '../components/eatery_components/EateryCard.vue';
 export default {
-  components: {
-    EateryCard
+  data() {
+    return {
+      restaurants: [],
+    };
   },
-  computed: {
-    getRestaurants() {
-      console.log(this.$store.state.groups.length);
-      return this.$store.state.groups[this.$route.params.id].eateries;
-    }
-  }
-}
+  components: {
+    EateryCard,
+  },
+  created() {
+    return VoteService.getEateries(this.$route.params.id)
+        .then(response => {
+          console.log(response.data);
+          this.restaurants = response.data;
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    
+  },
+};
 </script>
 
 <style></style>

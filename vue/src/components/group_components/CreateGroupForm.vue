@@ -71,8 +71,7 @@ export default {
                 is_active: true
             }
         }
-    },
-
+    }
 }
 </script>
 
