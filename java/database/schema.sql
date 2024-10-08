@@ -42,6 +42,7 @@ CREATE TABLE eatery (
 	rating int,
 	phone varchar(50),
 	price varchar(50),
+	city varchar(50),
 	CONSTRAINT PK_eatery PRIMARY KEY (eatery_id)
 );
 

@@ -20,13 +20,11 @@ export default {
   created() {
     return VoteService.getEateries(this.$route.params.id)
         .then(response => {
-          console.log(response.data);
           this.restaurants = response.data;
         })
         .catch(e => {
           console.log(e);
         });
-    
   },
 };
 </script>

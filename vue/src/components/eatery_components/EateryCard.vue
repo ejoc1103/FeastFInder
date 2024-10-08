@@ -103,8 +103,6 @@ export default {
         price: "",
         isClosed: false,
         city: "",
-        // thumbs_up: 0,
-        // thumbs_down: 0,
       },
       seeAddress: false,
       groups: [],

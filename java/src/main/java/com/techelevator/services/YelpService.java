@@ -54,7 +54,6 @@ public class YelpService {
     }
 
     private Eatery mapEatery(JsonNode root, int i) {
-        String id = root.path(i).path("id").asText();
                 String name = root.path(i).path("name").asText();
                 String imageUrl = root.path(i).path("image_url").asText();
                 String address =  buildAsset(root.path(i).path("location"));
@@ -73,10 +72,9 @@ public class YelpService {
                 String price = root.path(i).path("price").asText();
                 String rating = root.path(i).path("rating").asText();
                 String phoneNumber = root.path(i).path("display_phone").asText();
-                String website = buildAsset(root.path(i).path("attributes"));
+                String website = root.path(i).path("attributes").path("menu_url").asText();
                 String isClosed = root.path(i).path("is_closed").asText();
                 String city = root.path(i).path("location").path("city").asText();
-        System.out.println(city + "\n\n");
                 return new Eatery(category, closeTime, address, null, name, hasTakeout, imageUrl, openTime, phoneNumber, price, rating, website, isClosed, city);
     }
     private String buildAsset(JsonNode assetArray) {
