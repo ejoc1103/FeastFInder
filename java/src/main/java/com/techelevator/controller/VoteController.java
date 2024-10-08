@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -29,12 +30,12 @@ public class VoteController {
     }
 
     @RequestMapping(path = "/vote", method= RequestMethod.POST)
-    public Vote addVote(@Valid @RequestBody Vote vote) {
-        return voteDao.addVote(vote);
+    public Vote addVote(@Valid @RequestBody Vote vote, Principal principal) {
+        return voteDao.addVote(vote, principal.getName());
     }
 
     @RequestMapping(path = "/votes", method= RequestMethod.GET)
-    public List<Vote> getAllVotes() {
-        return voteDao.getAllVotes();
+    public List<Vote> getAllVotes(Principal principal) {
+        return voteDao.getAllVotes(principal.getName());
     }
 }

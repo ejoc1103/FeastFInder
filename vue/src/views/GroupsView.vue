@@ -85,6 +85,14 @@ export default {
         },
         hideGroup() {
             this.$store.commit("TOGGLE_VOTE_VIEW", false);
+        },
+        getEateries(vote_id) {
+            return VoteService.getEateries(vote_id).then(response => {
+                console.log(response.data);
+                this.restaurants = response.data;
+            }).catch(e => {
+                console.log(e);
+            });
         }
     }
 }

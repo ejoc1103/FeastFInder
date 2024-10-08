@@ -1,5 +1,8 @@
 package com.techelevator.dao.jdbcdao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,6 +20,23 @@ public class JdbcEateryDao implements EateryDao {
 
     public JdbcEateryDao(DataSource ds) {
         template = new JdbcTemplate(ds);
+    }
+    
+    @Override
+    public List<Eatery> getEateries(int voteId) {
+        String sql = "SELECT * FROM eatery WHERE eatery_id IN (SELECT eatery_id FROM eatery_vote WHERE vote_id = ?);";
+        try {
+            SqlRowSet results = template.queryForRowSet(sql, voteId);
+            List<Eatery> eateries = new ArrayList<>();
+            while(results.next())
+                eateries.add(mapRowToEatery(results));
+            return eateries;
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Problem connecting");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data problems");
+        }
+        return null;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.techelevator.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +31,10 @@ public class EateryController {
     @RequestMapping(path = "/eatery/{voteId}", method= RequestMethod.POST)
     public Eatery addEatery(@Valid @RequestBody Eatery eatery, @PathVariable int voteId) {
         return eateryDao.addEatery(eatery, voteId);
+    }
+
+    @RequestMapping(path = "/eateries/{voteId}", method= RequestMethod.GET)
+    public List<Eatery> getEateries(@Valid @PathVariable int voteId) {
+        return eateryDao.getEateries(voteId);
     }
 }

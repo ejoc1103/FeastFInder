@@ -1,6 +1,5 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS user_voter;
 DROP TABLE IF EXISTS voter;
 DROP TABLE IF EXISTS vote;
 DROP TABLE IF EXISTS eatery;
@@ -37,8 +36,8 @@ CREATE TABLE eatery (
 	eatery_address varchar(200),
 	category varchar(50),
 	website varchar(200),
-	open_time varchar,
-	close_time varchar,
+	open_time varchar(50),
+	close_time varchar(50),
 	has_takeout boolean,
 	rating int,
 	phone varchar(50),
@@ -50,12 +49,13 @@ CREATE TABLE vote (
 	vote_id SERIAL,
 	vote_name varchar(50) NOT NULL UNIQUE,
 	vote_description varchar(200),
-	vote_start_date date,
-	vote_end_date date,
+	vote_start_date varchar(50),
+	vote_end_date varchar(50),
 	is_active boolean,
 	eatery_id int,
 	user_vote_id int,
-	CONSTRAINT PK_vote PRIMARY KEY (vote_id)
+	CONSTRAINT PK_vote PRIMARY KEY (vote_id),
+	CONSTRAINT FK_user_vote_id FOREIGN KEY (user_vote_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE voter (
@@ -67,13 +67,6 @@ CREATE TABLE voter (
 	CONSTRAINT PK_voter PRIMARY KEY (voter_id),
 	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
 	CONSTRAINT FK_vote_id FOREIGN KEY (vote_id) REFERENCES vote(vote_id)
-);
-
-CREATE TABLE user_voter (
-	user_id int NOT NULL,
-	voter_id int NOT NULL,
-	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
-	CONSTRAINT FK_voter_id FOREIGN KEY (voter_id) REFERENCES voter(voter_id)
 );
 
 CREATE TABLE eatery_vote (

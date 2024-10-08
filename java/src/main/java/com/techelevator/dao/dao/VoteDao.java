@@ -6,6 +6,6 @@ import com.techelevator.model.Vote;
 
 public interface VoteDao {
     Vote getVote(int id);
-    Vote addVote(Vote vote);
-    List<Vote> getAllVotes();
+    Vote addVote(Vote vote, String name);
+    List<Vote> getAllVotes(String name);
 }

@@ -33,18 +33,23 @@ public class JdbcVoteDao implements VoteDao{
     }
 
     @Override
-    public Vote addVote(Vote vote) {
-        String sql = "INSERT INTO vote(vote_name, vote_description, vote_start_date, vote_end_date, eatery_id) VALUES (?, ?, ?, ?, ?) RETURNING vote_id";
-        int voteId = template.queryForObject(sql, Integer.class, vote.getVote_name(), vote.getVote_description(), vote.getVote_date(), vote.getEvent_date(), vote.getEatery_id());
+    public Vote addVote(Vote vote, String name) {
+        String sql = "INSERT INTO vote(vote_name, vote_description, vote_start_date, vote_end_date, eatery_id, user_vote_id) VALUES (?, ?, ?, ?, ?, ?) RETURNING vote_id";
+        int voteId = template.queryForObject(sql, Integer.class, vote.getVote_name(), vote.getVote_description(), vote.getVote_date(), vote.getEvent_date(), vote.getEatery_id(), getUserIdWithName(name));
         vote.setVote_id(voteId);
         return vote;
     }
 
+    private int getUserIdWithName(String name) {
+        String sql = "SELECT user_id FROM users WHERE username = ?";
+        return template.queryForObject(sql, Integer.class, name);
+    }
+
     @Override
-    public List<Vote> getAllVotes() {
+    public List<Vote> getAllVotes(String name) {
         List<Vote> votes = new ArrayList<>();
-        String sql = "SELECT * FROM vote";
-        SqlRowSet results = template.queryForRowSet(sql);
+        String sql = "SELECT * FROM vote WHERE user_vote_id = ?;";
+        SqlRowSet results = template.queryForRowSet(sql, getUserIdWithName(name));
         while (results.next()) {
             votes.add(mapRowToVote(results));
         }

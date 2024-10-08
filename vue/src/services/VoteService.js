@@ -15,6 +15,10 @@ export default {
         return axios.post(`/eatery/${voteId}`, eatery);
     },
     getEateries(voteId) {
-        return axios.get(`/eatery/${voteId}/eateries`);
+        return axios.get(`/eateries/${voteId}`);
+    },
+    getEatery(voteId) {
+        return axios.get(`/eatery/${voteId}`);
     }
+    
 }
