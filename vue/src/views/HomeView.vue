@@ -1,23 +1,27 @@
 <template>
   <div class="home">
 
+    <CreateGroupForm v-if="$store.state.showGroupForm" />
+
     <div v-if="showForm" class="search-form-container">
       <div class='full-search-form'>
         <EateryFinderFormVue />
         <div class="options">
-        <div class="popular-search-area">
-          <div v-if="seePopular" class="category-container">
-            <button v-for="category in categories" :key="category" class="category" @click="setCategory(category)">{{
-              category }}</button>
+          <div class="popular-search-area">
+            <div v-if="seePopular" class="category-container">
+              <button v-for="category in categories" :key="category" class="category" @click="setCategory(category)">{{
+      category }}</button>
+            </div>
           </div>
-        </div>
-        <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches' }}</button>
-        <button @click="showForm = !showForm">Hide Form</button>
+          <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches'
+            }}</button>
+          <button @click="showForm = !showForm">Hide Form</button>
         </div>
       </div>
     </div>
     <div v-else>
-      <button @click="showForm = !showForm">Create Event</button>
+      <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
+      <button v-else v-on:click="toggleGroup">Hide Create Form</button>
       <button @click="showForm = !showForm">Search Filters</button>
     </div>
     <EateryList v-show="restaurants.length < 2" :restaurants="restaurants" />
@@ -28,6 +32,7 @@
 <script>
 import EateryFinderFormVue from "../components/eatery_components/EateryFinderForm.vue";
 import EateryList from "../components/eatery_components/EateryList.vue";
+import CreateGroupForm from "../components/group_components/CreateGroupForm.vue";
 export default {
   data() {
     return {
@@ -61,6 +66,7 @@ export default {
   components: {
     EateryFinderFormVue,
     EateryList,
+    CreateGroupForm,
   },
   methods: {
     setCategory(category) {
@@ -70,7 +76,19 @@ export default {
     toggleSeePopular() {
       this.seePopular = !this.seePopular;
     },
+    toggleGroup() {
+      this.$store.commit("TOGGLE_GROUP_FORM", !this.$store.state.showGroupForm);
+    },
   },
+  created() {
+    navigator.geolocation.getCurrentPosition(({ coords }) => {
+      this.$store.commit("SET_LOCATION", {
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      });
+    }
+    );
+  }
 };
 </script>
 

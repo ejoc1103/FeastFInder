@@ -15,9 +15,7 @@
 
             <button type="submit">Create This Group</button>
         </form>
-        <button v-on:click="toggleGroup">Hide Create Form</button>
-        <!-- // v-if is only for testing purposes -->
-        
+
     </div>
 </template>
 
@@ -33,10 +31,9 @@ export default {
                 vote_date: '',
                 isActive: true,
                 eateries: [],
-                //group Id will be removed when we have an endpoint
                 vote_id: '',
             }
-            
+
         }
 
     },
@@ -48,29 +45,23 @@ export default {
             // if (currentDate > newEventDate || currentDate > newVoteDate) {
             //     console.log("Date cannot be in the past");
             // } else {
-                // From here to next comment is a placeholder for the actual endpoint
-                // the id part wont be needed when we have an endpoint
-                this.newGroup.vote_id = this.$store.state.groups.length;
-                // I believe this will work when there is an end point for creating a vote
-                VoteService.createGroup(this.newGroup)
-                    .then(response => {
-                        console.log(response.data);
-                        if (response.status === 201) {
-                            alert("New Group Created");
-                            this.newGroup = {};
-                            this.$store.commit('TOGGLE_GROUP_FORM', !this.$store.state.showGroupForm);
-                        }
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    });
-                console.log(this.$store.state.groups.length);
-                this.resetForm();
-            }
-        },
-        toggleGroup() {
-            console.log("toggle group");
-            this.$store.commit('TOGGLE_GROUP_FORM', !this.$store.state.showGroupForm);
+            // From here to next comment is a placeholder for the actual endpoint
+            // the id part wont be needed when we have an endpoint
+            this.newGroup.vote_id = this.$store.state.groups.length;
+            // I believe this will work when there is an end point for creating a vote
+            VoteService.createGroup(this.newGroup)
+                .then(response => {
+                    console.log(response.data);
+                    if (response.status === 201) {
+                        alert("New Group Created");
+                        this.newGroup = {};
+                        this.$store.commit('TOGGLE_GROUP_FORM', !this.$store.state.showGroupForm);
+                    }
+                })
+                .catch(e => {
+                    console.log(e);
+                });
+            this.resetForm();
         },
         resetForm() {
             this.newGroup = {
@@ -81,8 +72,9 @@ export default {
                 isActive: true
             }
         }
-    }
-// }
+    },
+
+}
 </script>
 
 <style>

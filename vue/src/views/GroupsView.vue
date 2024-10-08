@@ -8,6 +8,7 @@
         <button v-if="$store.state.showVoteView" v-on:click="showGroup(idToShow)" class="show-all-groups">See All
             Groups</button>
         <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
+        <button v-else v-on:click="toggleGroup">Hide Create Form</button>
 
         <div v-if="!$store.state.showVoteView && groups.length > 0" class="groups">
             <div v-for="group in groups" v-bind:key="group.id" class="group">
@@ -40,18 +41,18 @@ export default {
     data() {
         return {
             groups: [],
-            //here down is just for testing no for development
-            colorScheme: [
-                "#FF69B4", // Bright Pink
-                "#00FFFF", // Aqua Blue
-                "#E6E6FA", // Lavender
-                "#8A2BE2", // Bright Purple
-                "#36454F",  // Charcoal (for text)
-                '#7FFF00', // Bright green
-                '#228B22', // Darker Green
-                '#f7a029', // Orange 
-            ],
             restaurants: [],
+
+            // colorScheme: [
+            //     "#FF69B4", // Bright Pink
+            //     "#00FFFF", // Aqua Blue
+            //     "#E6E6FA", // Lavender
+            //     "#8A2BE2", // Bright Purple
+            //     "#36454F",  // Charcoal (for text)
+            //     '#7FFF00', // Bright green
+            //     '#228B22', // Darker Green
+            //     '#f7a029', // Orange 
+            // ],
         }
     },
     components: {
@@ -76,11 +77,6 @@ export default {
         });
     },
     methods: {
-        getEateries(id) {
-            this.restaurants = this.$store.state.groups[id].eateries;
-            this.showGroup();
-            console.log(this.restaurants);
-        },
         toggleGroup() {
             this.$store.commit("TOGGLE_GROUP_FORM", !this.$store.state.showGroupForm);
         },

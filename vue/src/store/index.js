@@ -64,18 +64,6 @@ export function createStore(currentToken, currentUser) {
       SET_LOADING(state, loading) {
         state.isLoading = loading;
       },
-      //from here down will need to be removed when end points are created
-      ADD_GROUP(state, group) {
-        state.groups.push(group);
-      },
-      ADD_EATERY_TO_VOTE(state, data) {
-        console.log(data);
-        if (state.groups[data.id].eateries === undefined) {
-          state.groups[data.id].eateries = [data.eatery];
-        } else {
-          state.groups[data.id].eateries.push(data.eatery);
-        }
-      }
     },
   });
   return store;

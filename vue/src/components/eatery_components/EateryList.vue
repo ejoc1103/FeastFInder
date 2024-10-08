@@ -40,7 +40,7 @@ export default {
       let location = this.$store.state.currentSearch;
       let term = this.$store.state.term;
       let category = this.$store.state.category;
-
+      console.log(location, term, category);
       if (location === ``) {
         this.search = `latitude=${this.$store.state.latitude}&longitude=${this.$store.state.longitude}`;
       } else {
@@ -57,6 +57,7 @@ export default {
         this.search += `&term=${this.$store.state.category}`;
 
       }
+      console.log(this.search);
       this.$store.commit('SET_LOADING', true);
       RestaurantService.getRestaurants(this.search).then((response) => {
         this.currentResponse = response;
@@ -83,14 +84,18 @@ export default {
   },
   created() {
     this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'SET_SEARCH_TERM' || mutation.type === 'SET_LOCATION') {
+      if (mutation.type === 'SET_NARROW_TERM') {
+        this.findEatery();
+      } else if (mutation.type === 'SET_LOCATION') {
+        this.findEatery();
+      } else if (mutation.type === 'SET_CATEGORY') {
         this.findEatery();
       }
+
+
     });
-    
-    if (this.$store.state.longitude !== '') {
-      this.findEatery();
-    }
+
+
   }
 };
 </script>
@@ -101,6 +106,7 @@ export default {
   grid-template-columns: 1fr;
   justify-items: center;
 }
+
 button {
   color: #f2fae6;
   background-color: #228B22;

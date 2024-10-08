@@ -110,15 +110,16 @@ body {
   grid-template-columns: 1fr;
   align-content: center;
   justify-content: center;
-  height: 100vh;
+  max-height: 100vh;
+  height: 95vh;
 }
 
 #register-main {
   display: grid;
   grid-template-columns: 1fr;
   align-content: center;
-  justify-content: center;
-  height: 100vh;
+  max-height: 100vh;
+  height: 95vh;
 }
 
 .nav {
