@@ -48,6 +48,10 @@ export default {
       const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
       return pattern.test(this.user.password);
     },
+    isEmailValid() {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(this.user.username);
+    },
     register() {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
@@ -55,9 +59,10 @@ export default {
       } else if (!this.isPasswordValid()) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number.';
-      }
-
-      else {
+      } else if(!this.isEmailValid()) {
+        this.registrationErrors = true;
+        this.registrationErrorMsg = 'Username must be a valid email address.';
+      } else {
         authService
           .register(this.user)
           .then((response) => {
