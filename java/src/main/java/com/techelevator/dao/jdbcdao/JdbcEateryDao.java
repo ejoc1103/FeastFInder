@@ -57,7 +57,7 @@ public class JdbcEateryDao implements EateryDao {
     @Override
     public Eatery addEatery(Eatery eatery, int voteId) {
         try {
-            String sql = "INSERT INTO eatery (eatery_name, image_url, eatery_address, category, website, open_time, close_time, has_takeout, rating, phone, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING eatery_id;";
+            String sql = "INSERT INTO eatery (eatery_name, image_url, eatery_address, category, website, open_time, close_time, has_takeout, rating, phone, price, city) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING eatery_id;";
             int id = template.queryForObject(sql, 
                 Integer.class, 
                     eatery.getEatery_name(), 
@@ -70,7 +70,9 @@ public class JdbcEateryDao implements EateryDao {
                     eatery.isHas_takeout(), 
                     eatery.getRating(), 
                     eatery.getPhone(), 
-                    eatery.getPrice());
+                    eatery.getPrice(),
+                    eatery.getCity());
+
             sql = "INSERT INTO eatery_vote(eatery_id, vote_id) VALUES (?,?);";
             template.update(sql, id, voteId);
             return getEatery(id);
@@ -96,6 +98,7 @@ public class JdbcEateryDao implements EateryDao {
         eatery.setRating(results.getDouble("rating"));
         eatery.setPhone(results.getString("phone"));
         eatery.setPrice(results.getString("price"));
+        eatery.setCity(results.getString("city"));
         return eatery;
     }
 }

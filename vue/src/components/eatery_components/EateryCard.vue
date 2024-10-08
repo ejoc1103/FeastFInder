@@ -1,40 +1,46 @@
 <template>
   <div id="eatery-grid">
-    <div v-for="restaurant in restaurants" v-bind:key="restaurant.eatery_id" id="card-view"
-      :style="{ backgroundImage: `url(${restaurant.image_url})` }">
+    <div
+      v-for="restaurant in restaurants"
+      v-bind:key="restaurant.eatery_id"
+      id="card-view"
+      :style="{ backgroundImage: `url(${restaurant.image_url})` }"
+    >
       <div id="card-grid">
-
         <h2 :style="{ gridArea: 'name' }">{{ restaurant.eatery_name }}</h2>
 
-
-        <p :style="{ gridArea: 'isClosed' }">{{ restaurant.isClosed ? "Open Now" : "Closed" }}</p>
-
+        <p :style="{ gridArea: 'isClosed' }">
+          {{ restaurant.isClosed ? "Open Now" : "Closed" }}
+        </p>
 
         <p :style="{ gridArea: 'category' }">{{ restaurant.category }}</p>
 
-        <p :style="{ gridArea: 'openTime' }">Opens: {{ formatTime(restaurant.open_time) }}</p>
+        <p :style="{ gridArea: 'openTime' }">
+          Opens: {{ formatTime(restaurant.open_time) }}
+        </p>
 
-        <p :style="{ gridArea: 'closeTime' }">Closes: {{ formatTime(restaurant.close_time) }}</p>
-        <!-- //Place holder for now we can change to all city from yelp 
-        for smaller view and use this somewhere from more info without the slice -->
-        <div @click="seeAddress = !seeAddress">
-          <p v-if="!seeAddress" :style="{ gridArea: 'address' }">{{
-      restaurant.eatery_address.slice(0, 10) }} </p>
-          <p v-if="seeAddress" :style="{ gridArea: 'address' }">{{
-      restaurant.eatery_address }} </p>
-        </div>
-        <!-- 
-  <p>{{ restaurant.phone }}</p>
-  
-  <p>{{ restaurant.website }}</p>
-  
-  <p>{{ restaurant.has_takeout }}</p> -->
+        <p :style="{ gridArea: 'closeTime' }">
+          Closes: {{ formatTime(restaurant.close_time) }}
+        </p>
+        <p :style="{ gridArea: 'city' }">{{ restaurant.city }}</p>
 
-        <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
-          <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">{{ group.vote_name }}
-            <button @click="addEateryToVote(group.vote_id, restaurant.eatery_id)">Add to Group</button>
+        <div
+          v-if="getPathName === 'home'"
+          :style="{ gridArea: 'buttons' }"
+          class="votes"
+        >
+          <div
+            v-for="group in groups"
+            :key="group.vote_id"
+            :name="group.vote_id"
+          >
+            {{ group.vote_name }}
+            <button
+              @click="addEateryToVote(group.vote_id, restaurant.eatery_id)"
+            >
+              Add to Group
+            </button>
           </div>
-
         </div>
 
         <div v-if="getPathName === 'groups'" class="votes">
@@ -47,13 +53,12 @@
           <button>Thumbs Down</button>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import VoteService from '../../services/VoteService';
+import VoteService from "../../services/VoteService";
 export default {
   data() {
     return {
@@ -71,39 +76,38 @@ export default {
         phone: "",
         price: "",
         isClosed: false,
+        city: "",
         // thumbs_up: 0,
         // thumbs_down: 0,
       },
       seeAddress: false,
       groups: [],
-    }
+    };
   },
-  props: [
-    "restaurants",
-  ],
+  props: ["restaurants"],
   methods: {
     addEateryToVote(vote_id, eatery_id) {
       this.newRestaurant = this.restaurants[eatery_id];
       VoteService.addEatery(vote_id, this.newRestaurant)
-        .then(response => {
+        .then((response) => {
           console.log(response.data);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
     formatTime(time) {
-      let [hours, minutes] = time.split(':');
+      let [hours, minutes] = time.split(":");
 
       if (!minutes) {
         hours = time.slice(0, 2);
         minutes = time.slice(2, 4);
       }
       hours = parseInt(hours, 10);
-      let suffix = hours >= 12 ? 'PM' : 'AM';
+      let suffix = hours >= 12 ? "PM" : "AM";
       hours = hours % 12 || 12;
       return `${hours}:${minutes} ${suffix}`;
-    }
+    },
   },
   computed: {
     getPathName() {
@@ -128,14 +132,14 @@ export default {
     // }
   },
   created() {
-    this.groups =
-      VoteService.getVotes()
-        .then(response => {
-          this.groups = response.data;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+    this.groups = VoteService.getVotes()
+      .then((response) => {
+        console.log(response.data);
+        this.groups = response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
 };
 </script>
@@ -143,7 +147,7 @@ export default {
 <style>
 #card-view {
   border-radius: 10px;
-  border: 5px solid #7FFF00;
+  border: 5px solid #7fff00;
   text-align: center;
   padding: 5px;
   margin: 5px;
@@ -156,11 +160,11 @@ export default {
   grid-template-areas:
     "name name name"
     "isClosed openTime openTime"
-    "isClosed closeTime closeTime"
+    "city closeTime closeTime"
     "buttons buttons buttons"
     "category category category";
   justify-items: center;
-  background-color: rgb(255, 105, 180, .5);
+  background-color: rgb(255, 105, 180, 0.5);
   height: 100%;
 }
 

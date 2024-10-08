@@ -14,10 +14,19 @@ public class Eatery {
     private String phone;
     private String price;
     private boolean isClosed;
+    private String city;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public Eatery() {
     }
-    public Eatery(String category, String close_time, String eatery_address, String eatery_id, String eatery_name, String has_takeout, String image_url, String open_time, String phone, String price, String rating, String website, String isClosed) {
+    public Eatery(String category, String close_time, String eatery_address, String eatery_id, String eatery_name, String has_takeout, String image_url, String open_time, String phone, String price, String rating, String website, String isClosed, String city) {
         this.category = category;
         this.close_time = close_time;
         this.eatery_address = eatery_address;
@@ -35,6 +44,7 @@ public class Eatery {
         this.website = website;
         if(isClosed != null)
             this.isClosed = Boolean.parseBoolean(isClosed);
+        this.city = city;
     }
 
     public int getEatery_id() {

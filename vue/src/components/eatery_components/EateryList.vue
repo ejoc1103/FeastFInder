@@ -60,6 +60,7 @@ export default {
       console.log(this.search);
       this.$store.commit('SET_LOADING', true);
       RestaurantService.getRestaurants(this.search).then((response) => {
+        console.log(response);
         this.currentResponse = response;
         this.updateRestaurants();
         this.$store.commit("TOGGLE_RESTAURANTS", true);
