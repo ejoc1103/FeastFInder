@@ -19,9 +19,7 @@ export default {
     },
     methods: {
         setSearch() {
-
             this.$store.commit('SET_SEARCH_TERM', this.zipcode);
-
             this.$store.commit('SET_NARROW_TERM', this.term);
             this.resetForm();
         },

@@ -1,7 +1,5 @@
 package com.techelevator.model;
 
-import java.sql.Date;
-
 public class Vote {
     private int vote_id;
     private String vote_name;
@@ -75,5 +73,4 @@ public class Vote {
     public void setUser_vote_id(int user_vote_id) {
         this.user_vote_id = user_vote_id;
     }
-
 }
