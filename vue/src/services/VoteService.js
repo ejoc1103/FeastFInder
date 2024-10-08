@@ -8,6 +8,7 @@ export default {
         return axios.get(`/vote/${id}`)
     },
     createGroup(poll) {
+        console.log(poll);
         return axios.post(`/vote`, poll);
     },
     addEatery(voteId, eatery) {
@@ -20,5 +21,5 @@ export default {
     getEatery(voteId) {
         return axios.get(`/eatery/${voteId}`);
     }
-    
+
 }
