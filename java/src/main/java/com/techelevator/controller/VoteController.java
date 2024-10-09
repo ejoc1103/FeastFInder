@@ -19,7 +19,6 @@ import com.techelevator.model.Vote;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
 public class VoteController {
     @Autowired
     private VoteDao voteDao;
@@ -29,6 +28,7 @@ public class VoteController {
         return voteDao.getVote(id);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/vote", method= RequestMethod.POST)
     public Vote addVote(@Valid @RequestBody Vote vote, Principal principal) {
         return voteDao.addVote(vote, principal.getName());
