@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
-        System.out.println("dad");
         // try (Scanner sc = new Scanner(System.in)) {
         //     System.out.print("Would you like to reset database? (y/n): ");
         //     String response = sc.nextLine();

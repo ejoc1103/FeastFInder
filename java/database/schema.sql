@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS user_group;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS groups;
 DROP TABLE IF EXISTS eatery_vote;
+DROP TABLE IF EXISTS eatery_voter;
 
 CREATE TABLE users (
 	user_id SERIAL,
