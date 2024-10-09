@@ -8,11 +8,9 @@ export default {
         return axios.get(`/vote/${id}`)
     },
     createGroup(poll) {
-        console.log(poll);
         return axios.post(`/vote`, poll);
     },
     addEatery(voteId, eatery) {
-        console.log(eatery);
         return axios.post(`/eatery/${voteId}`, eatery);
     },
     getEateries(voteId) {
@@ -20,6 +18,15 @@ export default {
     },
     getEatery(voteId) {
         return axios.get(`/eatery/${voteId}`);
+    },
+    setVoterName(voter_name, vote_id) {
+        return axios.post(`/voter/${voter_name}/${vote_id}`);
+    },
+    //needs to be vote_id
+    castVote(vote, eatery_id, voter_id) {
+        console.log(vote, eatery_id, voter_id);
+        let data = { eatery_response: vote, eatery_id: eatery_id, voter_id: voter_id };
+        return axios.post(`/addEateryVote`, data);
     }
 
 }

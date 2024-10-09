@@ -17,13 +17,15 @@ public class VoterController {
     @Autowired
     private VoterDao voterDao;
 
-    @RequestMapping(path = "/voter/{voter_name}", method = RequestMethod.POST)
-    public Voter addVoter(@PathVariable String voter_name) {
-        return voterDao.addVoter(voter_name);
+    @RequestMapping(path = "/voter/{voter_name}/{vote_id}", method = RequestMethod.POST)
+    public Voter addVoter(@PathVariable String voter_name, @PathVariable int vote_id) {
+        return voterDao.addVoter(voter_name, vote_id);
     }
 
     @RequestMapping(path = "/voter/{voter_id}", method = RequestMethod.GET)
     public Voter getVoter(@PathVariable int voter_id) {
         return voterDao.getVoter(voter_id);
     }
+
+
 }

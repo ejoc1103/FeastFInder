@@ -36,8 +36,11 @@ export default {
         return "../../registerBackground.jpg";
       } else if (pathName === 'groups') {
         return "../../groupsBackground.jpg";
-      } else {
-        return "../../dinerBackground.jpg";
+      } else if (pathName === 'voting') {
+        return "../../votingBackground.jpg";
+      }
+      else {
+        return "../../homeBackground.jpg";
       }
     },
     idSelector() {
@@ -48,6 +51,8 @@ export default {
         return 'login-main';
       } else if (pathName === 'register') {
         return 'register-main';
+      } else if (pathName === 'voting') {
+        return 'voting-main';
       }
       else {
         return 'home-main';
@@ -87,7 +92,7 @@ body {
   min-height: 92vh;
   width: 100%;
   padding: 15px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 #groups-main {
@@ -120,6 +125,14 @@ body {
   align-content: center;
   max-height: 100vh;
   height: 95vh;
+}
+
+#voting-main {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  gap: 20px;
+  max-width: 90vw;
 }
 
 .nav {

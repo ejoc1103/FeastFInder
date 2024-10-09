@@ -1,19 +1,24 @@
 <template>
     <div id="create-group-container">
         <form id="create-group-form" v-on:submit.prevent="submitGroup">
-            <label for="group-name">Group Name</label>
-            <input type="text" id="group-name" name="groupName" v-model="newGroup.vote_name">
+            <div id="name-container">
+                <label for="group-name">Group Name</label>
+                <input type="text" id="group-name" name="groupName" v-model="newGroup.vote_name">
+            </div>
+            <div id="description-container">
+                <label for="group-description">Description</label>
+                <input type="text" id="group-description" name="groupDescription" v-model="newGroup.group_description">
+            </div>
+            <div id="vote-container">
+                <label for="vote-date">Vote Date</label>
+                <input type="date" id="vote-date" name="voteDate" v-model="newGroup.vote_date">
+            </div>
+            <div id="event-container">
+                <label for="event-date">Event Date</label>
+                <input type="date" id="event-date" name="eventDate" v-model="newGroup.event_date">
+            </div>
 
-            <label for="group-description">Description</label>
-            <input type="text" id="group-description" name="groupDescription" v-model="newGroup.group_description">
-
-            <label for="vote-date">Vote Date</label>
-            <input type="date" id="vote-date" name="voteDate" v-model="newGroup.vote_date">
-
-            <label for="event-date">Event Date</label>
-            <input type="date" id="event-date" name="eventDate" v-model="newGroup.event_date">
-
-            <button type="submit">Create This Group</button>
+            <button id="create-group-button" type="submit">Create This Group</button>
         </form>
 
     </div>
@@ -47,7 +52,7 @@ export default {
             // } else {
             // From here to next comment is a placeholder for the actual endpoint
             // the id part wont be needed when we have an endpoint
-          
+
             // I believe this will work when there is an end point for creating a vote
             VoteService.createGroup(this.newGroup)
                 .then(response => {
@@ -78,7 +83,12 @@ export default {
 <style>
 #create-group-container {
     display: grid;
-    grid-template-columns: 1fr;
+
+    grid-template-areas:
+        "name description"
+        "vote description"
+        "event description"
+        "button button button";
     background-color: #E6E6FA;
     gap: 10px;
     ;
@@ -87,6 +97,32 @@ export default {
     margin: 5px;
     color: #8A2BE2;
 }
+
+    /* name
+        description
+        vote
+        event
+        button */
+    #name-container {
+        grid-area: name;
+    }
+    #description-container {
+        grid-area: description;
+    }
+    #vote-container {
+        grid-area: vote;
+    }
+    #event-container {
+        grid-area: event;
+    }
+    #create-group-button {
+        grid-area: button;
+        background-color: #8A2BE2;
+        color: #E6E6FA;
+        border-radius: 10px;
+        padding: 5px;
+        margin: 5px;
+    }
 
 #create-group-form {
     display: flex;

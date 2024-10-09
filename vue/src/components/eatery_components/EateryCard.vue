@@ -1,11 +1,7 @@
 <template>
   <div id="eatery-grid">
-    <div
-      v-for="restaurant in restaurants"
-      v-bind:key="restaurant.eatery_id"
-      id="card-view"
-      :style="{ backgroundImage: `url(${restaurant.image_url})` }"
-    >
+    <div v-for="restaurant in restaurants" v-bind:key="restaurant.eatery_id" id="card-view"
+      :style="{ backgroundImage: `url(${restaurant.image_url})` }">
       <div id="card-grid">
         <h2 :style="{ gridArea: 'name' }">{{ restaurant.eatery_name }}</h2>
 
@@ -24,20 +20,10 @@
         </p>
         <p :style="{ gridArea: 'city' }">{{ restaurant.city }}</p>
 
-        <div
-          v-if="getPathName === 'home'"
-          :style="{ gridArea: 'buttons' }"
-          class="votes"
-        >
-          <div
-            v-for="group in groups"
-            :key="group.vote_id"
-            :name="group.vote_id"
-          >
+        <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
+          <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">
             {{ group.vote_name }}
-            <button
-              @click="addEateryToVote(group.vote_id, restaurant.eatery_id)"
-            >
+            <button @click="addEateryToVote(group.vote_id, restaurant.eatery_id)">
               Add to Group
             </button>
           </div>
@@ -47,14 +33,14 @@
           <h3>4 Up Votes</h3>
           <h3>4 Down Votes</h3>
         </div>
-
+        <!-- Current Work Place  -->
         <div v-if="getPathName === 'voting'" class="votes">
-          <button>Thumbs Up</button>
-          <button>Thumbs Down</button>
+          <button @click="castVote(true, restaurant.eatery_id)">Thumbs Up</button>
+          <button @click="castVote(false, restaurant.eatery_id)">Thumbs Down</button>
         </div>
         <div>
- 
-          <button @click="showMoreInfo">{{this.showMoreOrLess?"Show Less" : "Show More" }}</button>
+
+          <button @click="showMoreInfo">{{ this.showMoreOrLess ? "Show Less" : "Show More" }}</button>
           <p>
             {{ moreDetailsView ? restaurant.eatery_address : "" }}
           </p>
@@ -73,12 +59,12 @@
           <p>
             {{ moreDetailsView ? restaurant.rating : "" }}
           </p>
-        
+
         </div>
       </div>
     </div>
   </div>
-  
+
 </template>
 
 <script>
@@ -110,6 +96,15 @@ export default {
   },
   props: ["restaurants"],
   methods: {
+    castVote(vote, eatery_id) {
+      VoteService.castVote(vote, eatery_id, this.$store.state.voter_id)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
     showMoreOrLessMethod() {
       this.showMoreOrLess = !this.showMoreOrLess;
     },

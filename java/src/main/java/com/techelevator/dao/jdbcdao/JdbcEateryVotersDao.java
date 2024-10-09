@@ -18,7 +18,7 @@ public class JdbcEateryVotersDao implements EateryVotersDao {
 
     @Override
     public Eatery_Voter addEateryVote(Eatery_Voter eateryVoter) {
-        String sql = "INSERT INTO eatery_vote (eatery_id, voter_id, eatery_response) VALUES (?, ?, ?) RETURNING eatery_id;";
+        String sql = "INSERT INTO eatery_voter (eatery_id, voter_id, eatery_response) VALUES (?, ?, ?) RETURNING eatery_id;";
         int id = template.queryForObject(sql, Integer.class, eateryVoter.getEatery_id(), eateryVoter.getVoter_id(), eateryVoter.isResponse());
         return getEateryVoteById(id);
     }

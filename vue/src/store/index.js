@@ -15,6 +15,7 @@ export function createStore(currentToken, currentUser) {
       longitude: '',
       latitude: '',
       isLoading: false,
+      voter_id: -1,
       //from here down will need to be removed when end points are created
       groups: [],
       showVoteView: false
@@ -64,6 +65,9 @@ export function createStore(currentToken, currentUser) {
       SET_LOADING(state, loading) {
         state.isLoading = loading;
       },
+      SET_VOTER_ID(state,id){
+        state.voter_id = id;
+      }
     },
   });
   return store;
