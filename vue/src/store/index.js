@@ -67,7 +67,7 @@ export function createStore(currentToken, currentUser) {
       },
       SET_VOTER_ID(state,id){
         state.voter_id = id;
-      }
+      },
     },
   });
   return store;

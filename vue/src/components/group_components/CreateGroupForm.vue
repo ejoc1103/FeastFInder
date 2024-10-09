@@ -1,21 +1,42 @@
 <template>
     <div id="create-group-container">
         <form id="create-group-form" v-on:submit.prevent="submitGroup">
-            <div id="name-container">
-                <label for="group-name">Group Name</label>
-                <input type="text" id="group-name" name="groupName" v-model="newGroup.vote_name">
+            <div class="event-container">
+                <div class="sub-container">
+
+                    <label for="group-name">
+                        <h3>Group Name:</h3>
+                    </label>
+                    <input type="text" id="group-name" name="groupName" v-model="newGroup.vote_name">
+                </div>
             </div>
-            <div id="description-container">
-                <label for="group-description">Description</label>
-                <input type="text" id="group-description" name="groupDescription" v-model="newGroup.group_description">
+            <div class="event-container">
+                <div class="sub-container">
+                    <label for="group-description">
+                        <h3>Description:</h3>
+                    </label>
+                    <input type="text" id="group-description" name="groupDescription"
+                        v-model="newGroup.group_description">
+                </div>
             </div>
-            <div id="vote-container">
-                <label for="vote-date">Vote Date</label>
-                <input type="date" id="vote-date" name="voteDate" v-model="newGroup.vote_date">
+            <div class="event-container">
+                <div class="sub-container">
+
+                    <label for="vote-date">
+                        <h3>Vote Date:</h3>
+                    </label>
+                    <input type="date" id="vote-date" name="voteDate" v-model="newGroup.vote_date">
+                </div>
             </div>
-            <div id="event-container">
-                <label for="event-date">Event Date</label>
-                <input type="date" id="event-date" name="eventDate" v-model="newGroup.event_date">
+            <div class="event-container">
+                <div class="sub-container">
+                    <label for="event-date">
+                        <h3>
+                            Event Date:
+                        </h3>
+                    </label>
+                    <input type="date" id="event-date" name="eventDate" v-model="newGroup.event_date">
+                </div>
             </div>
 
             <button id="create-group-button" type="submit">Create This Group</button>
@@ -81,55 +102,51 @@ export default {
 </script>
 
 <style>
-#create-group-container {
-    display: grid;
-
-    grid-template-areas:
-        "name description"
-        "vote description"
-        "event description"
-        "button button button";
-    background-color: #E6E6FA;
-    gap: 10px;
-    ;
-    border-radius: 10px;
-    padding: 5px;
-    margin: 5px;
+h3 {
+    font-size: 1.2rem;
     color: #8A2BE2;
+    background-color: #E6E6FA;
+    padding: 1vh;
+    border-radius: 10px;
 }
 
-    /* name
-        description
-        vote
-        event
-        button */
-    #name-container {
-        grid-area: name;
-    }
-    #description-container {
-        grid-area: description;
-    }
-    #vote-container {
-        grid-area: vote;
-    }
-    #event-container {
-        grid-area: event;
-    }
-    #create-group-button {
-        grid-area: button;
-        background-color: #8A2BE2;
-        color: #E6E6FA;
-        border-radius: 10px;
-        padding: 5px;
-        margin: 5px;
-    }
+#create-group-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 30px;
+}
 
 #create-group-form {
     display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    max-width: 50vw;
-    justify-content: center;
     align-items: center;
-    gap: 10px;
+    padding: 1rem;
+    gap: 15px;
+    border-radius: 30px;
+    background-color: #ea6190;
+    max-width: 50vw;
+    justify-content: space-evenly;
+    box-shadow: 0px 0px 10px 5px #20d3ed;
+}
+
+.event-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('../../public/borderImage.png');
+    border-radius: 30px;
+    padding: 2vw;
+    width: 15vw;
+}
+
+.sub-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fdac2a;
+    border-radius: 30px;
+    padding: 20px;
 }
 </style>

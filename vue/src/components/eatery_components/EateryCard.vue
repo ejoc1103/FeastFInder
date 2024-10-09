@@ -1,69 +1,120 @@
 <template>
-  <div id="eatery-grid">
-    <div v-for="restaurant in restaurants" v-bind:key="restaurant.eatery_id" id="card-view"
-      :style="{ backgroundImage: `url(${restaurant.image_url})` }">
-      <div id="card-grid">
-        <h2 :style="{ gridArea: 'name' }">{{ restaurant.eatery_name }}</h2>
+  <div>
+    <div id="eatery-grid" v-if="!moreDetailsView">
 
-        <p :style="{ gridArea: 'isClosed' }">
-          {{ restaurant.isClosed ? "Open Now" : "Closed" }}
-        </p>
-
-        <p :style="{ gridArea: 'category' }">{{ restaurant.category }}</p>
-
-        <p :style="{ gridArea: 'openTime' }">
-          Opens: {{ formatTime(restaurant.open_time) }}
-        </p>
-
-        <p :style="{ gridArea: 'closeTime' }">
-          Closes: {{ formatTime(restaurant.close_time) }}
-        </p>
-        <p :style="{ gridArea: 'city' }">{{ restaurant.city }}</p>
-
-        <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
-          <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">
-            {{ group.vote_name }}
-            <button @click="addEateryToVote(group.vote_id, restaurant.eatery_id)">
-              Add to Group
-            </button>
+      <div v-for="restaurant in restaurants" v-bind:key="restaurant.eatery_id" class="card-view"
+        :style="{ backgroundImage: `url(${restaurant.image_url})` }">
+        <div id="card-grid">
+          <h2 class="restaurant-name">{{ restaurant.eatery_name }}</h2>
+          <div>
+            <h3>
+              Currently:{{ restaurant.isClosed ? "Open Now" : "Closed" }}
+            </h3>
           </div>
-        </div>
 
-        <div v-if="getPathName === 'groups'" class="votes">
-          <h3>4 Up Votes</h3>
-          <h3>4 Down Votes</h3>
-        </div>
-        <!-- Current Work Place  -->
-        <div v-if="getPathName === 'voting'" class="votes">
-          <button @click="castVote(true, restaurant.eatery_id)">Thumbs Up</button>
-          <button @click="castVote(false, restaurant.eatery_id)">Thumbs Down</button>
-        </div>
-        <div>
+          <div>
+            <h3>
+              <!-- Only some times works we'll need to edit this -->
+              {{ restaurant.category.slice(0, restaurant.category.indexOf(" ")) }}
+            </h3>
+          </div>
 
-          <button @click="showMoreInfo">{{ this.showMoreOrLess ? "Show Less" : "Show More" }}</button>
-          <p>
-            {{ moreDetailsView ? restaurant.eatery_address : "" }}
-          </p>
-          <p>
-            {{ moreDetailsView ? restaurant.phone : "" }}
-          </p>
-          <p>
-            {{ moreDetailsView ? restaurant.website : "" }}
-          </p>
-          <p>
-            {{ moreDetailsView ? restaurant.price : "" }}
-          </p>
-          <p>
-            {{ moreDetailsView ? restaurant.has_takeout : "" }}
-          </p>
-          <p>
-            {{ moreDetailsView ? restaurant.rating : "" }}
-          </p>
+          <div>
+            <h3>
+              Opens: {{ formatTime(restaurant.open_time) }}
+            </h3>
+            <h3>
+              Closes: {{ formatTime(restaurant.close_time) }}
+            </h3>
+          </div>
+          <div>
+            <h3>
+              {{ restaurant.city }}
+            </h3>
+          </div>
+
+          <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
+            <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">
+
+              <button @click="addEateryToVote(group.vote_id, restaurant.eatery_id)">
+                {{ group.vote_name }}
+              </button>
+            </div>
+          </div>
+
+
+
+          <div v-if="getPathName === 'groups'" class="votes">
+            <h3>4 Up Votes</h3>
+            <h3>4 Down Votes</h3>
+          </div>
+          <!-- Current Work Place  -->
+          <div v-if="getPathName === 'voting'" class="votes">
+            <button @click="castVote(true, restaurant.eatery_id)">Thumbs Up</button>
+            <button @click="castVote(false, restaurant.eatery_id)">Thumbs Down</button>
+          </div>
+          <div>
+
+            <button @click="showMoreInfo(restaurant)">{{ this.showMoreOrLess ? "Show Less" : "Show More" }}</button>
+          </div>
 
         </div>
       </div>
+
     </div>
+    <div v-if="moreDetailsView" class="more-details-view">
+
+      <h2 class="restaurant-name">{{ restaurantDetails.eatery_name }}</h2>
+      <div>
+        <h3>
+          Currently:{{ restaurantDetails.isClosed ? "Open Now" : "Closed" }}
+        </h3>
+      </div>
+
+      <div>
+        <h3>
+          <!-- Only some times works we'll need to edit this -->
+          {{ restaurantDetails.category }}
+        </h3>
+      </div>
+
+      <div>
+        <h3>
+          Opens: {{ formatTime(restaurantDetails.open_time) }}
+        </h3>
+        <h3>
+          Closes: {{ formatTime(restaurantDetails.close_time) }}
+        </h3>
+      </div>
+      <div>
+        <h3>
+          {{ restaurantDetails.city }}
+        </h3>
+      </div>
+      <h3>
+        {{ restaurantDetails.eatery_address }}
+      </h3>
+      <h3>
+        {{ restaurantDetails.phone }}
+      </h3>
+      <h3>
+        {{ restaurantDetails.website }}
+      </h3>
+      <h3>
+        {{ restaurantDetails.price }}
+      </h3>
+      <h3>
+        {{ restaurantDetails.has_takeout }}
+      </h3>
+      <h3>
+        {{ restaurantDetails.rating }}
+      </h3>
+      <button @click="showMoreInfo()">Show All</button>
+    </div>
+
   </div>
+
+
 
 </template>
 
@@ -92,12 +143,13 @@ export default {
       },
       seeAddress: false,
       groups: [],
+      restaurantDetails: {},
     };
   },
   props: ["restaurants"],
   methods: {
     castVote(vote, eatery_id) {
-    
+      console.log(eatery_id);
       VoteService.castVote(vote, eatery_id, this.$store.state.voter_id)
         .then((response) => {
           console.log(response.data);
@@ -109,15 +161,23 @@ export default {
     showMoreOrLessMethod() {
       this.showMoreOrLess = !this.showMoreOrLess;
     },
-    showMoreInfo() {
+    showMoreInfo(restaurant) {
+      console.log(restaurant);
+      if (restaurant) {
+        this.restaurantDetails = restaurant;
+      } else {
+        this.restaurantDetails = null;
+      }
       this.moreDetailsView = !this.moreDetailsView;
     },
-    addEateryToVote(vote_id, eatery_id) {
-      this.newRestaurant = this.restaurants[eatery_id];
-      console.log(this.newRestaurant);
-      console.log(vote_id);
-      console.log(eatery_id);
-      VoteService.addEatery(vote_id, this.newRestaurant)
+    //Error is coming from somewhere around here Joe please take a look I
+    // couldn't figure it out
+    addEateryToVote(vote_id, pickedId) {
+      console.log(this.restaurants);
+      let pickedRestaurant = this.restaurants.filter((restaurant) => restaurant.eatery_id === pickedId);
+
+      console.log(pickedId);
+      VoteService.addEatery(vote_id, pickedRestaurant)
         .then((response) => {
           console.log(response.data);
         })
@@ -143,10 +203,21 @@ export default {
       return this.showMoreOrLess ? "Show Less" : "Show More";
     },
     getPathName() {
-      console.log(this.$route.name);
       let pathName = this.$route.name;
       return pathName;
     },
+    checkPathName() {
+      let pathName = this.$route.name;
+
+      if (pathName === 'home') {
+        return 'card-view';
+      } else if (pathName === 'groups' && this.moreDetailsView) {
+        return 'more-details-view';
+      } else if (pathName === 'voting') {
+        return 'voting-view';
+      }
+      return pathName;
+    }
     // getGroups() {
     //   return this.$store.state.groups;
     // },
@@ -166,7 +237,6 @@ export default {
   created() {
     this.groups = VoteService.getVotes()
       .then((response) => {
-        console.log(response.data);
         this.groups = response.data;
       })
       .catch((e) => {
@@ -177,27 +247,36 @@ export default {
 </script>
 
 <style>
-#card-view {
+.card-view {
   border-radius: 10px;
   border: 5px solid #7fff00;
   text-align: center;
   padding: 5px;
   margin: 5px;
   background-size: cover;
-  width: 27vw;
+  width: 26vw;
+}
+
+.more-details-view {
+  grid-column: span 3;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  border: 5px solid #7fff00;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+  background-size: cover;
+  background-color: rgb(234, 97, 144, 0.6);
+  width: 80vw;
 }
 
 #card-grid {
-  display: grid;
-  grid-template-areas:
-    "name name name"
-    "isClosed openTime openTime"
-    "city closeTime closeTime"
-    "buttons buttons buttons"
-    "category category category";
-  justify-items: center;
-  background-color: rgb(255, 105, 180, 0.5);
-  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: start;
+  background-color: rgba(255, 105, 180, 0.5);
 }
 
 #eatery-grid {
@@ -206,14 +285,22 @@ export default {
   justify-items: center;
 }
 
-h2 {
-  font-size: 2em;
+.restaurant-name {
   border-radius: 5px;
   margin: 0;
+  background-color: #22b6b2;
+  border-radius: 30px;
+  padding: 1vw;
+}
+
+h2 {
+  border-radius: 5px;
+  margin: 0;
+  background-color: #22b6b2;
+  border-radius: 30px;
 }
 
 p {
-  font-size: 1.4em;
   border-radius: 2px;
   margin: 0;
 }

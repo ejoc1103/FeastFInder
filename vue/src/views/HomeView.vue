@@ -23,6 +23,7 @@
       <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
       <button v-else v-on:click="toggleGroup">Hide Create Form</button>
       <button @click="showForm = !showForm">Search Filters</button>
+      <select></select>
     </div>
     <EateryList v-show="restaurants.length < 2" :restaurants="restaurants" />
   </div>

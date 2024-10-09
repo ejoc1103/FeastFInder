@@ -4,9 +4,17 @@
     <!-- for now this can be helpful for debugging api calls may also be part
     of an added feature later -->
     <!-- <h1>{{ this.search }}</h1> -->
+
+    <!-- Left Chevron Icon -->
+    <button v-if="showBack" v-on:click="nextPage(false)">
+      <i class="fas fa-chevron-left"></i>
+    </button>
     <EateryCard :restaurants="restaurants" />
-    <button v-on:click="nextPage(false)">Last Card</button>
-    <button v-on:click="nextPage(true)">Next Card</button>
+
+    <!-- Right Chevron Icon -->
+    <button v-if="showForward" v-on:click="nextPage(true)">
+      <i class="fas fa-chevron-right"></i>
+    </button>
   </div>
 
 </template>
@@ -41,7 +49,6 @@ export default {
       let location = this.$store.state.currentSearch;
       let term = this.$store.state.term;
       let category = this.$store.state.category;
-      console.log(location, term, category);
       if (location === ``) {
         this.search = `latitude=${this.$store.state.latitude}&longitude=${this.$store.state.longitude}`;
       } else {
@@ -58,10 +65,9 @@ export default {
         this.search += `&term=${this.$store.state.category}`;
 
       }
-  
+
       this.$store.commit('SET_LOADING', true);
       RestaurantService.getRestaurants(this.search).then((response) => {
-        console.log(response);
         this.currentResponse = response;
         this.updateRestaurants();
         this.$store.commit("TOGGLE_RESTAURANTS", true);
@@ -70,7 +76,7 @@ export default {
 
     },
     nextPage(next) {
-      if(next) {
+      if (next) {
         this.start += 3;
         this.end += 3;
 
@@ -82,12 +88,14 @@ export default {
     },
     updateRestaurants() {
       this.restaurants = [];
+      // going to be needed but hold on
       for (let i = this.start; i < this.end; i++) {
         if (this.currentResponse.data[i]) {
           this.restaurants.push(this.currentResponse.data[i]);
         }
       }
-      console.log(this.restaurants);
+
+
     },
   },
   created() {
@@ -104,23 +112,42 @@ export default {
     });
 
 
-  }
+  },
+  computed: {
+    showBack() {
+      if (this.start === 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    showForward() {
+      if (this.end >= this.currentResponse.data.length) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  },
 };
 </script>
 
 <style scoped>
 .eatery-grid-container {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 9fr 1fr;
   justify-items: center;
 }
 
 button {
-  color: #f2fae6;
-  background-color: #228B22;
-  border-radius: 20px;
-  padding: 15px;
-  margin: 5px;
-  box-shadow: 0px 0px 10px #8A2BE2;
+  background-image: url('../../../public/borderImage.png');
+  background-size: cover;
+  box-shadow: 20px 20px 40px rgba(164, 36, 115, 0.8);
+}
+
+i {
+  color: #7FFF00;
+  font-weight: bold;
+  font-size: 4em;
 }
 </style>

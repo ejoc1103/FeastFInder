@@ -120,16 +120,17 @@ export default {
 }
 
 .group-banner {
-    color: #8A2BE2;
     font-size: 1.2em;
-    background-color: #E6E6FA;
     border-radius: 30%;
-    border-image: url('../../public/borderImage.png') 30 round;
+    background-image: url('../../public/borderImage.png');
     border: 10px solid;
 }
 
 .group-banner h1 {
     margin: 20px;
+    background-color: #8A2BE2;
+    border-radius: 30%;
+    padding: 1vw;
 }
 
 .view-group {

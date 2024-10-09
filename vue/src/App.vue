@@ -74,6 +74,40 @@ body {
   background-color: #00FFFF;
 }
 
+button {
+  color: #f2fae6;
+  background-color: #f7a94d;
+  border-radius: 20px;
+  padding: 10px;
+  /* Increase padding */
+  box-shadow: 8px 8px 25px rgba(164, 36, 115, 0.8);
+  /* Increase shadow intensity and transparency */
+  font-size: 1.2em;
+  /* Larger font size */
+  font-weight: bold;
+  /* Make text bolder */
+  border: 2px solid #a42473;
+  /* Add a contrasting border */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Smooth transition for hover effects */
+}
+
+button:hover {
+  background-color: #f88f1f;
+
+  box-shadow: 10px 10px 30px rgba(164, 36, 115, 1);
+
+  transform: scale(1.05);
+  /* crazy but cool option */
+  /* border: 20px solid;
+  
+  border-image: url('../public/borderImage.png') 30 round;
+
+  border-radius: 10px; */
+
+}
+
 .full-app-body {
   display: grid;
   justify-items: center;

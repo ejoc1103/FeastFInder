@@ -10,7 +10,9 @@ export default {
     createGroup(poll) {
         return axios.post(`/vote`, poll);
     },
+    //FOCUS HERE
     addEatery(voteId, eatery) {
+        console.log(voteId, eatery);
         return axios.post(`/eatery/${voteId}`, eatery);
     },
     getEateries(voteId) {
