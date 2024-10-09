@@ -36,7 +36,7 @@
           <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
             <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">
 
-              <button @click="addEateryToVote(group.vote_id, restaurant.eatery_id)">
+              <button @click="addEateryToVote(group.vote_id, restaurants.indexOf(restaurant))">
                 {{ group.vote_name }}
               </button>
             </div>
@@ -45,8 +45,8 @@
 
 
           <div v-if="getPathName === 'groups'" class="votes">
-            <h3>4 Up Votes</h3>
-            <h3>4 Down Votes</h3>
+            <h3 >{{ getUpVotes(restaurant) }} Up Votes</h3>
+            <h3>{{ getDownVotes(restaurant) }} Down Votes</h3>
           </div>
           <!-- Current Work Place  -->
           <div v-if="getPathName === 'voting'" class="votes">
@@ -144,10 +144,36 @@ export default {
       seeAddress: false,
       groups: [],
       restaurantDetails: {},
+      upVotes: [],
+      downVotes: [],
     };
   },
   props: ["restaurants"],
   methods: {
+    getUpVotes(restaurant) {
+      let count = 0;
+      VoteService.getVoteTrueCount(restaurant.eatery_id)
+        .then((response) => {
+          console.log(response.data);
+          count = `${response.data} dad`;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      return count;
+    },
+    getDownVotes(restaurant) {
+      let count = 0;
+      VoteService.getVoteFalseCount(restaurant.eatery_id)
+        .then((response) => {
+          console.log(response.data);
+          count = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      return count;
+    },
     castVote(vote, eatery_id) {
       console.log(eatery_id);
       VoteService.castVote(vote, eatery_id, this.$store.state.voter_id)
@@ -173,10 +199,10 @@ export default {
     //Error is coming from somewhere around here Joe please take a look I
     // couldn't figure it out
     addEateryToVote(vote_id, pickedId) {
-      console.log(this.restaurants);
-      let pickedRestaurant = this.restaurants.filter((restaurant) => restaurant.eatery_id === pickedId);
-
+      console.log("dad");
       console.log(pickedId);
+      let pickedRestaurant = this.restaurants[pickedId];
+
       VoteService.addEatery(vote_id, pickedRestaurant)
         .then((response) => {
           console.log(response.data);
@@ -242,7 +268,16 @@ export default {
       .catch((e) => {
         console.log(e);
       });
-  },
+    // for(let = 0; i < this.groups.length; i++) {
+    //   VoteService.getVoteTrueCount(this.groups[i].eatery_id)
+    //     .then((response) => {
+    //       this.upVotes.push(response.data);
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // }
+  }
 };
 </script>
 
