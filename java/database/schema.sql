@@ -74,6 +74,8 @@ CREATE TABLE eatery_voter (
 	voter_id int NOT NULL,
 	eatery_id int NOT NULL,
 	eatery_response boolean,
+	casted_id SERIAL,
+	CONSTRAINT PK_casted_id PRIMARY KEY (casted_id),
 	CONSTRAINT FK_voter_id FOREIGN KEY (voter_id) REFERENCES voter(voter_id),
 	CONSTRAINT FK_eatery_id FOREIGN KEY (eatery_id) REFERENCES eatery(eatery_id)
 );

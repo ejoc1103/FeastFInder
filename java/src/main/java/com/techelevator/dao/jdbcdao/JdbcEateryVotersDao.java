@@ -36,7 +36,7 @@ public class JdbcEateryVotersDao implements EateryVotersDao {
     }
 
     private Eatery_Voter getEateryVoteById(int id) {
-        String sql = "SELECT * FROM eatery_vote WHERE eatery_id = ?;";
+        String sql = "SELECT * FROM eatery_voter WHERE eatery_id = ?;";
         return template.queryForObject(sql, (rs, rowNum) -> {
             Eatery_Voter eateryVoter = new Eatery_Voter();
             eateryVoter.setEatery_id(rs.getInt("eatery_id"));
