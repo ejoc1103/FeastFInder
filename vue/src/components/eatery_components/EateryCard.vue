@@ -97,6 +97,7 @@ export default {
   props: ["restaurants"],
   methods: {
     castVote(vote, eatery_id) {
+    
       VoteService.castVote(vote, eatery_id, this.$store.state.voter_id)
         .then((response) => {
           console.log(response.data);
@@ -113,6 +114,9 @@ export default {
     },
     addEateryToVote(vote_id, eatery_id) {
       this.newRestaurant = this.restaurants[eatery_id];
+      console.log(this.newRestaurant);
+      console.log(vote_id);
+      console.log(eatery_id);
       VoteService.addEatery(vote_id, this.newRestaurant)
         .then((response) => {
           console.log(response.data);
@@ -143,9 +147,9 @@ export default {
       let pathName = this.$route.name;
       return pathName;
     },
-    getGroups() {
-      return this.$store.state.groups;
-    },
+    // getGroups() {
+    //   return this.$store.state.groups;
+    // },
 
     // getTime(time) {
     //   let string = time.slice(0, this.restaurants[0].openTime.indexOf(' '));

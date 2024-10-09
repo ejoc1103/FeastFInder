@@ -5,7 +5,8 @@
     of an added feature later -->
     <!-- <h1>{{ this.search }}</h1> -->
     <EateryCard :restaurants="restaurants" />
-    <button v-on:click="nextPage">Next Card</button>
+    <button v-on:click="nextPage(false)">Last Card</button>
+    <button v-on:click="nextPage(true)">Next Card</button>
   </div>
 
 </template>
@@ -57,7 +58,7 @@ export default {
         this.search += `&term=${this.$store.state.category}`;
 
       }
-      console.log(this.search);
+  
       this.$store.commit('SET_LOADING', true);
       RestaurantService.getRestaurants(this.search).then((response) => {
         console.log(response);
@@ -68,19 +69,25 @@ export default {
       });
 
     },
-    nextPage() {
-      this.start += 3;
-      this.end += 3;
+    nextPage(next) {
+      if(next) {
+        this.start += 3;
+        this.end += 3;
+
+      } else {
+        this.start -= 3;
+        this.end -= 3;
+      }
       this.updateRestaurants();
     },
     updateRestaurants() {
       this.restaurants = [];
       for (let i = this.start; i < this.end; i++) {
         if (this.currentResponse.data[i]) {
-          this.currentResponse.data[i].eatery_id = i;
           this.restaurants.push(this.currentResponse.data[i]);
         }
       }
+      console.log(this.restaurants);
     },
   },
   created() {
