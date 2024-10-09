@@ -2,7 +2,7 @@
   <div>
     <div class="card">
       <div class="card-header">
-        <EateryCard :restaurants="restaurants" />
+        <EateryCard :restaurants="restaurants" :upVotes="upVotes" :downVotes="downVotes" />
       </div>
       <div class="card-body">
 
@@ -18,6 +18,8 @@ export default {
   data() {
     return {
       restaurants: [],
+      upVotes: [],
+      downVotes: [],
     };
   },
   props: ['group'],
@@ -26,9 +28,25 @@ export default {
   },
   created() {
     this.restaurants = VoteService.getEateries(this.group.vote_id).then(response => {
-      console.log(this.group.vote_id);
-      console.log(response.data);
       this.restaurants = response.data;
+      this.restaurants.forEach((group) => {
+          VoteService.getVoteTrueCount(group.eatery_id)
+            .then((response) => {
+              console.log("dad");
+              console.log(response.data);
+              this.upVotes.push(response.data);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+          VoteService.getVoteFalseCount(group.eatery_id)
+            .then((response) => {
+              this.downVotes.push(response.data);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        });
     }).catch(e => {
       console.log(e);
     });
