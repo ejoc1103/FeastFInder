@@ -24,7 +24,6 @@ export default {
     },
     //needs to be vote_id
     castVote(vote, eatery_id, voter_id) {
-        console.log(vote, eatery_id, voter_id);
         let data = { eatery_response: vote, eatery_id: eatery_id, voter_id: voter_id };
         return axios.post(`/addEateryVote`, data);
     }

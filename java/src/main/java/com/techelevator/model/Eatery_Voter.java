@@ -5,14 +5,6 @@ public class Eatery_Voter {
     private int eatery_id;
     private int voter_id;
 
-    public boolean isResponse() {
-        return eatery_response;
-    }
-
-    public void setResponse(boolean eatery_response) {
-        this.eatery_response = eatery_response;
-    }
-
     public int getEatery_id() {
         return eatery_id;
     }
@@ -28,5 +20,14 @@ public class Eatery_Voter {
     public void setVoter_id(int voter_id) {
         this.voter_id = voter_id;
     }
+
+    public boolean getEatery_response() {
+        return eatery_response;
+    }
+
+    public void setEatery_response(boolean eatery_response) {
+        this.eatery_response = eatery_response;
+    }
+
 
 }

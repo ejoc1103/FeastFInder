@@ -32,6 +32,7 @@ public class EateryVotersControllers {
 
     @RequestMapping(path="/addEateryVote", method = RequestMethod.POST)
     public Eatery_Voter addEateryVote(@Valid @RequestBody Eatery_Voter eateryVoter) {
+        System.out.println(eateryVoter.getEatery_response() + "\n".repeat(5));
         return eateryVotersDao.addEateryVote(eateryVoter);
     }
 }
