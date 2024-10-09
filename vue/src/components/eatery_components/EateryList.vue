@@ -140,7 +140,7 @@ export default {
 }
 
 button {
-  background-image: url('../../../public/borderImage.png');
+  background-image: url('../../../borderImage.png');
   background-size: cover;
   box-shadow: 20px 20px 40px rgba(164, 36, 115, 0.8);
 }

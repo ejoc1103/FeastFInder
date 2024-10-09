@@ -6,32 +6,27 @@
         :style="{ backgroundImage: `url(${restaurant.image_url})` }">
         <div id="card-grid">
           <h2 class="restaurant-name">{{ restaurant.eatery_name }}</h2>
-          <div>
-            <h3>
-              Currently:{{ restaurant.isClosed ? "Open Now" : "Closed" }}
+          <div id="status-container">
+            <h3 id="status">
+              {{ restaurant.isClosed ? "Sorry They're Closed" : "Open Now!" }}
+            </h3>
+            <h3 id="category">
+              {{ restaurant.category }}
             </h3>
           </div>
 
-          <div>
-            <h3>
-              <!-- Only some times works we'll need to edit this -->
-              {{ restaurant.category.slice(0, restaurant.category.indexOf(" ")) }}
-            </h3>
-          </div>
-
-          <div>
-            <h3>
+          <div id="hours-container">
+            <h3 id="open-time">
               Opens: {{ formatTime(restaurant.open_time) }}
             </h3>
-            <h3>
+            <h3 id="close-time">
               Closes: {{ formatTime(restaurant.close_time) }}
             </h3>
+            <p id="city">
+              In {{ restaurant.city }}
+            </p>
           </div>
-          <div>
-            <h3>
-              {{ restaurant.city }}
-            </h3>
-          </div>
+
 
           <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
             <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">
@@ -247,13 +242,16 @@ export default {
 
 <style>
 .card-view {
+  display: grid;
+  align-items: stretch;
   border-radius: 10px;
-  border: 5px solid #7fff00;
+  border: 5px solid #8A2BE2;
   text-align: center;
   padding: 5px;
   margin: 5px;
   background-size: cover;
   width: 26vw;
+  min-height: 70vh;
 }
 
 .more-details-view {
@@ -261,30 +259,30 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   border-radius: 10px;
-  border: 5px solid #7fff00;
+  border: 1% solid #00FFFF;
   text-align: center;
   padding: 5px;
   margin: 5px;
   background-size: cover;
-  background-color: rgb(234, 97, 144, 0.6);
   width: 80vw;
 }
 
 #card-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: stretch;
   align-items: start;
-  background-color: rgba(255, 105, 180, 0.5);
 }
 
 #eatery-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
+  justify-content: center;
+  align-items: stretch;
 }
 
 .restaurant-name {
+  grid-column: span 3;
   border-radius: 5px;
   margin: 0;
   background-color: #22b6b2;
@@ -292,20 +290,60 @@ export default {
   padding: 1vw;
 }
 
-h2 {
-  border-radius: 5px;
-  margin: 0;
-  background-color: #22b6b2;
-  border-radius: 30px;
-}
-
-p {
-  border-radius: 2px;
-  margin: 0;
-}
-
 .votes {
   border-radius: 5px;
   margin: 0;
+}
+
+#status-container {
+  grid-column: span 3;
+  background-color: rgb(247, 160, 41, 0.55);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#status {
+  color: #2f855a;
+  /* Green for open */
+}
+
+#status-container #status:contains("Closed") {
+  color: #c53030;
+  /* Red for closed */
+}
+
+/* Category container styling */
+#category-container {
+  text-align: center;
+  background-color: rgb(247, 160, 41, 0.55);
+  padding: 5px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#category {
+  font-weight: bold;
+}
+
+#hours-container {
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: rgb(247, 160, 41, 0.55);
+  border-radius: 30%;
+  padding: 2px;
+}
+
+#open-time,
+#close-time {
+  color: #8A2BE2;
+  /* Dark gray */
+}
+
+#city {
+  grid-column: span 2;
+  color: #00FFFF;
+  /* Dark gray */
 }
 </style>

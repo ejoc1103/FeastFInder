@@ -102,7 +102,7 @@ button:hover {
   /* crazy but cool option */
   /* border: 20px solid;
   
-  border-image: url('../public/borderImage.png') 30 round;
+  border-image: url('../borderImage.png') 30 round;
 
   border-radius: 10px; */
 
@@ -149,8 +149,9 @@ button:hover {
   grid-template-columns: 1fr;
   align-content: center;
   justify-content: center;
+  /* for now solved the scroll issue  */
   max-height: 100vh;
-  height: 80vh;
+  height: 95vh;
 }
 
 #register-main {
