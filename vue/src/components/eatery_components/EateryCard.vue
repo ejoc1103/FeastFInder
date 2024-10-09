@@ -107,6 +107,7 @@
         {{ restaurantDetails.has_takeout }}
       </h3>
       <h3>
+        <i class="fa-solid fa-star"></i>
         {{ restaurantDetails.rating }}
       </h3>
       <button @click="showMoreInfo()">Show All</button>
