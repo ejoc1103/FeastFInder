@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="eatery-grid" v-if="!moreDetailsView">
+    <div id="eatery-grid" v-if="!$store.state.moreDetailsView">
 
       <div v-for="restaurant in restaurants" v-bind:key="restaurant.eatery_id" class="card-view"
         :style="{ backgroundImage: `url(${restaurant.image_url})` }">
@@ -57,19 +57,12 @@
       </div>
 
     </div>
-    <div v-if="moreDetailsView" class="more-details-view">
+    <div v-if="$store.state.moreDetailsView" class="more-details-view">
 
       <h2 class="restaurant-name">{{ restaurantDetails.eatery_name }}</h2>
-      <div>
+      <div class="more-status">
         <h3>
           Currently:{{ restaurantDetails.isClosed ? "Open Now" : "Closed" }}
-        </h3>
-      </div>
-
-      <div>
-        <h3>
-          <!-- Only some times works we'll need to edit this -->
-          {{ restaurantDetails.category }}
         </h3>
       </div>
 
@@ -85,6 +78,9 @@
         <h3>
           {{ restaurantDetails.city }}
         </h3>
+        <h3>
+          {{ restaurantDetails.category }}
+        </h3>
       </div>
       <h3>
         {{ restaurantDetails.eatery_address }}
@@ -92,18 +88,23 @@
       <h3>
         {{ restaurantDetails.phone }}
       </h3>
-      <h3 v-if="restaurantDetails.website !== null">
-        {{ restaurantDetails.website }}
-      </h3>
+
+      <a v-if="restaurantDetails.website !== null" :href="restaurantDetails.website" class="website-link">Link to their
+        online menu!</a>
+
       <h3>
         {{ restaurantDetails.price }}
       </h3>
       <h3>
-        {{ restaurantDetails.has_takeout }}
+        {{ restaurantDetails.has_takeout ? "They have takeout!" : "No takeout " }} 😢
       </h3>
       <h3>
-        <i class="fa-solid fa-star"></i>
-        {{ restaurantDetails.rating }}
+        <span v-for="n in Math.floor(restaurantDetails.rating)" :key="n">
+          <i class="fa-solid fa-star"></i>
+        </span>
+        <span v-if="restaurantDetails.rating % 1 !== 0">
+          <i class="fa-solid fa-star-half-alt"></i> <!-- Half-star for non-integer ratings -->
+        </span>
       </h3>
       <button @click="showMoreInfo()">Show All</button>
     </div>
@@ -120,7 +121,6 @@ export default {
   data() {
     return {
       showMoreOrLess: false,
-      moreDetailsView: false,
       newRestaurant: {
         eatery_id: "",
         eatery_name: "",
@@ -158,16 +158,13 @@ export default {
       this.showMoreOrLess = !this.showMoreOrLess;
     },
     showMoreInfo(restaurant) {
-      console.log(restaurant);
       if (restaurant) {
         this.restaurantDetails = restaurant;
       } else {
         this.restaurantDetails = null;
       }
-      this.moreDetailsView = !this.moreDetailsView;
+      this.$store.commit('TOGGLE_DETAILS_VIEW');
     },
-    //Error is coming from somewhere around here Joe please take a look I
-    // couldn't figure it out
     addEateryToVote(vote_id, pickedId) {
       let pickedRestaurant = this.restaurants[pickedId];
 
@@ -205,7 +202,7 @@ export default {
 
       if (pathName === 'home') {
         return 'card-view';
-      } else if (pathName === 'groups' && this.moreDetailsView) {
+      } else if (pathName === 'groups' && this.$store.state.moreDetailsView) {
         return 'more-details-view';
       } else if (pathName === 'voting') {
         return 'voting-view';
@@ -241,6 +238,41 @@ export default {
 </script>
 
 <style>
+.website-link {
+  color: #f2fae6;
+  background-color: #E6E6FA;
+  /* Increase padding */
+  box-shadow: 8px 8px 25px rgba(164, 36, 115, 0.8);
+  /* Increase shadow intensity and transparency */
+  font-size: 1.2em;
+  /* Larger font size */
+  font-weight: bold;
+  /* Make text bolder */
+  border: 2px solid #a42473;
+  /* Add a contrasting border */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Smooth transition for hover effects */
+  cursor: pointer;
+}
+
+a:hover {
+  background-color: #f88f1f;
+
+  box-shadow: 10px 10px 30px rgba(164, 36, 115, 1);
+
+  transform: scale(1.05);
+
+}
+
+button {
+  background-color: #8A2BE2;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  margin: 5px;
+}
+
 .card-view {
   display: grid;
   align-items: stretch;
@@ -259,12 +291,57 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   border-radius: 10px;
-  border: 1% solid #00FFFF;
+  border: 10px solid #00FFFF;
   text-align: center;
   padding: 5px;
   margin: 5px;
   background-size: cover;
   width: 80vw;
+  max-height: 70vh;
+  background: linear-gradient(50deg,
+
+      #00FFFF,
+
+      #228B22,
+
+      #FF69B4,
+
+      #8A2BE2,
+
+      #7FFF00,
+
+      #f7a029);
+}
+
+.more-details-view div {
+  border: 5px solid #8A2BE2;
+}
+
+.more-details-view .more-status {
+  display: grid;
+  grid-column: span 1;
+  height: 100%;
+  background-color: #8A2BE2;
+  max-height: 12vh;
+  border-radius: 30px;
+  padding: 4px;
+  justify-content: center;
+  width: 80%;
+}
+
+.more-details-view h3 {
+  padding: 0 20px;
+}
+
+.website-link {
+  font-size: 1.2em;
+  text-decoration: none;
+  color: #8A2BE2;
+  background-color: #00FFFF;
+  border-radius: 30px;
+  justify-self: center;
+  align-self: center;
+  padding: 5px 10px;
 }
 
 #card-grid {

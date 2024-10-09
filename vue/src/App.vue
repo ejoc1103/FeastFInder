@@ -76,9 +76,7 @@ body {
 
 button {
   color: #f2fae6;
-  background-color: #f7a94d;
-  border-radius: 20px;
-  padding: 10px;
+  background-color: #E6E6FA;
   /* Increase padding */
   box-shadow: 8px 8px 25px rgba(164, 36, 115, 0.8);
   /* Increase shadow intensity and transparency */
@@ -91,6 +89,7 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
   /* Smooth transition for hover effects */
+  cursor: pointer;
 }
 
 button:hover {

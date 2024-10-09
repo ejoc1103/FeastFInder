@@ -6,13 +6,13 @@
     <!-- <h1>{{ this.search }}</h1> -->
 
     <!-- Left Chevron Icon -->
-    <button v-if="showBack" v-on:click="nextPage(false)">
+    <button v-if="showBack && !$store.state.moreDetailsView" v-on:click="nextPage(false)">
       <i class="fas fa-chevron-left"></i>
     </button>
     <EateryCard :restaurants="restaurants" />
 
     <!-- Right Chevron Icon -->
-    <button v-if="showForward" v-on:click="nextPage(true)">
+    <button v-if="showForward && !$store.state.moreDetailsView" v-on:click="nextPage(true)">
       <i class="fas fa-chevron-right"></i>
     </button>
   </div>
