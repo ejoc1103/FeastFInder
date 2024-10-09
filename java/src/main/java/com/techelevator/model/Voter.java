@@ -38,7 +38,7 @@ public class Voter {
         this.user_id = user_id;
     }
 
-    public void setVoter_name(String string) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setVoter_name(String voter_name) {
+       this.voter_name = voter_name;
     }
 }
