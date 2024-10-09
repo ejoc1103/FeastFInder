@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ public class EateryController {
         return eateryDao.getEatery(id);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/eatery/{voteId}", method= RequestMethod.POST)
     public Eatery addEatery(@Valid @RequestBody Eatery eatery, @PathVariable int voteId) {
         return eateryDao.addEatery(eatery, voteId);
