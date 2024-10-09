@@ -97,7 +97,7 @@
       <h3>
         {{ restaurantDetails.phone }}
       </h3>
-      <h3>
+      <h3 v-if="restaurantDetails.website !== null">
         {{ restaurantDetails.website }}
       </h3>
       <h3>
@@ -259,8 +259,8 @@ export default {
 
 .more-details-view {
   grid-column: span 3;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   border-radius: 10px;
   border: 5px solid #7fff00;
   text-align: center;

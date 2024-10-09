@@ -150,7 +150,7 @@ button:hover {
   align-content: center;
   justify-content: center;
   max-height: 100vh;
-  height: 95vh;
+  height: 80vh;
 }
 
 #register-main {

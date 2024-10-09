@@ -116,7 +116,10 @@ export default {
 }
 
 #login-form h3 {
-  color: #E6E6FA;
+  color: #00FFFF;
+  background-color: #f7a029;
+  padding: 2vh;
+  border-radius: 10px;
 }
 
 #form-info {

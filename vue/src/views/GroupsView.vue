@@ -11,14 +11,16 @@
         <button v-else v-on:click="toggleGroup">Hide Create Form</button>
 
         <div class="groups">
-            <div v-for="group in groups" v-bind:key="group.id" class="group">
+            <!-- :class="isActive(group.isActive)" is setting the class name for this 
+            based on whether it's active or not on the back end -->
+            <div v-for="group in groups" v-bind:key="group.id" :class="isActive(group.is_active)">
                 <div v-if="!$store.state.showVoteView">
                     <h1>{{ group.vote_name }}</h1>
                     <button v-on:click="showGroup" class="view-group">View Group</button>
                 </div>
                 <div v-if="$store.state.showVoteView" class="voting">
                     <!-- this is where I am working on the group view -->
-                    <GroupCard :group="group"/>
+                    <GroupCard :group="group" />
                 </div>
             </div>
         </div>
@@ -80,6 +82,14 @@ export default {
         },
         hideGroup() {
             this.$store.commit("TOGGLE_VOTE_VIEW", false);
+        },
+        isActive(isActive) {
+            console.log(isActive);
+            if (isActive) {
+                return "active-group";
+            } else {
+                return "inactive-group";
+            }
         }
     }
 }
@@ -131,6 +141,22 @@ export default {
     background-color: #8A2BE2;
     border-radius: 30%;
     padding: 1vw;
+}
+
+.active-group {
+    background-color: #FF69B4;
+    color: #E6E6FA;
+    border-radius: 10px;
+    padding: 10px;
+    width: 50%;
+}
+
+.inactive-group {
+    background-color: #00FFFF;
+    color: #36454F;
+    border-radius: 10px;
+    padding: 10px;
+    width: 50%;
 }
 
 .view-group {
