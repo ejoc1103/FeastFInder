@@ -31,7 +31,7 @@
     </div>
 
     <!-- Change search button -->
-    <div v-else>
+    <div v-if="!$store.state.moreDetailsView">
       <button @click="showFullSearch = !showFullSearch" id="change-search">Change Search</button>
     </div>
 

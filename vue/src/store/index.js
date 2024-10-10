@@ -17,6 +17,7 @@ export function createStore(currentToken, currentUser) {
       isLoading: false,
       voter_id: -1,
       moreDetailsView: false,
+      hasRestaurants: false,
       //from here down will need to be removed when end points are created
       groups: [],
       showVoteView: false,
@@ -73,6 +74,9 @@ export function createStore(currentToken, currentUser) {
       TOGGLE_DETAILS_VIEW(state) {
         state.moreDetailsView = !state.moreDetailsView;
       },
+      TOGGLE_HAS_RESTAURANTS(state, show) {
+        state.hasRestaurants = show;
+      }
     },
   });
   return store;

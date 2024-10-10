@@ -16,7 +16,8 @@
 
           <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
             <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">
-              <button @click="addEateryToVote(group.vote_id, restaurants.indexOf(restaurant))"
+              <button v-if="!group.restaurants.includes(restaurant)"
+                @click=" addEateryToVote(group, restaurants.indexOf(restaurant))"
                 :disabled="hasVoted[restaurants.indexOf(restaurant)]">
                 {{ group.vote_name }}
               </button>
@@ -43,55 +44,7 @@
     </div>
 
     <div v-if="$store.state.moreDetailsView" class="more-details-view">
-
-      <h2 class="restaurant-name">{{ restaurantDetails.eatery_name }}</h2>
-      <div class="more-status">
-        <h3>
-          Currently:{{ restaurantDetails.isClosed ? "Open Now" : "Closed" }}
-        </h3>
-      </div>
-
-      <div>
-        <h3>
-          Opens: {{ formatTime(restaurantDetails.open_time) }}
-        </h3>
-        <h3>
-          Closes: {{ formatTime(restaurantDetails.close_time) }}
-        </h3>
-      </div>
-      <div>
-        <h3 v-if="!$store.state.moreDetailsView">
-          {{ restaurantDetails.city }}
-        </h3>
-        <h3>
-          {{ restaurantDetails.category }}
-        </h3>
-      </div>
-      <h3>
-        {{ restaurantDetails.eatery_address }}
-      </h3>
-      <h3>
-        {{ restaurantDetails.phone }}
-      </h3>
-
-      <a v-if="restaurantDetails.website !== null" :href="restaurantDetails.website" class="website-link">Link to their
-        online menu!</a>
-
-      <h3>
-        {{ restaurantDetails.price }}
-      </h3>
-      <h3>
-        {{ restaurantDetails.has_takeout ? "They have takeout!" : "No takeout " }} 😢
-      </h3>
-      <h3>
-        <span v-for="n in Math.floor(restaurantDetails.rating)" :key="n">
-          <i class="fa-solid fa-star"></i>
-        </span>
-        <span v-if="restaurantDetails.rating % 1 !== 0">
-          <i class="fa-solid fa-star-half-alt"></i> <!-- Half-star for non-integer ratings -->
-        </span>
-      </h3>
-      <button @click="showMoreInfo()">Show All</button>
+      <EateryDetail :restaurantDetails="restaurantDetails"/>
     </div>
 
 
@@ -100,6 +53,7 @@
 
 <script>
 import VoteService from "../../services/VoteService";
+import EateryDetail from '../eatery_components/EateryDetail.vue';
 export default {
   data() {
     return {
@@ -124,7 +78,6 @@ export default {
       seeAddress: false,
       groups: [],
       restaurantDetails: {},
-      hasVoted: [],
     };
   },
   props: {
@@ -135,10 +88,13 @@ export default {
     upVotes: Array,
     downVotes: Array,
   },
+  components: {
+    EateryDetail,
+  },
   methods: {
     castVote(vote, eatery_id, index) {
       VoteService.castVote(vote, eatery_id, this.$store.state.voter_id)
-        .then((response) => {
+        .then(() => {
           this.isValid[index] = false;
           this.hasVoted[index] = true;
         })
@@ -157,16 +113,19 @@ export default {
       }
       this.$store.commit('TOGGLE_DETAILS_VIEW');
     },
-    addEateryToVote(vote_id, pickedId) {
+    addEateryToVote(group, pickedId) {
       let pickedRestaurant = this.restaurants[pickedId];
 
-      VoteService.addEatery(vote_id, pickedRestaurant)
+      this.groups[this.groups.indexOf(group)].restaurants.push(pickedRestaurant);
+      VoteService.addEatery(group.vote_id, pickedRestaurant)
         .then((response) => {
           console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
         });
+
+
     },
     formatTime(time) {
       let [hours, minutes] = time.split(":");
@@ -212,6 +171,9 @@ export default {
     VoteService.getVotes()
       .then((response) => {
         this.groups = response.data;
+        for (let i = 0; i < this.groups.length; i++) {
+          this.groups[i].restaurants = [];
+        }
       })
       .catch((e) => {
         console.log(e);
