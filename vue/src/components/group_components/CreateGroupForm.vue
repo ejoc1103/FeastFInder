@@ -67,26 +67,30 @@ export default {
             this.$store.commit("TOGGLE_GROUP_FORM", !this.$store.state.showGroupForm);
         },
         submitGroup() {
-    let currentDate = new Date();
-    let newEventDate = new Date(this.newGroup.event_date);
-    let newVoteDate = new Date(this.newGroup.vote_date);
+            if (this.newGroup.vote_name !== '') {
+                let currentDate = new Date();
+                let newEventDate = new Date(this.newGroup.event_date);
+                let newVoteDate = new Date(this.newGroup.vote_date);
 
-    VoteService.createGroup(this.newGroup)
-        .then(response => {
-            console.log(response);
-            if (response.status === 200) {
-                this.newGroup = {};
-                this.$store.commit('TOGGLE_GROUP_FORM', false);
-                console.log("Form visibility state (after mutation):", this.$store.state.showGroupForm);
-                this.$router.push('/groups');
+                VoteService.createGroup(this.newGroup)
+                    .then(response => {
+                        console.log(response);
+                        if (response.status === 200) {
+                            this.newGroup = {};
+                            this.$store.commit('TOGGLE_GROUP_FORM', false);
+                            console.log("Form visibility state (after mutation):", this.$store.state.showGroupForm);
+                            this.$router.push('/groups');
+                        }
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+
+                this.resetForm();
+            } else {
+                alert("Please enter a name for the feast.");
             }
-        })
-        .catch(e => {
-            console.log(e);
-        });
-
-    this.resetForm();
-},
+        },
         resetForm() {
             this.newGroup = {
                 vote_name: '',
@@ -98,13 +102,13 @@ export default {
         }
     },
     created() {
-  const today = new Date().toISOString().split('T')[0];
-  this.newGroup.vote_date = today;
+        const today = new Date().toISOString().split('T')[0];
+        this.newGroup.vote_date = today;
 
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  this.newGroup.event_date = tomorrow.toISOString().split('T')[0];
-},
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        this.newGroup.event_date = tomorrow.toISOString().split('T')[0];
+    },
 }
 </script>
 

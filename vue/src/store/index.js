@@ -19,7 +19,8 @@ export function createStore(currentToken, currentUser) {
       moreDetailsView: false,
       //from here down will need to be removed when end points are created
       groups: [],
-      showVoteView: false
+      showVoteView: false,
+      areGroupButtonsVisible: [],
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
