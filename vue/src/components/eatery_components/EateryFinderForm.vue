@@ -5,7 +5,7 @@
             <input type="text" v-model="zipcode" />
             <label for="term">Filter:</label>
             <input type="text" v-model="term" />
-            <button type="submit">Find Eatery</button>
+            <button type="submit">Find Feast Spots</button>
     </form>
 </template>
 

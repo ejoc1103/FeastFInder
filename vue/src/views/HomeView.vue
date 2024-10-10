@@ -2,8 +2,10 @@
   <div class="home">
     <div v-if="showFullSearch">
 
+      <!-- CreateGroupForm will be shown based on $store.state.showGroupForm -->
       <CreateGroupForm v-if="$store.state.showGroupForm" />
 
+      <!-- Search form section -->
       <div v-if="showForm" class="search-form-container">
         <div class='full-search-form'>
           <EateryFinderFormVue />
@@ -11,28 +13,31 @@
             <div class="popular-search-area">
               <div v-if="seePopular" class="category-container">
                 <button v-for="category in categories" :key="category" class="category"
-                  @click="setCategory(category)">{{
-      category }}</button>
+                  @click="setCategory(category)">{{ category }}</button>
               </div>
             </div>
-            <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches'
-              }}</button>
+            <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches' }}</button>
             <button @click="showForm = !showForm">Hide Form</button>
           </div>
         </div>
       </div>
+
+      <!-- Buttons for toggling group form and search form -->
       <div v-else>
-        <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
+        <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Feast</button>
         <button v-else v-on:click="toggleGroup">Hide Create Form</button>
         <button @click="showForm = !showForm">Search Filters</button>
       </div>
     </div>
+
+    <!-- Change search button -->
     <div v-else>
       <button @click="showFullSearch = !showFullSearch" id="change-search">Change Search</button>
     </div>
-    <EateryList v-show="restaurants.length < 2" :restaurants="restaurants" />
-  </div>
 
+    <!-- Conditionally show EateryList based on group form visibility using v-show -->
+    <EateryList v-show="!$store.state.showGroupForm && restaurants.length < 2" :restaurants="restaurants" />
+  </div>
 </template>
 
 <script>
@@ -54,16 +59,7 @@ export default {
         "Vegan restaurants near me",
         "Gluten-free restaurants",
         "Healthy restaurants",
-        // "Restaurants with outdoor seating",
-        // "Late-night restaurants",
-        // "Restaurants with delivery",
-        // "Seafood restaurants near me",
-        // "Fine dining restaurants",
-        // "Fast food near me",
-        // "Best brunch spots",
-        // "Restaurants with live music",
-        // "Mexican restaurants near me",
-        // "Asian cuisine near me"
+        // Other categories can be added here
       ],
       seePopular: false,
       showForm: false,
@@ -93,8 +89,7 @@ export default {
         latitude: coords.latitude,
         longitude: coords.longitude,
       });
-    }
-    );
+    });
   }
 };
 </script>

@@ -6,7 +6,7 @@
                 <div class="sub-container">
 
                     <label for="group-name">
-                        <h3>Group Name:</h3>
+                        <h3>Feast Name:</h3>
                     </label>
                     <input type="text" id="group-name" name="groupName" v-model="newGroup.vote_name">
                 </div>
@@ -24,7 +24,7 @@
                 <div class="sub-container">
 
                     <label for="vote-date">
-                        <h3>Vote Date:</h3>
+                        <h3>Start Vote:</h3>
                     </label>
                     <input type="date" id="vote-date" name="voteDate" v-model="newGroup.vote_date">
                 </div>
@@ -33,14 +33,14 @@
                 <div class="sub-container">
                     <label for="event-date">
                         <h3>
-                            Event Date:
+                            Day of Feast:
                         </h3>
                     </label>
                     <input type="date" id="event-date" name="eventDate" v-model="newGroup.event_date">
                 </div>
             </div>
 
-            <button id="create-group-button" type="submit">Create This Group</button>
+            <button id="create-group-button" type="submit">Create This Feast</button>
         </form>
     </div>
 </template>
@@ -67,30 +67,26 @@ export default {
             this.$store.commit("TOGGLE_GROUP_FORM", !this.$store.state.showGroupForm);
         },
         submitGroup() {
-            let currentDate = new Date();
-            let newEventDate = new Date(this.newGroup.event_date);
-            let newVoteDate = new Date(this.newGroup.vote_date);
+    let currentDate = new Date();
+    let newEventDate = new Date(this.newGroup.event_date);
+    let newVoteDate = new Date(this.newGroup.vote_date);
 
-            // if (currentDate > newEventDate || currentDate > newVoteDate) {
-            //     console.log("Date cannot be in the past");
-            // } else {
-            // From here to next comment is a placeholder for the actual endpoint
-            // the id part wont be needed when we have an endpoint
+    VoteService.createGroup(this.newGroup)
+        .then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                this.newGroup = {};
+                this.$store.commit('TOGGLE_GROUP_FORM', false);
+                console.log("Form visibility state (after mutation):", this.$store.state.showGroupForm);
+                this.$router.push('/groups');
+            }
+        })
+        .catch(e => {
+            console.log(e);
+        });
 
-            // I believe this will work when there is an end point for creating a vote
-            VoteService.createGroup(this.newGroup)
-                .then(response => {
-                    if (response.status === 201) {
-                        alert("New Group Created");
-                        this.newGroup = {};
-                        this.$store.commit('TOGGLE_GROUP_FORM', !this.$store.state.showGroupForm);
-                    }
-                })
-                .catch(e => {
-                    console.log(e);
-                });
-            this.resetForm();
-        },
+    this.resetForm();
+},
         resetForm() {
             this.newGroup = {
                 vote_name: '',
@@ -100,7 +96,15 @@ export default {
                 is_active: true
             }
         }
-    }
+    },
+    created() {
+  const today = new Date().toISOString().split('T')[0];
+  this.newGroup.vote_date = today;
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  this.newGroup.event_date = tomorrow.toISOString().split('T')[0];
+},
 }
 </script>
 

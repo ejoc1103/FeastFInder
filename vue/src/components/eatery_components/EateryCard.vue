@@ -1,8 +1,7 @@
 <template>
   <div>
     <div id="eatery-grid" v-if="!$store.state.moreDetailsView">
-
-      <div v-for="restaurant in restaurants" v-bind:key="restaurant.eatery_id" class="card-view"
+      <div v-for="(restaurant, index) in restaurants" :key="restaurant.eatery_id" class="card-view"
         :style="{ backgroundImage: `url(${restaurant.image_url})` }">
         <div id="card-grid">
           <h2 class="restaurant-name">{{ restaurant.eatery_name }}</h2>
@@ -27,92 +26,71 @@
             </p>
           </div>
 
-
           <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
             <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">
-
-              <button @click="addEateryToVote(group.vote_id, restaurants.indexOf(restaurant))">
+              <button v-if="isVisible[index]" @click="addEateryToVote(group.vote_id, index)">
                 {{ group.vote_name }}
               </button>
             </div>
           </div>
 
-
-
           <div v-if="getPathName === 'groups'" class="votes">
-            <h3>{{ this.upVotes[restaurants.indexOf(restaurant)] }} Up Votes</h3>
-            <h3>{{ this.downVotes[restaurants.indexOf(restaurant)] }} Down Votes</h3>
+            <h3>{{ this.upVotes[index] }} Up Votes</h3>
+            <h3>{{ this.downVotes[index] }} Down Votes</h3>
           </div>
-          <!-- Current Work Place  -->
-          <div v-if="getPathName === 'voting'" class="votes">
-            <button @click="castVote(true, restaurant.eatery_id)">Thumbs Up</button>
-            <button @click="castVote(false, restaurant.eatery_id)">Thumbs Down</button>
+
+          <div v-if="getPathName === 'voting' && this.isVisible[index]" class="votes">
+            <button @click="castVote(true, restaurant.eatery_id, index)">Thumbs Up</button>
+            <button @click="castVote(false, restaurant.eatery_id, index)">Thumbs Down</button>
           </div>
+
           <div>
-
-            <button @click="showMoreInfo(restaurant)">{{ this.showMoreOrLess ? "Show Less" : "Show More" }}</button>
+            <button @click="toggleMoreOrLess">{{ showMoreOrLess ? "Show Less" : "Show More" }}</button>
           </div>
-
         </div>
       </div>
-
     </div>
-    <div v-if="$store.state.moreDetailsView" class="more-details-view">
 
+    <div v-if="$store.state.moreDetailsView" class="more-details-view">
       <h2 class="restaurant-name">{{ restaurantDetails.eatery_name }}</h2>
       <div class="more-status">
         <h3>
-          Currently:{{ restaurantDetails.isClosed ? "Open Now" : "Closed" }}
+          Currently: {{ restaurantDetails.isClosed ? "Open Now" : "Closed" }}
         </h3>
       </div>
 
       <div>
-        <h3>
-          Opens: {{ formatTime(restaurantDetails.open_time) }}
-        </h3>
-        <h3>
-          Closes: {{ formatTime(restaurantDetails.close_time) }}
-        </h3>
+        <h3>Opens: {{ formatTime(restaurantDetails.open_time) }}</h3>
+        <h3>Closes: {{ formatTime(restaurantDetails.close_time) }}</h3>
       </div>
+
       <div>
-        <h3 v-if="!$store.state.moreDetailsView">
-          {{ restaurantDetails.city }}
-        </h3>
-        <h3>
-          {{ restaurantDetails.category }}
-        </h3>
+        <h3>{{ restaurantDetails.city }}</h3>
+        <h3>{{ restaurantDetails.category }}</h3>
       </div>
-      <h3>
-        {{ restaurantDetails.eatery_address }}
-      </h3>
-      <h3>
-        {{ restaurantDetails.phone }}
-      </h3>
 
-      <a v-if="restaurantDetails.website !== null" :href="restaurantDetails.website" class="website-link">Link to their
-        online menu!</a>
+      <h3>{{ restaurantDetails.eatery_address }}</h3>
+      <h3>{{ restaurantDetails.phone }}</h3>
 
-      <h3>
-        {{ restaurantDetails.price }}
-      </h3>
-      <h3>
-        {{ restaurantDetails.has_takeout ? "They have takeout!" : "No takeout " }} 😢
-      </h3>
+      <a v-if="restaurantDetails.website !== null" :href="restaurantDetails.website" class="website-link">
+        Link to their online menu!
+      </a>
+
+      <h3>{{ restaurantDetails.price }}</h3>
+      <h3>{{ restaurantDetails.has_takeout ? "They have takeout!" : "No takeout " }} 😢</h3>
+
       <h3>
         <span v-for="n in Math.floor(restaurantDetails.rating)" :key="n">
           <i class="fa-solid fa-star"></i>
         </span>
         <span v-if="restaurantDetails.rating % 1 !== 0">
-          <i class="fa-solid fa-star-half-alt"></i> <!-- Half-star for non-integer ratings -->
+          <i class="fa-solid fa-star-half-alt"></i>
         </span>
       </h3>
+
       <button @click="showMoreInfo()">Show All</button>
     </div>
-
   </div>
-
-
-
 </template>
 
 <script>
@@ -121,61 +99,50 @@ export default {
   data() {
     return {
       showMoreOrLess: false,
-      newRestaurant: {
-        eatery_id: "",
-        eatery_name: "",
-        image_url: "",
-        eatery_address: "",
-        category: "",
-        website: "",
-        open_time: "",
-        close_time: "",
-        has_takeout: false,
-        rating: 0,
-        phone: "",
-        price: "",
-        isClosed: false,
-        city: "",
-      },
-      seeAddress: false,
       groups: [],
       restaurantDetails: {},
+      isVisible: [],
     };
   },
   props: ["restaurants", "upVotes", "downVotes"],
   methods: {
-    castVote(vote, eatery_id) {
+    castVote(vote, eatery_id, index) {
       console.log(eatery_id);
       VoteService.castVote(vote, eatery_id, this.$store.state.voter_id)
         .then((response) => {
           console.log(response.data);
+          this.isVisible[index] = false;
         })
         .catch((e) => {
           console.log(e);
         });
     },
-    showMoreOrLessMethod() {
+
+    toggleMoreOrLess() {
       this.showMoreOrLess = !this.showMoreOrLess;
     },
+
     showMoreInfo(restaurant) {
       if (restaurant) {
         this.restaurantDetails = restaurant;
       } else {
-        this.restaurantDetails = null;
+        this.restaurantDetails = {};
       }
       this.$store.commit('TOGGLE_DETAILS_VIEW');
     },
+
     addEateryToVote(vote_id, pickedId) {
       let pickedRestaurant = this.restaurants[pickedId];
-
       VoteService.addEatery(vote_id, pickedRestaurant)
         .then((response) => {
+          this.isVisible[pickedId] = true;
           console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
         });
     },
+
     formatTime(time) {
       let [hours, minutes] = time.split(":");
 
@@ -183,6 +150,7 @@ export default {
         hours = time.slice(0, 2);
         minutes = time.slice(2, 4);
       }
+
       hours = parseInt(hours, 10);
       let suffix = hours >= 12 ? "PM" : "AM";
       hours = hours % 12 || 12;
@@ -190,52 +158,23 @@ export default {
     },
   },
   computed: {
-    buttonName() {
-      return this.showMoreOrLess ? "Show Less" : "Show More";
-    },
     getPathName() {
-      let pathName = this.$route.name;
-      return pathName;
+      return this.$route.name;
     },
-    checkPathName() {
-      let pathName = this.$route.name;
-
-      if (pathName === 'home') {
-        return 'card-view';
-      } else if (pathName === 'groups' && this.$store.state.moreDetailsView) {
-        return 'more-details-view';
-      } else if (pathName === 'voting') {
-        return 'voting-view';
-      }
-      return pathName;
-    }
-    // getGroups() {
-    //   return this.$store.state.groups;
-    // },
-
-    // getTime(time) {
-    //   let string = time.slice(0, this.restaurants[0].openTime.indexOf(' '));
-    //   if (string > '1200') {
-    //     string = string.slice(0, 2) - 12 + ':' + string.slice(2);
-    //     string += ' PM';
-    //   } else {
-    //     string += ' AM';
-    //   }
-    //   console.log(string);
-    //   return string;
-    // }
   },
   created() {
-    this.groups = VoteService.getVotes()
+    VoteService.getVotes()
       .then((response) => {
         this.groups = response.data;
       })
       .catch((e) => {
         console.log(e);
       });
+    this.isVisible = this.restaurants.map(() => true);
   }
 };
 </script>
+
 
 <style>
 .website-link {
@@ -368,9 +307,22 @@ button {
 }
 
 .votes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   border-radius: 5px;
   margin: 0;
 }
+
+.votes button {
+  flex: 1 0 30%;
+  max-width: 150px;
+  min-width: 100px;
+  margin: 5px 0;
+}
+
 
 #status-container {
   grid-column: span 3;

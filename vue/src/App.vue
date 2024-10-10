@@ -4,7 +4,7 @@
       <!-- Do nav next -->
       <div class="nav-links">
         <router-link v-show="getPathName !== 'home'" v-bind:to="{ name: 'home' }">Home</router-link>
-        <router-link v-show="getPathName !== 'groups'" v-bind:to="{ name: 'groups' }">Groups</router-link>
+        <router-link v-show="getPathName !== 'groups'" v-bind:to="{ name: 'groups' }">My Feasts</router-link>
         <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
       </div>
   
