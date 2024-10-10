@@ -1,7 +1,8 @@
 <template>
   <div>
     <div id="eatery-grid" v-if="!$store.state.moreDetailsView">
-      <div v-for="restaurant in restaurants" :key="restaurant.eatery_id" class="card-view" :style="{ backgroundImage: `url(${restaurant.image_url})` }">
+      <div v-for="restaurant in restaurants" :key="restaurant.eatery_id" class="card-view"
+        :style="{ backgroundImage: `url(${restaurant.image_url})` }">
         <div id="card-grid">
           <h2 class="restaurant-name">{{ restaurant.eatery_name }}</h2>
           <div id="status-container">
@@ -15,7 +16,8 @@
 
           <div v-if="getPathName === 'home'" :style="{ gridArea: 'buttons' }" class="votes">
             <div v-for="group in groups" :key="group.vote_id" :name="group.vote_id">
-              <button @click="addEateryToVote(group.vote_id, restaurants.indexOf(restaurant))" :disabled="hasVoted[restaurants.indexOf(restaurant)]">
+              <button @click="addEateryToVote(group.vote_id, restaurants.indexOf(restaurant))"
+                :disabled="hasVoted[restaurants.indexOf(restaurant)]">
                 {{ group.vote_name }}
               </button>
             </div>
@@ -26,7 +28,9 @@
             <h3>{{ this.downVotes[restaurants.indexOf(restaurant)] }} Down Votes</h3>
           </div>
 
-          <div v-if="getPathName === 'voting' && isValid[restaurants.indexOf(restaurant)] && !hasVoted[restaurants.indexOf(restaurant)]" class="votes">
+          <div
+            v-if="getPathName === 'voting' && isValid[restaurants.indexOf(restaurant)] && !hasVoted[restaurants.indexOf(restaurant)]"
+            class="votes">
             <button @click="castVote(true, restaurant.eatery_id, restaurants.indexOf(restaurant))">Thumbs Up</button>
             <button @click="castVote(false, restaurant.eatery_id, restaurants.indexOf(restaurant))">Thumbs Down</button>
           </div>
@@ -38,7 +42,59 @@
       </div>
     </div>
 
-    <!-- More details view code -->
+    <div v-if="$store.state.moreDetailsView" class="more-details-view">
+
+      <h2 class="restaurant-name">{{ restaurantDetails.eatery_name }}</h2>
+      <div class="more-status">
+        <h3>
+          Currently:{{ restaurantDetails.isClosed ? "Open Now" : "Closed" }}
+        </h3>
+      </div>
+
+      <div>
+        <h3>
+          Opens: {{ formatTime(restaurantDetails.open_time) }}
+        </h3>
+        <h3>
+          Closes: {{ formatTime(restaurantDetails.close_time) }}
+        </h3>
+      </div>
+      <div>
+        <h3 v-if="!$store.state.moreDetailsView">
+          {{ restaurantDetails.city }}
+        </h3>
+        <h3>
+          {{ restaurantDetails.category }}
+        </h3>
+      </div>
+      <h3>
+        {{ restaurantDetails.eatery_address }}
+      </h3>
+      <h3>
+        {{ restaurantDetails.phone }}
+      </h3>
+
+      <a v-if="restaurantDetails.website !== null" :href="restaurantDetails.website" class="website-link">Link to their
+        online menu!</a>
+
+      <h3>
+        {{ restaurantDetails.price }}
+      </h3>
+      <h3>
+        {{ restaurantDetails.has_takeout ? "They have takeout!" : "No takeout " }} 😢
+      </h3>
+      <h3>
+        <span v-for="n in Math.floor(restaurantDetails.rating)" :key="n">
+          <i class="fa-solid fa-star"></i>
+        </span>
+        <span v-if="restaurantDetails.rating % 1 !== 0">
+          <i class="fa-solid fa-star-half-alt"></i> <!-- Half-star for non-integer ratings -->
+        </span>
+      </h3>
+      <button @click="showMoreInfo()">Show All</button>
+    </div>
+
+
   </div>
 </template>
 
@@ -72,13 +128,13 @@ export default {
     };
   },
   props: {
-  restaurants: {
-    type: Array,
-    default: () => [],
+    restaurants: {
+      type: Array,
+      default: () => [],
+    },
+    upVotes: Array,
+    downVotes: Array,
   },
-  upVotes: Array,
-  downVotes: Array,
-},
   methods: {
     castVote(vote, eatery_id, index) {
       VoteService.castVote(vote, eatery_id, this.$store.state.voter_id)
@@ -146,21 +202,21 @@ export default {
     }
   },
   created() {
-  if (Array.isArray(this.restaurants) && this.restaurants.length > 0) {
-    this.isValid = this.restaurants.map(() => true);
-    this.hasVoted = this.restaurants.map(() => false);
-  } else {
-    console.error("No restaurants data available or data is not in the correct format.");
-  }
+    if (Array.isArray(this.restaurants) && this.restaurants.length > 0) {
+      this.isValid = this.restaurants.map(() => true);
+      this.hasVoted = this.restaurants.map(() => false);
+    } else {
+      console.error("No restaurants data available or data is not in the correct format.");
+    }
 
-  VoteService.getVotes()
-    .then((response) => {
-      this.groups = response.data;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-}
+    VoteService.getVotes()
+      .then((response) => {
+        this.groups = response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 };
 </script>
 

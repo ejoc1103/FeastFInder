@@ -26,31 +26,27 @@ export default {
   components: {
     EateryCard,
   },
-  created() {
-    this.restaurants = VoteService.getEateries(this.group.vote_id).then(response => {
-      this.restaurants = response.data;
-      this.restaurants.forEach((group) => {
-          VoteService.getVoteTrueCount(group.eatery_id)
-            .then((response) => {
-              console.log("dad");
-              console.log(response.data);
-              this.upVotes.push(response.data);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-          VoteService.getVoteFalseCount(group.eatery_id)
-            .then((response) => {
-              this.downVotes.push(response.data);
-            })
-            .catch((e) => {
-              console.log(e);
-            });
-        });
-    }).catch(e => {
-      console.log(e);
-    });
+  async created() {
+  try {
+    const response = await VoteService.getEateries(this.group.vote_id);
+    this.restaurants = response.data;
+
+    for (const group of this.restaurants) {
+      try {
+        const upVoteResponse = await VoteService.getVoteTrueCount(group.eatery_id);
+        const downVoteResponse = await VoteService.getVoteFalseCount(group.eatery_id);
+
+        this.upVotes.push(upVoteResponse.data);
+        this.downVotes.push(downVoteResponse.data);
+      } catch (voteError) {
+        console.log(voteError);
+      }
+    }
+  } catch (error) {
+    console.log(error);
   }
+}
+
 
 }
 

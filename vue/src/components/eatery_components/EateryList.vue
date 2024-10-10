@@ -83,16 +83,24 @@ export default {
 
     },
     nextPage(next) {
-      if (next) {
-        this.start += 3;
-        this.end += 3;
+  if (next) {
+    this.start += 3;
+    this.end += 3;
+  } else {
+    this.start -= 3;
+    this.end -= 3;
+  }
+  
+  this.showBack = this.start > 0;
 
-      } else {
-        this.start -= 3;
-        this.end -= 3;
-      }
-      this.updateRestaurants();
-    },
+  if (this.end >= this.currentResponse.data.length) {
+    this.showForward = false;
+  } else {
+    this.showForward = true;
+  }
+
+  this.updateRestaurants();
+},
     updateRestaurants() {
       this.restaurants = [];
       // going to be needed but hold on
@@ -122,9 +130,6 @@ export default {
     } else {
       return true;
     }
-
-
-
 
   },
 
