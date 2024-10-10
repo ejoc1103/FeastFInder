@@ -75,7 +75,7 @@
         </h3>
       </div>
       <div>
-        <h3>
+        <h3 v-if="!$store.state.moreDetailsView">
           {{ restaurantDetails.city }}
         </h3>
         <h3>

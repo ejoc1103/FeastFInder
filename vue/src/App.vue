@@ -7,7 +7,7 @@
         <router-link v-show="getPathName !== 'groups'" v-bind:to="{ name: 'groups' }">Groups</router-link>
         <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
       </div>
-
+  
       <h1 class="logo">Feast Finder</h1>
       <router-link v-if="$store.state.groups.length > 0" v-bind:to="{ name: 'voting', params: { id: '0' } }">View
         Votes</router-link>
@@ -22,6 +22,20 @@
 
 <script>
 export default {
+  data() {
+    return {
+      // pathName: this.$route.name,
+      redShades: [
+        "#FF4500", // Orange Red
+        "#FF6347", // Tomato
+        "#DC143C", // Crimson
+        "#FF1493", // Deep Pink (leans red, with a pink tint)
+        "#FF5F5F", // Soft Red
+        "#B22222"  // Firebrick
+      ],
+    };
+  },
+
   computed: {
     getPathName() {
       return this.$route.name;
@@ -41,6 +55,23 @@ export default {
       }
       else {
         return "../../homeBackground.jpg";
+      }
+    },
+    getHeaderColor() {
+      let pathName = this.$route.name;
+      if (pathName === 'home') {
+        return this.headerColors[0];
+      } else if (pathName === 'login') {
+        return this.headerColors[1];
+      } else if (pathName === 'register') {
+        return this.headerColors[2];
+      } else if (pathName === 'groups') {
+        return this.headerColors[3];
+      } else if (pathName === 'voting') {
+        return this.headerColors[4];
+      }
+      else {
+        return this.headerColors[5];
       }
     },
     idSelector() {
@@ -173,7 +204,20 @@ button:hover {
 .nav {
   display: grid;
   grid-template-columns: 3fr 5fr 3fr;
-  background-color: #8A2BE2;
+  background: linear-gradient(50deg,
+
+      #00FFFF,
+
+      #228B22,
+
+      #FF69B4,
+
+      #8A2BE2,
+
+      #7FFF00,
+
+      #f7a029);
+  ;
   align-content: center;
   font-size: 1.2em;
   width: 100%;
@@ -195,9 +239,10 @@ button:hover {
   text-decoration: none;
 }
 
+/* Set Gradient here */
 .logo {
   font-size: 2em;
-  color: #7FFF00;
+  color: #E6E6FA;
   font-family: "Shrikhand", serif;
   font-weight: 400;
   font-style: normal;
