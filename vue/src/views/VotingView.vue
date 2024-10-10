@@ -1,12 +1,10 @@
 <template>
   <div id="voting-container">
-    <!-- Display vote name -->
     <h1>{{ vote.vote_name }}</h1>
     
     <div v-if="!isVoteExpired">
       <div id="form-style">
-        <form @submit.prevent="setVoterName">
-          <!-- If this works use it  -->
+        <form v-if="!showVoteBoard" @submit.prevent="setVoterName">
           <label for="voterName">Name:</label>
           <input type="text" id="voter-name" name="voterName" v-model="voter_name">
           <button type="submit">Submit Name</button>
@@ -15,7 +13,6 @@
 
       <EateryCard v-if="showVoteBoard" :restaurants="restaurants" />
 
-      <!-- Copy URL Button -->
       <button @click="copyURL" class="copy-url-button">Copy Page URL</button>
     </div>
 
@@ -44,16 +41,26 @@ export default {
     EateryCard,
   },
   methods: {
+    // Handle form submission
     setVoterName() {
-      VoteService.setVoterName(this.voter_name, this.$route.params.id).then(response => {
-        this.$store.commit('SET_VOTER_ID', response.data.voter_id);
-        this.showVoteBoard = true;
-      }).catch(e => {
-        console.log(e);
-      });
+      console.log("Form submitted, voter_name:", this.voter_name); // Debugging line to check the name value
+      if (this.voter_name.trim() === "") {
+        alert("Please enter your name.");
+        return;
+      }
+
+      VoteService.setVoterName(this.voter_name, this.$route.params.id)
+        .then(response => {
+          console.log("Voter name submitted successfully:", response);
+          this.$store.commit('SET_VOTER_ID', response.data.voter_id);
+          this.showVoteBoard = true;
+        })
+        .catch(e => {
+          console.log("Error submitting voter name:", e);
+        });
     },
+    
     copyURL() {
-      // Copy the current page URL to the clipboard
       const url = window.location.href;
       navigator.clipboard.writeText(url).then(() => {
         alert("URL copied to clipboard!");
@@ -68,20 +75,29 @@ export default {
         this.vote = response.data;
       })
       .catch(e => {
-        console.log(e);
+        console.log("Error fetching vote data:", e);
       });
 
+    // Fetch eateries
     VoteService.getEateries(this.$route.params.id)
       .then(response => {
         this.restaurants = response.data;
       })
       .catch(e => {
-        console.log(e);
+        console.log("Error fetching eateries data:", e); // Debugging line for eateries
       });
   },
   computed: {
+    // Check if the vote has expired
     isVoteExpired() {
-      return new Date(this.vote.vote_date) < this.currentDate;
+      const voteDateString = this.vote.vote_date;
+      const voteDate = new Date(voteDateString + 'T00:00:00');
+      const currentDate = new Date();
+
+      voteDate.setHours(0, 0, 0, 0); // Normalize vote date to midnight
+      currentDate.setHours(0, 0, 0, 0); // Normalize current date to midnight
+
+      return voteDate < currentDate; // Return if the vote is expired
     }
   }
 };
