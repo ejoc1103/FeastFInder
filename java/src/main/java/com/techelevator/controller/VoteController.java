@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +18,6 @@ import com.techelevator.model.Vote;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
 public class VoteController {
     @Autowired
     private VoteDao voteDao;

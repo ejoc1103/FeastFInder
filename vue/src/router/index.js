@@ -8,6 +8,7 @@ import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import GroupsView from '../views/GroupsView.vue';
 import VotingView from '../views/VotingView.vue';
+import DevView from '../views/DevView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.
@@ -65,7 +66,16 @@ const routes = [
       // Leave false for testing but will need to be true for production
       requiresAuth: true
     }
-  }
+  },
+  {
+    path: '/devs',
+    name: 'devs',
+    component: DevView,
+    meta: {
+      // Leave false for testing but will need to be true for production
+      requiresAuth: false
+    }
+  },
 ];
 
 // Create the router
