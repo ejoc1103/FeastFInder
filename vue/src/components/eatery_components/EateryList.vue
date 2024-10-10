@@ -31,6 +31,8 @@ export default {
       start: 0,
       end: 3,
       search: '',
+      showForward: true,
+      showBack: false,
     };
   },
   components: {
@@ -70,6 +72,11 @@ export default {
       RestaurantService.getRestaurants(this.search).then((response) => {
         this.currentResponse = response;
         this.updateRestaurants();
+        if (this.end >= this.currentResponse.data.length) {
+          this.showForward = false;
+        } else {
+          this.showForward = true;
+        }
         this.$store.commit("TOGGLE_RESTAURANTS", true);
         this.$store.commit('SET_LOADING', false);
       });
@@ -110,25 +117,17 @@ export default {
 
 
     });
-
-
-  },
-  computed: {
-    showBack() {
-      if (this.start === 0) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    showForward() {
-      if (this.end >= this.currentResponse.data.length) {
-        return false;
-      } else {
-        return true;
-      }
+    if (this.start === 0) {
+      return false;
+    } else {
+      return true;
     }
+
+
+
+
   },
+
 };
 </script>
 

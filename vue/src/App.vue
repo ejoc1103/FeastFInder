@@ -85,6 +85,7 @@ button {
   font-weight: bold;
   /* Make text bolder */
   border: 2px solid #a42473;
+  border-radius: 30px;
   /* Add a contrasting border */
   cursor: pointer;
   transition: all 0.3s ease;

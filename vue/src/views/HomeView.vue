@@ -167,6 +167,7 @@ button {
 #change-search {
   font-size: 1.3em;
   color: #8A2BE2;
+  background-color: #E6E6FA;
   padding: 10px;
   margin: 0;
 }
