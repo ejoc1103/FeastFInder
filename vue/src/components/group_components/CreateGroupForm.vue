@@ -1,5 +1,6 @@
 <template>
     <div id="create-group-container">
+        <button v-if="$store.state.showGroupForm" v-on:click="toggleGroup">Hide Create Form</button>
         <form id="create-group-form" v-on:submit.prevent="submitGroup">
             <div class="event-container">
                 <div class="sub-container">
@@ -41,7 +42,6 @@
 
             <button id="create-group-button" type="submit">Create This Group</button>
         </form>
-
     </div>
 </template>
 
@@ -63,6 +63,9 @@ export default {
 
     },
     methods: {
+        toggleGroup() {
+            this.$store.commit("TOGGLE_GROUP_FORM", !this.$store.state.showGroupForm);
+        },
         submitGroup() {
             let currentDate = new Date();
             let newEventDate = new Date(this.newGroup.event_date);
@@ -135,7 +138,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('../../public/borderImage.png');
+    background-image: url('../../borderImage.png');
     border-radius: 30px;
     padding: 2vw;
     width: 15vw;

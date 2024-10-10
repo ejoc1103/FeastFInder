@@ -5,12 +5,11 @@
             <h1 v-else>Create New Group</h1>
         </div>
         <create-group-form v-if="$store.state.showGroupForm" />
-        <button v-if="$store.state.showVoteView" v-on:click="showGroup(idToShow)" class="show-all-groups">See All
-            Groups</button>
+        <button v-if="$store.state.showVoteView" v-on:click="showGroup(idToShow)" class="show-all-groups">Back To My
+            Feasts</button>
         <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
-        <button v-else v-on:click="toggleGroup">Hide Create Form</button>
 
-        <div class="groups">
+        <div v-if="!$store.state.showGroupForm" class="groups">
             <!-- :class="isActive(group.isActive)" is setting the class name for this 
             based on whether it's active or not on the back end -->
             <div v-for="group in groups" v-bind:key="group.id" :class="isActive(group.is_active)">
@@ -24,7 +23,8 @@
                 </div>
             </div>
         </div>
-        <button v-on:click="hideGroup(idToShow)" class="view-group">Back To Groups View</button>
+        <button v-if="$store.state.showVoteView" v-on:click="hideGroup(idToShow)" class="view-group">Back To Groups
+            View</button>
     </div>
 </template>
 
@@ -45,7 +45,6 @@ export default {
             //     "#00FFFF", // Aqua Blue
             //     "#E6E6FA", // Lavender
             //     "#8A2BE2", // Bright Purple
-            //     "#36454F",  // Charcoal (for text)
             //     '#7FFF00', // Bright green
             //     '#228B22', // Darker Green
             //     '#f7a029', // Orange 
@@ -132,7 +131,7 @@ export default {
 .group-banner {
     font-size: 1.2em;
     border-radius: 30%;
-    background-image: url('../../public/borderImage.png');
+    background-image: url('../../borderImage.png');
     border: 10px solid;
 }
 

@@ -1,13 +1,21 @@
 <template>
+
   <div id="voting-container">
-    <div id="form-style">
-      <form @submit.prevent="setVoterName">
-        <label for="voterName">Name:</label>
-        <input type="text" id="voter-name" name="voterName" v-model="voter_name">
-        <button type="submit">Submit Name</button>
-      </form>
+    <div v-if="!isVoteExpired">
+      <div id="form-style">
+        <form @submit.prevent="setVoterName">
+          <!-- If this works use it  -->
+          <label for="voterName">Name:</label>
+          <input type="text" id="voter-name" name="voterName" v-model="voter_name">
+          <button type="submit">Submit Name</button>
+        </form>
+      </div>
+
+      <EateryCard v-if="showVoteBoard" :restaurants="restaurants" />
     </div>
-    <EateryCard v-if="showVoteBoard" :restaurants="restaurants" />
+    <div v-else id="expired-container">
+      <h1>This Vote Has Expired!</h1>
+    </div>
   </div>
 </template>
 
@@ -20,6 +28,8 @@ export default {
       restaurants: [],
       voter_name: '',
       showVoteBoard: false,
+      vote: {},
+      currentDate: new Date(),
     };
   },
   components: {
@@ -27,6 +37,7 @@ export default {
   },
   methods: {
     setVoterName() {
+      console.log(this.restaurants);
       VoteService.setVoterName(this.voter_name, this.$route.params.id).then(response => {
         this.$store.commit('SET_VOTER_ID', response.data.voter_id);
         this.showVoteBoard = true;
@@ -36,6 +47,15 @@ export default {
     }
   },
   created() {
+
+    VoteService.getVote(this.$route.params.id)
+      .then(response => {
+        this.vote = response.data;
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
     return VoteService.getEateries(this.$route.params.id)
       .then(response => {
         this.restaurants = response.data;
@@ -43,7 +63,15 @@ export default {
       .catch(e => {
         console.log(e);
       });
+
+
   },
+  computed: {
+    isVoteExpired() {
+      return new Date(this.vote.vote_date) < this.currentDate;
+    }
+  }
+
 };
 </script>
 
@@ -64,5 +92,16 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+#expired-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #8A2BE2;
+  padding: 20px;
+  border-radius: 20%;
+  color: #E6E6FA;
 }
 </style>

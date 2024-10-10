@@ -6,13 +6,13 @@
     <!-- <h1>{{ this.search }}</h1> -->
 
     <!-- Left Chevron Icon -->
-    <button v-if="showBack" v-on:click="nextPage(false)">
+    <button v-if="showBack && !$store.state.moreDetailsView" v-on:click="nextPage(false)">
       <i class="fas fa-chevron-left"></i>
     </button>
     <EateryCard :restaurants="restaurants" />
 
     <!-- Right Chevron Icon -->
-    <button v-if="showForward" v-on:click="nextPage(true)">
+    <button v-if="showForward && !$store.state.moreDetailsView" v-on:click="nextPage(true)">
       <i class="fas fa-chevron-right"></i>
     </button>
   </div>
@@ -31,6 +31,8 @@ export default {
       start: 0,
       end: 3,
       search: '',
+      showForward: true,
+      showBack: false,
     };
   },
   components: {
@@ -70,6 +72,11 @@ export default {
       RestaurantService.getRestaurants(this.search).then((response) => {
         this.currentResponse = response;
         this.updateRestaurants();
+        if (this.end >= this.currentResponse.data.length) {
+          this.showForward = false;
+        } else {
+          this.showForward = true;
+        }
         this.$store.commit("TOGGLE_RESTAURANTS", true);
         this.$store.commit('SET_LOADING', false);
       });
@@ -110,25 +117,17 @@ export default {
 
 
     });
-
-
-  },
-  computed: {
-    showBack() {
-      if (this.start === 0) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    showForward() {
-      if (this.end >= this.currentResponse.data.length) {
-        return false;
-      } else {
-        return true;
-      }
+    if (this.start === 0) {
+      return false;
+    } else {
+      return true;
     }
+
+
+
+
   },
+
 };
 </script>
 
@@ -140,7 +139,7 @@ export default {
 }
 
 button {
-  background-image: url('../../../public/borderImage.png');
+  background-image: url('../../../borderImage.png');
   background-size: cover;
   box-shadow: 20px 20px 40px rgba(164, 36, 115, 0.8);
 }

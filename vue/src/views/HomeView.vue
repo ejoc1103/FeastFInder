@@ -1,29 +1,34 @@
 <template>
   <div class="home">
+    <div v-if="showFullSearch">
 
-    <CreateGroupForm v-if="$store.state.showGroupForm" />
+      <CreateGroupForm v-if="$store.state.showGroupForm" />
 
-    <div v-if="showForm" class="search-form-container">
-      <div class='full-search-form'>
-        <EateryFinderFormVue />
-        <div class="options">
-          <div class="popular-search-area">
-            <div v-if="seePopular" class="category-container">
-              <button v-for="category in categories" :key="category" class="category" @click="setCategory(category)">{{
+      <div v-if="showForm" class="search-form-container">
+        <div class='full-search-form'>
+          <EateryFinderFormVue />
+          <div class="options">
+            <div class="popular-search-area">
+              <div v-if="seePopular" class="category-container">
+                <button v-for="category in categories" :key="category" class="category"
+                  @click="setCategory(category)">{{
       category }}</button>
+              </div>
             </div>
+            <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches'
+              }}</button>
+            <button @click="showForm = !showForm">Hide Form</button>
           </div>
-          <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches'
-            }}</button>
-          <button @click="showForm = !showForm">Hide Form</button>
         </div>
+      </div>
+      <div v-else>
+        <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
+        <button v-else v-on:click="toggleGroup">Hide Create Form</button>
+        <button @click="showForm = !showForm">Search Filters</button>
       </div>
     </div>
     <div v-else>
-      <button v-if="!$store.state.showGroupForm" v-on:click="toggleGroup">Create a New Group</button>
-      <button v-else v-on:click="toggleGroup">Hide Create Form</button>
-      <button @click="showForm = !showForm">Search Filters</button>
-      <select></select>
+      <button @click="showFullSearch = !showFullSearch" id="change-search">Change Search</button>
     </div>
     <EateryList v-show="restaurants.length < 2" :restaurants="restaurants" />
   </div>
@@ -62,6 +67,7 @@ export default {
       ],
       seePopular: false,
       showForm: false,
+      showFullSearch: false,
     };
   },
   components: {
@@ -94,6 +100,15 @@ export default {
 </script>
 
 <style scoped>
+button {
+  color: #f2fae6;
+  background-color: #228B22;
+  border-radius: 20px;
+  padding: 15px;
+  margin: 5px;
+  box-shadow: 0px 0px 10px #8A2BE2;
+}
+
 .home {
   display: grid;
   justify-items: center;
@@ -142,18 +157,18 @@ export default {
   box-shadow: 0px 0px 25px #8A2BE2;
 }
 
-button {
-  color: #f2fae6;
-  background-color: #228B22;
-  border-radius: 20px;
-  padding: 15px;
-  margin: 5px;
-  box-shadow: 0px 0px 10px #8A2BE2;
-}
 
 .options {
   display: flex;
   flex-direction: row;
   padding: 5px;
+}
+
+#change-search {
+  font-size: 1.3em;
+  color: #8A2BE2;
+  background-color: #E6E6FA;
+  padding: 10px;
+  margin: 0;
 }
 </style>
