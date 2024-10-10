@@ -68,16 +68,23 @@ export default {
       seeAddress: false,
       groups: [],
       restaurantDetails: {},
-      hasVoted: [], // Track whether a user has voted for each restaurant
+      hasVoted: [],
     };
   },
-  props: ["restaurants", "upVotes", "downVotes"],
+  props: {
+  restaurants: {
+    type: Array,
+    default: () => [],
+  },
+  upVotes: Array,
+  downVotes: Array,
+},
   methods: {
     castVote(vote, eatery_id, index) {
       VoteService.castVote(vote, eatery_id, this.$store.state.voter_id)
         .then((response) => {
           this.isValid[index] = false;
-          this.hasVoted[index] = true; // Mark as voted for this restaurant
+          this.hasVoted[index] = true;
         })
         .catch((e) => {
           console.log(e);
@@ -139,16 +146,21 @@ export default {
     }
   },
   created() {
-    this.groups = VoteService.getVotes()
-      .then((response) => {
-        this.groups = response.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  if (Array.isArray(this.restaurants) && this.restaurants.length > 0) {
     this.isValid = this.restaurants.map(() => true);
-    this.hasVoted = this.restaurants.map(() => false); // Initialize hasVoted array
+    this.hasVoted = this.restaurants.map(() => false);
+  } else {
+    console.error("No restaurants data available or data is not in the correct format.");
   }
+
+  VoteService.getVotes()
+    .then((response) => {
+      this.groups = response.data;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
 };
 </script>
 
