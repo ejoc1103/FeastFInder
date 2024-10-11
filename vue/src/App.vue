@@ -1,5 +1,5 @@
 <template>
-  <div class="full-app-body">
+  <div class="full-app-body" :style="{ backgroundImage: `url(${currentBackground})` }">
     <div class="nav" v-show="$store.state.token != ''">
       <!-- Do nav next -->
       <div class="nav-links">
@@ -7,12 +7,12 @@
         <router-link v-show="getPathName !== 'groups'" v-bind:to="{ name: 'groups' }">My Feasts</router-link>
         <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
       </div>
-  
+
       <h1 class="logo">Feast Finder</h1>
       <router-link v-if="$store.state.groups.length > 0" v-bind:to="{ name: 'voting', params: { id: '0' } }">View
         Votes</router-link>
     </div>
-    <div id="capstone-app" :style="{ backgroundImage: `url(${currentBackground})` }">
+    <div id="capstone-app">
       <div :id="idSelector">
         <router-view />
       </div>
@@ -52,8 +52,7 @@ export default {
         return "../../groupsBackground.jpg";
       } else if (pathName === 'voting') {
         return "../../votingBackground.jpg";
-      }
-      else {
+      } else {
         return "../../homeBackground.jpg";
       }
     },
@@ -144,6 +143,13 @@ button:hover {
   justify-items: center;
   align-items: center;
   height: 100%;
+  background-repeat: repeat;
+  background-size: 100vw auto;
+  /* Full width of the viewport */
+  background-position: top center;
+  /* Start at the top */
+  background-attachment: fixed;
+  /* Keeps the background fixed during scroll */
 }
 
 #capstone-app {
@@ -151,8 +157,6 @@ button:hover {
   display: grid;
   justify-items: center;
   color: #E6E6FA;
-  background-repeat: repeat;
-  background-size: cover;
   max-height: 100vh;
   min-height: 92vh;
   width: 100%;

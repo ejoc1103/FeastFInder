@@ -16,7 +16,8 @@
                   @click="setCategory(category)">{{ category }}</button>
               </div>
             </div>
-            <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches' }}</button>
+            <button @click="toggleSeePopular">{{ seePopular ? 'Hide Popular Searches' : 'Show Popular Quick Searches'
+              }}</button>
             <button @click="showForm = !showForm">Hide Form</button>
           </div>
         </div>
@@ -94,7 +95,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 button {
   color: #f2fae6;
   background-color: #228B22;
@@ -107,7 +108,8 @@ button {
 .home {
   display: grid;
   justify-items: center;
-  align-items: start;
+  gap: 1vh;
+  height: 100%;
 }
 
 .category-container {

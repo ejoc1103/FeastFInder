@@ -9,12 +9,14 @@
     <button v-if="showBack && !$store.state.moreDetailsView" v-on:click="nextPage(false)">
       <i class="fas fa-chevron-left"></i>
     </button>
+    <div v-else></div>
     <EateryCard :restaurants="restaurants" />
 
     <!-- Right Chevron Icon -->
     <button v-if="showForward && !$store.state.moreDetailsView" v-on:click="nextPage(true)">
       <i class="fas fa-chevron-right"></i>
     </button>
+    <div v-else></div>
   </div>
 
 </template>
@@ -83,24 +85,24 @@ export default {
 
     },
     nextPage(next) {
-  if (next) {
-    this.start += 3;
-    this.end += 3;
-  } else {
-    this.start -= 3;
-    this.end -= 3;
-  }
-  
-  this.showBack = this.start > 0;
+      if (next) {
+        this.start += 3;
+        this.end += 3;
+      } else {
+        this.start -= 3;
+        this.end -= 3;
+      }
 
-  if (this.end >= this.currentResponse.data.length) {
-    this.showForward = false;
-  } else {
-    this.showForward = true;
-  }
+      this.showBack = this.start > 0;
 
-  this.updateRestaurants();
-},
+      if (this.end >= this.currentResponse.data.length) {
+        this.showForward = false;
+      } else {
+        this.showForward = true;
+      }
+
+      this.updateRestaurants();
+    },
     updateRestaurants() {
       this.restaurants = [];
       // going to be needed but hold on
@@ -140,7 +142,8 @@ export default {
 .eatery-grid-container {
   display: grid;
   grid-template-columns: 1fr 9fr 1fr;
-  justify-items: center;
+  justify-content: center;
+  align-content: center;
 }
 
 button {
