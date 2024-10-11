@@ -44,7 +44,7 @@
     </div>
 
     <div v-if="$store.state.moreDetailsView" class="more-details-view">
-      <EateryDetail :restaurantDetails="restaurantDetails"/>
+      <EateryDetail :restaurantDetails="restaurantDetails" />
     </div>
 
 
@@ -80,14 +80,7 @@ export default {
       restaurantDetails: {},
     };
   },
-  props: {
-    restaurants: {
-      type: Array,
-      default: () => [],
-    },
-    upVotes: Array,
-    downVotes: Array,
-  },
+  props: ['restaurants', 'upVotes', 'downVotes'],
   components: {
     EateryDetail,
   },
@@ -238,11 +231,11 @@ button {
   border-radius: 10px;
   border: 10px solid #00FFFF;
   text-align: center;
+  align-items: center;
   padding: 5px;
   margin: 5px;
   background-size: cover;
   width: 80vw;
-  max-height: 70vh;
   background: linear-gradient(50deg,
 
       #00FFFF,
@@ -258,25 +251,6 @@ button {
       #f7a029);
 }
 
-.more-details-view div {
-  border: 5px solid #8A2BE2;
-}
-
-.more-details-view .more-status {
-  display: grid;
-  grid-column: span 1;
-  height: 100%;
-  background-color: #8A2BE2;
-  max-height: 12vh;
-  border-radius: 30px;
-  padding: 4px;
-  justify-content: center;
-  width: 80%;
-}
-
-.more-details-view h3 {
-  padding: 0 20px;
-}
 
 .website-link {
   font-size: 1.2em;

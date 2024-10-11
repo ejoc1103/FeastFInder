@@ -7,7 +7,7 @@
         <router-link v-show="getPathName !== 'groups'" v-bind:to="{ name: 'groups' }">My Feasts</router-link>
         <router-link v-bind:to="{ name: 'logout' }">Logout</router-link>
       </div>
-  
+
       <h1 class="logo">Feast Finder</h1>
       <router-link v-if="$store.state.groups.length > 0" v-bind:to="{ name: 'voting', params: { id: '0' } }">View
         Votes</router-link>
@@ -152,7 +152,8 @@ button:hover {
   justify-items: center;
   color: #E6E6FA;
   background-repeat: repeat;
-  background-size: cover;
+  background-size: 100vw auto;
+  background-position: center;
   max-height: 100vh;
   min-height: 92vh;
   width: 100%;
@@ -226,9 +227,8 @@ button:hover {
 }
 
 .nav-links {
-  display: grid;
+  display: flex;
   gap: 1vw;
-  grid-template-columns: 1fr 1fr 1fr;
   font-size: 1.2em;
   align-items: center;
   justify-items: center;
