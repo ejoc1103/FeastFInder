@@ -142,7 +142,8 @@ export default {
 .eatery-grid-container {
   display: grid;
   grid-template-columns: 1fr 9fr 1fr;
-  justify-items: center;
+  justify-content: center;
+  align-content: center;
 }
 
 button {

@@ -1,5 +1,5 @@
 <template>
-  <div class="full-app-body">
+  <div class="full-app-body" :style="{ backgroundImage: `url(${currentBackground})` }">
     <div class="nav" v-show="$store.state.token != ''">
       <!-- Do nav next -->
       <div class="nav-links">
@@ -12,7 +12,7 @@
       <router-link v-if="$store.state.groups.length > 0" v-bind:to="{ name: 'voting', params: { id: '0' } }">View
         Votes</router-link>
     </div>
-    <div id="capstone-app" :style="{ backgroundImage: `url(${currentBackground})` }">
+    <div id="capstone-app">
       <div :id="idSelector">
         <router-view />
       </div>
@@ -52,8 +52,7 @@ export default {
         return "../../groupsBackground.jpg";
       } else if (pathName === 'voting') {
         return "../../votingBackground.jpg";
-      }
-      else {
+      } else {
         return "../../homeBackground.jpg";
       }
     },
@@ -144,6 +143,13 @@ button:hover {
   justify-items: center;
   align-items: center;
   height: 100%;
+  background-repeat: repeat;
+  background-size: 100vw auto;
+  /* Full width of the viewport */
+  background-position: top center;
+  /* Start at the top */
+  background-attachment: fixed;
+  /* Keeps the background fixed during scroll */
 }
 
 #capstone-app {
@@ -151,9 +157,12 @@ button:hover {
   display: grid;
   justify-items: center;
   color: #E6E6FA;
+<<<<<<< HEAD
   background-repeat: repeat;
   background-size: 100vw auto;
   background-position: center;
+=======
+>>>>>>> 81dee641a255c8cdc93296b2d7cd0df0a7a9f0ac
   max-height: 100vh;
   min-height: 92vh;
   width: 100%;
@@ -222,16 +231,19 @@ button:hover {
   align-content: center;
   font-size: 1.2em;
   width: 100%;
-  height: 8vh;
+  max-height: 8vh;
   justify-items: center;
 }
 
 .nav-links {
   display: flex;
+<<<<<<< HEAD
   gap: 1vw;
+=======
+>>>>>>> 81dee641a255c8cdc93296b2d7cd0df0a7a9f0ac
   font-size: 1.2em;
   align-items: center;
-  justify-items: center;
+  gap: 10px;
 }
 
 .nav-links a {

@@ -32,8 +32,12 @@
           <div
             v-if="getPathName === 'voting' && isValid[restaurants.indexOf(restaurant)] && !hasVoted[restaurants.indexOf(restaurant)]"
             class="votes">
-            <button @click="castVote(true, restaurant.eatery_id, restaurants.indexOf(restaurant))">Thumbs Up</button>
-            <button @click="castVote(false, restaurant.eatery_id, restaurants.indexOf(restaurant))">Thumbs Down</button>
+            <button @click="castVote(true, restaurant.eatery_id, restaurants.indexOf(restaurant))" class="thumbs-up">
+              <i class="fas fa-thumbs-up"></i>
+            </button>
+            <button @click="castVote(false, restaurant.eatery_id, restaurants.indexOf(restaurant))" class="thumbs-down">
+              <i class="fas fa-thumbs-down"></i>
+            </button>
           </div>
 
           <div>
@@ -43,7 +47,11 @@
       </div>
     </div>
 
+<<<<<<< HEAD
     <div v-if="$store.state.moreDetailsView" class="more-details-view">
+=======
+    <div v-if="$store.state.moreDetailsView" class="details-view-container">
+>>>>>>> 81dee641a255c8cdc93296b2d7cd0df0a7a9f0ac
       <EateryDetail :restaurantDetails="restaurantDetails" />
     </div>
 
@@ -224,12 +232,12 @@ button {
   min-height: 70vh;
 }
 
-.more-details-view {
+.details-view-container {
   grid-column: span 3;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   border-radius: 10px;
-  border: 10px solid #00FFFF;
+  border: 5px solid #00FFFF;
   text-align: center;
   align-items: center;
   padding: 5px;
@@ -251,7 +259,10 @@ button {
       #f7a029);
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 81dee641a255c8cdc93296b2d7cd0df0a7a9f0ac
 .website-link {
   font-size: 1.2em;
   text-decoration: none;
@@ -346,5 +357,42 @@ button {
   grid-column: span 2;
   color: #00FFFF;
   /* Dark gray */
+}
+
+.thumbs-up {
+  background-color: #4CAF50;
+  /* Green color */
+  box-shadow: 0px 4px 6px rgba(0, 128, 0, 0.3);
+  /* Green shadow */
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.thumbs-up:hover {
+  background-color: #45a049;
+  /* Darker green on hover */
+  transform: scale(2);
+  /* Grow to twice the size */
+}
+
+/* Thumbs Down Button Styles */
+.thumbs-down {
+  background-color: #f44336;
+  /* Red color */
+  box-shadow: 0px 4px 6px rgba(255, 0, 0, 0.3);
+  /* Red shadow */
+  padding: 10px;
+}
+
+.thumbs-down:hover {
+  background-color: #e53935;
+  /* Darker red on hover */
+  transform: scale(2);
+  /* Grow to twice the size */
+}
+
+i {
+  font-size: 1.5em;
+  color: white;
 }
 </style>
