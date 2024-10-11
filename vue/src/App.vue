@@ -225,17 +225,15 @@ button:hover {
   align-content: center;
   font-size: 1.2em;
   width: 100%;
-  height: 8vh;
+  max-height: 8vh;
   justify-items: center;
 }
 
 .nav-links {
-  display: grid;
-  gap: 1vw;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
   font-size: 1.2em;
   align-items: center;
-  justify-items: center;
+  gap: 10px;
 }
 
 .nav-links a {
